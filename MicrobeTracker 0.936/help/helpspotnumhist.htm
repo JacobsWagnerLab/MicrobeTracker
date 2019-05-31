@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+spotnumhist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">spotnumhist(cellList)</font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,...)</font></p>
+<p><font face="Courier">spotinthist(cellList,xarray) </font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,xarray)</font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,'overlap')&nbsp; </font></p>
+<p><font face="Courier">[numlist] = spotinthist(cellList)</font></p>
+<p><font face="Courier">[numlist1,numlist2] = spotinthist(cellList1,cellList2)</font></p>
+<p><font face="Courier">spotinthist(...'nooutput')&nbsp; </font></p>
+
+<p>This function plots a histogram of the number of previously detected spots
+inside every cell in a population.</p>
+
+<ul>
+  <li>
+    &lt;cellList&gt; - an array that contains the meshes. You can drag and drop
+    the file with the data into MATLAB workspace or open it using MATLAB Import
+    Tool. The default name of the variable is <b>cellList</b>, but it can be
+    renamed.
+  </li>
+  <li>
+    &lt;cellList1&gt;, &lt;cellList2&gt; - you can load two arrays, they will
+    be plotted together for comparison.
+  </li>
+  <li>
+    &lt;xarray&gt; - an array of x values for the histogram, which serve the
+    centers of bins of the histogram (the boundaries will be in between, for
+    example [1 2 3 4 5] to display cells with 1 spot, then with 2 spots, etc.,
+    [2 5 8 11] will group in the first bin cells with 1-3 spots, in the second
+    cells with 4-6 spots, etc.).
+  </li>
+  <li>
+    'overlap' - indicate this if you wish the histograms to overlap, otherwise
+    they will be displayed separately.
+  </li>
+  <li>
+    &lt;numlist&gt;, &lt;numlist1&gt;, &lt;numlist2&gt; - arrays containing the
+    number of spots in every cell to save and plot separately.
+  </li>
+  <li>
+    &lt;nooutput&gt; - blocks standard output (type of data processed, mean,
+    and standard deviation).
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b><a href="helpTools.htm">MicrobeTracker Tools</a>,
+<a href="../help.htm">MicrobeTracker Suite</a></b>.</p>
+<!-- End replacement block 3 -->
+</body>
+</html>

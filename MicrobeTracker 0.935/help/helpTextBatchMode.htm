@@ -1,0 +1,135 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Text-based Batch Mode
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>MicrobeTracker has two variants of the
+<a href="helpMicrobeTrackerButtons.htm#batch">batch-processing mode</a>: graphical and text-based. The
+text-based batch mode is called from the graphical one by clicking the <b>Text
+mode</b> button. The graphical mode window will then be replaced with the
+text-based one.  The window is a simple text editor, which allows the user to type,
+save and load text files. The same files can also be prepared in any external
+text editor. This window is designed to prepare a simple script, which is
+interpreted by MicrobeTracker when the user clicks <b>Run</b>. MirobeTracker can run
+both standard MATLAB functions and the internal MicrobeTracker functions, not
+accessible otherwise. This mode provides in principle wider possibilities than
+the graphical mode because any MicrobeRacker function can be run inside it.
+However, the text-based mode is more error-prone and has only been tested with a
+limited number of funtions. Therefore, it should be used with caution.</p>
+
+<p align="left"><b><font size="4">List of basic MicrobeTracker functions</font></b></p>
+
+<ul>
+  <li><font face="Courier"><b>loadimages(channel,folder)</b></font> -  loads a
+    series of TIFF images from a folder. It takes 2 parameters: folder - the
+    name of the folder with the images; and channel - the channel to which the
+    images will be loaded, this is a number 1,3, or 4: 1 for "phase", 3 for
+    "signal 1", and 4 for "signal 2". Note that folder and file names either
+    start in the current MATLAB folder, or are full paths starting with a drive
+    letter.</li>
+  <li><font face="Courier"><b>loadstackimages(channel,file)</b></font> - loads a
+    set of images from a stack file using Bioformats (must be available). It takes two parameters:
+    file - the source file name, and channel - same as above.</li>
+  <li><font face="Courier"><b>loadaram(file)</b></font> -  loads a set of saved
+    parameters from a file file. The parameters are assigned to an internal
+    variable which remains the same until it is changed by such command as
+    loadparam, parseparams (see below), edit2p (to grab the parameters from
+    MicrobeTracker's Parameters control). Therefore, parameters must be
+    initialized at the beginning, but no reassignment of parameters is necessary
+    to process a new set of images.</li>
+  <li><font face="Courier"><b>param = loadmesh(filename)</b></font> - loads
+    analysis (meshes) from file filename. Optional output is the parameters
+    string, in case you need to load it as well (it does not assign these
+    parameters to the internal varaible and therefore they would not be used in
+    cell detection. End this commant with a semicolon, unless you want the
+    parameters to bi displayed in MATLAB's command window.</li>
+  <li><font face="Courier"><b>parseparams(param)</b></font> - initializes the
+    internal parameter variable with the string param obtained by loadmesh
+    command. Run this command to actually use the parameters in cell detection.
+    </li>
+  <li><font face="Courier"><b>alignfrm</b></font> - aligns the frames (loaded at
+    the moment).</li>
+  <li><font face="Courier"><b>savealign(filename)</b></font> - saves the
+    alignment data to file filename.</li>
+  <li><font face="Courier"><b>loadalign(filename)</b></font> - loads the
+    alignment data from file filename.</li>
+  <li><font face="Courier"><b>subtractbgr(channels,range,invert)</b></font> -
+    subtract background from channels (a number 3 or 4, or array [3 4], 3 for
+    signal 1, 4 for signal 2). range - range of frames to process, a two-number
+    array, an empty array or a single number. invert - 0 or 1, 0 for
+    phase-contrast (dark on light background) images used to detect cells, 1 for
+    fluoresnce images (light on dark background) used to detect cells.</li>
+  <li><font face="Courier"><b>process(range,mode,lst,addsig,addas,savefile,fsave,saveselect,region)</b></font> -
+    the main processing command, which depends on 9 parameters:
+    <ul>
+      <li><b>range</b> - range of frames (an array of two numbers or a single
+        number) on which the processing will be made or an empty array for all
+        frames, e.g. [1 10] for frames from 1 to 10, [] for all frames.</li>
+      <li><b>mode</b> - 1-Timelapse, 2-1st independent frame, 3-Independent
+        frames, 4-Reuse meshes.</li>
+      <li><b>lst</b> - list of cells to be processed, defined on the frame
+        preceeding the first frame in the range (if detection is performed) or
+        on any frame (in Reuse meshes mode). Use the empty array [] to process
+        all cells.</li>
+      <li><b>addsig</b> - an array of four numbers 0 or 1, indicating whether to
+        add signal to each channel (as above: 1-phase, 3-signal 1, 4-signal 2).</li>
+      <li><b>addas</b> - a cell array of values indicating the names under
+        which the signals will be saved. Default {}, which is equivalent to
+        {0,-,1,2}. Each numeric value X is converted to signalX, each string
+        value remains unchanged. I.e. {0,0,'s1',200} will save the profile of
+        the phase signal to field "signal0", signal 1 to field "s1", signal 2 to
+        field "signal200".</li>
+      <li><b>savefile</b> - filename to save the analysis while processing (such
+        as 'tempresults.mat' in the main window). Provide an enpty string '' if
+        no saving is necessary.</li>
+      <li><b>fsave</b> - "frequency" of saveing, i.e. the number of frames per
+        one saving.</li>
+      <li><b>saveselect</b> - 1 to save only selected cells and 0 to save all
+        cells.</li>
+      <li><b>region</b> - region to process (an array of four numbers, left-top-
+      width-height), [] for the whole image.</li>
+    </ul>
+  <li><font face="Courier"><b>savemesh(filename,list,mode,range)</b></font> -
+    save the analysis, list - list of selected cells (or an empty array), mode -
+    1 (true) to save only the selected cells, 0 (false) - to save all cells,
+    range - range of frames (as above, a two-element array, an empty array or a
+    number).</li>
+</ul>
+
+<p align="left"><b><font size="4">Example</font></b></p>
+
+<p align="left">Here is an example of a script, which can be run in text-based
+batch mode:</p>
+
+<p align="left"><font face="Courier" color=#0000AA>&nbsp;&nbsp;loadimages(1,'C:\images')<br/>
+&nbsp;&nbsp;loadparams('C:\meshes2.mat');<br/>
+&nbsp;&nbsp;process([],1,[],0,'','',0,0,[])<br/>
+&nbsp;&nbsp;savemesh('C:\meshes2.mat',[],0,[])</font></p>
+
+<p align="left">The first line of script loads the images from folder
+C:\images\ (here Windows fomat is assumed, replace back slashes to forward
+slashes for Linux/Mac). The second line loads the parameters from an analysis
+file meshes2.mat on drive C:. The third line does cell detection on all loaded
+frames in Timelapse mode. The fourth line saves the analysis to file
+meshes2.mat.</p>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTrackerButtons.htm">
+Buttons and Controls</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

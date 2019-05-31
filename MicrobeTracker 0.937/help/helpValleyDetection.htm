@@ -1,0 +1,296 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Edge and Valley detection in MicrobeTracker
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<div align="right">
+  <table border="0" cellspacing="1" width="20%" id="AutoNumber1" style="border-collapse: collapse" align="right">
+    <tr>
+      <td width="50%" align="center">
+      <p align="center">
+      <img border="0" src="Edgedetection_1_phase.gif" width="126" height="91"><span style="mso-bidi-font-family:Arial;font-size:7pt"><b><br>
+      Phase contrast</b></span></td>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_2_thres.gif" width="126" height="91"><div v:shape="_x0000_s1026" class="O" style="text-align:center;mso-char-wrap:
+1;mso-kinsoku-overflow:1">
+        <span style="mso-bidi-font-family:Arial;font-size:
+7pt"><b>Thresholding only</b></span></div>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_3_Valley_05_0_m0006.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt"><b>Valley</b>,
+          </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.5, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%">1 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt">= 0, t</span><span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:4pt;position:relative;top:.37em;mso-text-raise:-25%">2 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">= 0.0</span><span style="font-family: Times New Roman; font-size: 7pt">6</span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> </span>
+        </div>
+      </div>
+      </td>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_4_Log_09.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt"><b>LoG</b>,
+          </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.9, t = 0</span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> </span>
+        </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_5_Valley_0_0_m0006.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley,<b> </b>
+          </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b>&#963;</b></span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b> = 1</b>, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%">1 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt">= 0, t</span><span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:4pt;position:relative;top:.37em;mso-text-raise:-25%">2 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">=  1.8</span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> </span>
+        </div>
+      </div>
+      </td>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_6_Valley_1_0_m0006.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley,<b> </b>
+          </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b>&#963;</b></span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b> = 0</b>,<b>
+          </b>t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%">1 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt">= 0, t</span><span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:4pt;position:relative;top:.37em;mso-text-raise:-25%">2 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">= 1.8</span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> </span>
+        </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_7_Valley_05_0_m001.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley, </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.5, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%">1 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt">= 0,<b> t</b></span><span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:4pt;position:relative;top:.37em;mso-text-raise:-25%"><b>2 </b></span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b>= 30</b></span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b> </b></span>
+        </div>
+      </div>
+      </td>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_8_Valley_05_0_m0002.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley, </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.5, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%">1 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt">= 0,<b> t</b></span><span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:4pt;position:relative;top:.37em;mso-text-raise:-25%"><b>2 </b></span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b>= 0.6</b></span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"><b> </b></span>
+        </div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_9_Valley_05_m0008_m0006.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley, </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.5,<b> t</b></span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%"><b>1 </b></span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt"><b>=  2.4</b>, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;
+position:relative;top:.37em;mso-text-raise:-25%">2 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">= 1.8</span><span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> </span>
+        </div>
+      </div>
+      </td>
+      <td width="50%" align="center">
+      <img border="0" src="Edgedetection_10_Valley_05_p001_m0006.gif" width="126" height="91"><p:colorscheme colors="#FFFFFF,#000000,#808080,#000000,#BBE0E3,#333399,#009999,#99CC00" /><div v:shape="_x0000_s1026" class="O">
+        <div style="text-align:center;mso-char-wrap:1;mso-kinsoku-overflow:1">
+          <span style="mso-bidi-font-family:Arial;font-size:7pt">Valley, </span>
+          <span lang="EL" style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">&#963;</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt"> = 0.5,<b> t</b></span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;position:relative;
+top:.37em;mso-text-raise:-25%"><b>1 </b></span>
+          <span style="font-family:&quot;Times New Roman&quot;;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
+font-size:7pt"><b>= 0</b>, t</span><span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:4pt;
+position:relative;top:.37em;mso-text-raise:-25%">2 </span>
+          <span style="font-family:&quot;Times New Roman&quot;;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;font-size:7pt">= 1.8</span></div>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" colspan="2" align="center">The effect of parameters on 
+      the valley detection algorithm and its comparison with LoG</td>
+    </tr>
+  </table>
+</div>
+
+<p align="left">Edge and valley detection is used to supplement thresholding in 
+initial segmentation of the cells. MicrobeTracker uses two algorithms for this 
+purpose:</p>
+
+<ul>
+  <li>
+
+<p align="left"><b><a href="#Laplacian of Gaussian">Laplacian of Gaussian (LoG)</a></b></p>
+  </li>
+  <li>
+  <p align="left"><b><a href="#Valley detection">Valley detection</a></b></li>
+</ul>
+
+<p align="left">While LoG with zero threshold has empirically proven to be the 
+best out of the standard edge detection algorithms, Valley detection was 
+developed for MicrobeTracker, and though it depends on a large number of 
+parameters, in some cases it generates superior results. The algorithm which 
+MicrobeTracker uses 
+is defined by the following parameter:</p>
+
+<ul>
+  <li>
+<p>
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgemode>edgemode</a></font>
+&#9472; "none" (or 0) - no edge detection, "log" (or 1) - Laplacian of Gaussian
+(LoG), "valley" (or 2) - Valley detection, "logvalley" (or 3) - both,
+"clogvalley" (or 4) - cross-detection mode without direct LoG or Valley.</p>
+  </li>
+</ul>
+
+<p align="center"><font size="5"><a name="Laplacian of Gaussian">Laplacian of 
+Gaussian</a></font></p>
+<p>
+This algorithm applies a Gaussian filter (which smoothes the image), followed by
+a Laplacian filter (resulting in a combined "mexican hat" filter). The points of
+zero crossing of the resulting image are considered to be  parts of the 'edge'.
+The algorithm (as implemented here) depends on two parameters:</p>
+<ul>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgeSigmaL>edgeSigmaL</a></font>
+    &#9472; width of the smoothing Gaussian. Must be above zero. Default: 1.</p>
+  </li>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#logthresh>logthresh</a></font>
+    &#9472; mimimum normalized (by standarg deviation) value of the Laplacian.
+    Default: 0. Typical values: -0.5 to 1.</p>
+  </li>
+</ul>
+<p align="center" clear=all><font size="5"><a name="Valley detection">Valley 
+detection</a></font></p>
+<p align="left" clear="all">This 
+algorithm applies a Gaussian filter (which smoothes the image), followed by 
+finding local minima with the second derivative above a threshold. The function 
+uses two thresholds: a strong one, always indicating a valley pixel, and a weak one, only 
+indicating a valley pixel if it is adjacent to a pixel identified using the 
+strong threshold. The parameters:</p>
+<ul>
+  <li>
+<p>
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgeSigmaV>edgeSigmaV</a></font>
+&#9472; width of the smoothing Gaussian. Must be zero or above. Default: 0.5.</p>
+  </li>
+  <li>
+<p>
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#valleythresh1>valleythresh1</a></font>
+&#9472; weak threshold. Must be above the strong threshold. Default: 0.</p>
+  </li>
+  <li>
+<p>
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#valleythresh2>valleythresh2</a></font>
+&#9472; strong threshold. Default: 1.</p>
+  </li>
+</ul>
+
+<p align="center" clear=all><font size="5"><a name="crossmode">Cross-detection mode</a></font></p>
+<p>There is also a cross-detection mode, combining the two algorithms above. The
+mode is activated in the "logvalley" or "clogvalley" modes. In the "logvalley"
+mode the edges detected by all three algorithms are combined, while the
+"clogvalley" mode only results in the cross-detected edge. This mode depends on
+one additional parameter:</p>
+<ul>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#crossthresh>crossthresh</a></font>
+    &#9472; cross-detection threshold, the mimimum product of the normalized
+    valley depth and the normalized Laplacian. Default: 0. Typcal values: 0-1.</p>
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p>&nbsp;</p>
+<p align="left"><b>See also: <a href="helpParameterTestMode.htm#Segmentation">
+Segmentation testiong tool</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="helpTools.htm">MicrobeTracker tools</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

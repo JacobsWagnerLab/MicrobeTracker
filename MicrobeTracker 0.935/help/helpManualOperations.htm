@@ -1,0 +1,140 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Manual Operations
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>The manual operations tools are designed to manually split, join, or refine
+selected cells or add new cells. The controls for these tools are organized into
+a panel on the bottom of the main window of MicrobeTracker and consist of four
+buttons: Join, Refine, Split, and Add. There tools may or may not update the
+lineage data, which depends on whether the Timelapse or Independent Frames
+regime is selected (see below).</p>
+
+<p align="left"><b><font size="4">Buttons and their actions</font></b></p>
+
+<ul>
+  <li><b>Join</b> - In order to join at least two cells must be selected. The
+  program will detect the closest poles of these cells and will try to make one
+  cell by joining the poles.</li>
+  <li><b>Split</b> - The split regime operates in two modes.
+  The first (semi-autmatic) mode is called by clicking the <b>Split</b> button
+  and requires exactly one cell to be selected. This mode will determine the
+  splitting point automatically by finding the minimum "valley" in the phase
+  image corresponding to the cell.</li>
+  <li><b>Split + Shift</b> - The second mode is called by clicking <b>Split</b>
+  while holding the keyboard <b>Shift</b> button. This mode requires the user to
+  pick the splitting point. The cell does not need to be selected in advance -
+  the clicked one will be taken. To exit this mode, click outside of the cells of
+  press <b>Escape</b>. This mode currently operates only when the mesh is
+  available.</li>
+  <li><b>Refine</b> - In order to refine cells, at least one cell must be
+  selected. The program will run cell detection routine with the current
+  parameters taking the current cell shape for the starting point.</li>
+  <li><b>Add</b> - Cell addition only works if algorithm 1 or 4 is selected;
+  in case of algorithm 1 you have to click on the contour, and in case of
+  algorithm 4 on the centerline (the width is then determined by
+  <font face="Courier">cellwidth</font> paramerer); to terminate double click or
+  press <b>Enter</b>, to cancel press <b>Escape</b>.</li>
+  <li><b>Add+Shift</b> - Hold <b>Shift</b> <u>while finishing cell addition</u>
+  to call a dialog asking for the new cell number. This number must be a
+  positive integer and must not exist on the current or any later frame.</li>
+</ul>
+
+<p>If any of the manual operations fails, no change is made; otherwise the
+program replaces the cells in memory, but <u>does not</u> save them to the disk.
+Note that the program in these modes also does not automatically integrate
+the signal, which has to be added to the meshes separately (for example, by
+running it on the selected meshes in 'Reuse meshes' mode, see
+<a href="#Detection">below</a>). To undo the last manual operation, press
+<b>Control + Z</b> on the kerboard.</p>
+
+<p align="left"><b><font size="4">Operation in the Individual Frames regime
+</font></b></p><p align="left">This regime is activated if the cells on which
+the operation is performed were originally detected in the Individual Frames
+regime, which is determined by the <font face="Courier">timelapse</font>
+attribute in the data structure corresponding to the cells being set to 0
+(false). The user can force this regime by adding
+<font face="Courier">forceindframes = 1</font> line to the parameter list. In
+this regime the frames are treated individually, so every cell is marked as
+newborn and no lineage information is kept.</p>
+
+<p align="left"><b><font size="4">Operation in the Timelapse regime</font></b>
+</p><p align="left">This regime is activated if the cells on which
+the operation is performed were originally detected in the Timelapse
+regime, which is determined by the <font face="Courier">timelapse</font>
+attribute in the data structure corresponding to the cells being set to 1
+(true), and if the <font face="Courier">forceindframes</font> parameter is
+simultaneously set to 0 (false) or is absent. In this regime the program will
+attempt to reconstruct the lineage history (i.e. their birthframe, division
+frame and parent/progeny numbers, see <a href="helpCellNumbering.htm">Cell
+Numbering</a> page) of the modified cells and their relatives.
+
+<p align="left"><b><font size="4">Comparison of the two regimes</font></b></p>
+<table style="border-collapse: collapse; border: thin solid;" border="1" width="90%" align="center">
+<tr>
+  <th rowspan="2">Button</th>
+  <th colspan="2">Regime</th>
+</tr>
+<tr>
+  <th>Independent Frames</th>
+  <th>Timelapse</th>
+</tr>
+<tr>
+  <th align="left">Add</th>
+  <td valign="top">Assigns the first available free cell number in the frame and mark
+  as newborn.</td>
+  <td valign="top">Assigns the first available free cell number in all frames and mark
+  as newborn.</td>
+</tr>
+<tr>
+  <th align="left">Add+Shift</th>
+  <td valign="top">Asks for the number of the new cell. Must not be present on this frame.</td>
+  <td valign="top">Asks for the number of the new cell or (alternatively) the
+  number of the mother cell (if the cell just divided; see also the
+  <a href="helpCellNumbering.htm">Cell Numbering</a> page). If the new cell is
+  present on any of the previous frames, it will keep the birthframe of that
+  cell, otherwise it will be marked as newborn. The mother cell must be present
+  on any of the previous frames.</td>
+</tr>
+<tr>
+  <th align="left">Split</th>
+  <td valign="top">The orientation (old-new pole) is determined but is not marked as known.</td>
+  <td valign="top">The orientation (old-new pole) is determined and marked as known. If the
+  frame is not the first one, one of the cells is marked as the daughter of the
+  other on all subsequent frames.</td>
+</tr>
+<tr>
+  <th align="left">Join</th>
+  <td valign="top">The larger numbered cell dissapears, the other one keeps all
+  its attributes.</td>
+  <td valign="top">Joining of more than two cells is not allowed. If the younger (larger numbered) cell was not present before
+  but present in the next frame, its birthframe is updated. Otherwise the
+  attributes remain unchanged.</td>
+</tr>
+<tr>
+  <th align="left">Refine</th>
+  <td valign="top" colspan="2">The lineage data remains unchanged.</td>
+</tr>
+</table>
+
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTrackerButtons.htm">
+Buttons and Controls</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

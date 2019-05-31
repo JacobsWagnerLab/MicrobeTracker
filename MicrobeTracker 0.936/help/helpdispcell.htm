@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+dispcell
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+<p>Syntax:</p>
+<p><font face="Courier">dispcell(cellList,images,frame,cell)</font></p>
+<p><font face="Courier">dispcell(cellList,images,frame,cell,radius)</font></p>
+<p><font face="Courier">dispcell(cellList,images,frame,cell,radius,border)</font></p>
+<p><font face="Courier">dispcell(cellList,images,frame,cell,[],border)</font></p>
+<p><font face="Courier">dispcell(...,fieldname)</font></p>
+<p><font face="Courier">dispcell(...,'disk')</font></p>
+<p><font face="Courier">dispcell(...,'circle')</font></p>
+
+<p>This function displays an image of the selected cell with the cell outline
+and spots in this cell.</p>
+<ul>
+  <li>
+  <p>&lt;cellList&gt; - an array that contains meshes. You can drag and drop the
+  file with the data into MATLAB workspace or open it using MATLAB's Import
+  Tool. The default name of the variable is <b>cellList</b>, but it can be
+  renamed.</li>
+  <li>
+  <p>&lt;images&gt; - a 3D array of images. It can be obtained using
+  <a href="helploadimageseries.htm"> loadimageseries</a> and
+  <a href="helploadimagestack.htm"> loadimagestack</a> commands, e.g.:
+  <font face="Courier">images=loadimageseries('c:\users\test\imagefiles',1);</font></li>
+  <li>
+  <p>&lt;frame&gt; - the frame number of the cell to display.</li>
+  <li>
+  <p>&lt;cell&gt; - the cell number of the cell to display.</li>
+  <li>
+  <p>&lt;radius&gt; - radius of the marker disk in image pixels.</li>
+  <li>
+  <p>&lt;border&gt; - width of the empty area displayed outside of the cell.</li>
+  <li>
+  <p>&lt;fieldname&gt; - name of the field containing spots, must start with
+  'spots', e.g. 'spots', 'spots1', 'spots2', etc. Default: 'spots'. Several
+  fields can be listed. Default: 'spots'. To not display spots, put a
+  non-existent field name, e.g. 'spotsx'.</li>
+  <li>
+  <p>'disk' - display spots as filled disks rather than dots. The radius in this
+  case is measured in image pixels, not screen points.</li>
+  <li>
+  <p>'circle' - display spots as circles rather than dots. The radius in this
+  case is measured in image pixels, not screen points.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

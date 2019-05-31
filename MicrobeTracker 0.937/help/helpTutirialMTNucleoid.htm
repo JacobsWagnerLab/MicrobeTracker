@@ -1,0 +1,576 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker - Quick Start</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Tutorial: Extending MicrobeTracker
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This tutorial is intended to demonstrate how to use MATLAB tools
+to extend the functionality of
+<a href="helpMicrobeTracker.htm">MicrobeTracker</a>. A typical problem in the
+analysis of microscope images is identification of large intracellular objects,
+such as protein filaments, nucleoids, injected particles, or protein aggregates.
+When big enough, these objects are very different from nearly
+diffraction-limited spots and therefore require special treatment. The desired
+propertis could be their number, size (area on an image), total intensity, or
+centroid location. This tutorial demonstrates how to use standard MATLAB
+functions perform (including some of the functions of the
+<a href="http://www.mathworks.com/products/image/">Image Processing</a> and
+<a href="http://www.mathworks.com/products/mapping/">Mapping</a> toolboxes) in
+order to perform some of the mentioned tasks and to provide a framework for the
+others.
+
+<p>The image set for this tutorial is of <i>E. coli</i> cells grown in M9 media
+expressing HU-CFP and imaged in phase contrast and fluorescence modes on an
+agarose pad, so that their nucleoids are visible (courtesy of Dr. Manuel
+Campos, Jacobs-Wagner lab). The tutorials shows how to count the number of
+nucleoids per cell, calculate their total and relative areas, as well as the
+fluorescence intensity.</p>
+
+<p>The data for the tutorials is not available by default. Please, make sure you
+download the version of the MicrobeTracker Suite "with examples" from the
+<a href="http://microbetracker.org/download/">MicrobeTracker website</a>.</p>
+
+<p>The tutorial is divided into two sections: <b>Pixel-based processing</b> and
+<b>Subpixel-resolution processing</b>. The first one provides an easier mode of
+analysis, sufficient in most cases. The second one uses some advanced Mapping
+toolbox functions and is helpful when high precision is required or the cells
+and intracellular objects are only a few pixels in size.</p>
+
+<p>The tutorial assumes that the cell meshes are already obtained, they are
+available in the <font face="Courier">meshes.mat</font> file in the
+<font face="Courier">microbetracker_nucleoid</font> subfolder. This subfolder
+also contains the phase contrast image used to generate the meshes
+(<font face="Courier">phase.tif</font>) and the fluorescence image used in this
+tutorial to calculate the signal (<font face="Courier">fluo.tif</font>). The
+tutorial assumes that the user knows how to load the meshes into the MATLAB
+workspace and how to run the included scripts. It is also recommended for the
+user to be familiar with the basics of the Image Processing toolbox, which can
+be achieved by going through the
+<a href="http://www.mathworks.com/help/toolbox/images/f0-3373.html">Getting
+Started</a> tutorials on MATLAB's website. For reference, the images with
+detected meshes are shown below (click on an image to see a zoomed version).
+
+<center><a href="example_mt_nucleoid_1.gif" target="_blank">
+<img src="example_mt_nucleoid_1.gif" width="350" border="0" alt="Phase contrast image with meshes" />
+</a></center>
+
+<center><a href="example_mt_nucleoid_2.gif" target="_blank">
+<img src="example_mt_nucleoid_2.gif" width="350" border="0" alt="Fluorescence image with meshes" />
+</a></center>
+
+
+
+<p align="left"><b><font size="4">Pixel-based processing</font></b></p>
+
+<p><b>1.</b> Load the meshes and the fluorescence image into the MATLAB
+workspace.</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;load('meshes.mat','cellList')<br/>
+&nbsp;&nbsp;&nbsp;image = loadimagestack('fluo.tif');
+</font></p>
+
+<p>Here MicrobeTracker's <a href="helploadimagestack.htm">loadimagestack</a>
+function is used, capable of loading multiple images. To load a single image,
+MATLAB's <a href="http://www.mathworks.com/help/techdoc/ref/imread.html">imread</a>
+function can be used instead.</p>
+
+<p><b>2.</b> Images in MATLAB can be stored either as arrays of unsigned
+integers or as doubles. By default, a loaded image will be in the unsigned
+integer format at the precision of the number matching that of the image file.
+Many processing functions, however, require the image in double format, which
+takes more space. When processing stacks of images, it is recommended to convert
+them to doubles only one image at a time to save memory:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;image = im2double(image);
+</font></p>
+
+<p><b>3.</b> Let's perform processing for the cell #2 in the dataset. The
+dataset contains one frames, therefore the frame number will be 1. To reduce the
+amount of text to write, get the variables for this particular cell we need: the
+"box" identifying the area of the image containing the cell, and the mesh of the
+cell (see <a href="helpMicrobeTrackerOutput.htm">Output Format</a> section
+for a description of these variables):</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;box = cellList{1}{2}.box;<br/>
+&nbsp;&nbsp;&nbsp;mesh = cellList{1}{2}.mesh;
+</font></p>
+
+<p><b>4.</b> Crop the fluorescence image around the cell using
+<a href="http://www.mathworks.com/help/toolbox/images/ref/imcrop.html">imcrop</a>
+function:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;img1 = imcrop(image,box);
+</font></p>
+
+<p>And convert the meshes to the cropped image coordinates:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;mesh(:,[1 3]) = mesh(:,[1 3])-box(1)+1;<br/>
+&nbsp;&nbsp;&nbsp;mesh(:,[2 4]) = mesh(:,[2 4])-box(2)+1;
+</font></p>
+
+<p><b>5.</b> Display the image and the mesh outline:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;imshow(img1,[]);<br/>
+&nbsp;&nbsp;&nbsp;hold on<br/>
+&nbsp;&nbsp;&nbsp;plot(mesh(:,1),mesh(:,2),'y',mesh(:,3),mesh(:,4),'y')<br/>
+&nbsp;&nbsp;&nbsp;set(gca,'position',[0 0 1 1])
+</font></p>
+
+<p>Here the second argument of
+<a href="http://www.mathworks.com/help/toolbox/images/ref/imshow.html">imshow</a>
+function ([]) means automatic scaling of the image. In the second line,
+<a href="http://www.mathworks.com/help/techdoc/ref/hold.html">hold on</a> is
+used to retain the image when the outline if drawn. The last line uses
+<a href="http://www.mathworks.com/help/techdoc/ref/set.html">set</a> command
+to change the <a href="http://www.mathworks.com/help/techdoc/ref/axes_props.html">axes</a>
+position and expand the image in the figure.</p>
+
+<center><a href="example_mt_nucleoid_3.gif" target="_blank">
+<img src="example_mt_nucleoid_3.gif" width="200" border="0" alt="Outlined cell example" />
+</a></center>
+
+<p><b>6.</b> Convert the mesh to a polygon in order to use MATLAB's commands
+operating with this format. The polygon consists of two variables - x and y
+coordinates of the points on the outline of the cell:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;x0 = [mesh(:,1);flipud(mesh(1:end-1,3))];<br/>
+&nbsp;&nbsp;&nbsp;y0 = [mesh(:,2);flipud(mesh(1:end-1,4))];
+</font></p>
+
+<p><b>7.</b> Here is one example of using the polygon. Produce a mask of the cell using
+<a href="http://www.mathworks.com/help/toolbox/images/ref/poly2mask.html">poly2mask</a>
+command - a binary image with 1's corresponding to the pixels inside the cell
+and 0's to the pixels outside:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;cellmask = poly2mask(x0,y0,box(4)+1,box(3)+1);
+</font></p>
+
+<p><b>8.</b> The next step is to identify the nucleoid. One way to distinguish
+the nucleoid (or another object) from the background is to find a threshold
+intensity such that the regions of higher intensity would correspond to the
+nucleoid, and the objects of lower intensity to the background. For this
+MATLAB's <a href="http://www.mathworks.com/help/toolbox/images/ref/graythresh.html">graythresh</a>
+function can be used. To use this function, first normalize the image to span
+the range of intensities from 0 to 1, since othervise it may fail:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;img2 = img1-min(img1(:));<br/>
+&nbsp;&nbsp;&nbsp;img2 = img2/max(img2(:));
+</font></p>
+
+<p>And then run graythresh function. Here only the pixels inside the cell are used
+to calculate the threshold, they are obtained by using the cell mask as an index
+for the image variable, i.e. <font face="Courier">img2(cellmask)</font>:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;g = graythresh(img2(cellmask));
+</font></p>
+
+<p>To get a mask corresponding to the nucleoid, get all the points with
+intensities above the threshold:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;nucleoidmask = img2>g;
+</font></p>
+
+<p>There are alternatives to graythresh function to find objects in an image.
+One popular alternative is applying a "Mexican hat" fitler to the image in
+order to enhance the boundaries (use MATLAB's
+<a href="http://www.mathworks.com/help/toolbox/images/ref/fspecial.html">fspecial</a>
+command with 'log' parameter to create the filter and
+<a href="http://www.mathworks.com/help/toolbox/images/ref/imfilter.html">imfilter</a>
+to filter the image), and then take the areas below zero (sometimes below a
+different threshold). This approach is beneficial when the object is assumed to
+be of about uniform intensity and to have sharp boundaries, corrupted by
+diffraction. In such case enhancing the boundaries is meaningful. In the case of
+a nucleoid, where DNA density may decay very gradually, using boundary-enhancing
+filters may result in rejection of weak areas neighboring brighter areas of the
+nucleoid. In such cases, simple thresholding is prefered and therefore it was
+chosen here.</p>
+
+<p><b>9.</b> Let's now visualize the nucleoid. For this use imshow command as
+before. We'll combine the cell and the nucleoid masks to make the nucleoid white
+on gray background of the cell and black background outside.</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;imshow(cellmask*0.5+nucleoidmask*0.5)
+</font></p>
+
+<p>To display the cell outline, use the "hold on" command first, and then
+visualize the outline polygon:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;hold on<br/>
+&nbsp;&nbsp;&nbsp;plot(x0,y0,'y')
+</font></p>
+
+<center><a href="example_mt_nucleoid_4.gif" target="_blank">
+<img src="example_mt_nucleoid_4.gif" width="200" border="0" alt="Cell with a detected nucleoid" />
+</a></center>
+
+<p><b>10.</b> Now let's cycle through all the cells in this example visualizing
+the nucleoids in them. For this, open in the editor the script
+<font face="Courier">get_nucleoid_pixilated_vis.m</font> provided with this
+example. I.e. type:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;edit get_nucleoid_pixilated_vis
+</font></p>
+
+<p>And then set a breakpoint in line 27 by clicking the dash after the line
+number. After that, run the script by clicking <b>Run</b> button:</p>
+
+<center><a href="example_mt_nucleoid_5.gif" target="_blank">
+<img src="example_mt_nucleoid_5.gif" width="650" border="0" alt="Running a script in debug mode" />
+</a></center>
+
+<p>The script will display a cell and stop at the breakpoint. To continue to the
+next cell, click <b>Continue</b> button or press <b>F5</b>.</p>
+
+<p><b>11.</b> Let's now calculate the number of nucleoids per cell. For this,
+use MATLAB's <a href="http://www.mathworks.com/help/toolbox/images/ref/regionprops.html">regionprops</a>
+function to identify discontinuous regions in the nucleoid mask:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;regstats = regionprops(nucleoidmask);
+</font></p>
+
+<p>Then cycle through all regions picking those with the area larger than some
+prefixed area <font face="Courier">areamin</font>. On each step, if the region
+is large enough, the counter <font face="Courier">nucleoidcount</font> is
+incremented:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;areamin = 50;<br/>
+&nbsp;&nbsp;&nbsp;nucleoidcount = 0;<br/>
+&nbsp;&nbsp;&nbsp;for i=1:length(regstats)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if regstats(i).Area>=areamin<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nucleoidcount = nucleoidcount+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;nucleoidcount
+</font></p>
+
+<p>A script that cycles through each cell, calculates the number of nucleoids,
+and then displays a histogran of the number of nucleoids per cell is provided
+with this example and is called
+<font face="Courier">get_nucleoid_count_pixilated.m</font>. Now run it:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;get_nucleoid_count_pixilated
+</font></p>
+
+<center><a href="example_mt_nucleoid_6.gif" target="_blank">
+<img src="example_mt_nucleoid_6.gif" width="450" border="0" alt="Histogram of the #nucleoids/cell" />
+</a></center>
+
+<p><b>12.</b> Let's now calculate the nucleoid areas. With a small modification
+of the above script, we now append the areas of the nucleoids we were counting
+before:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;nucleoidareaarray = [];
+</font></p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;areamin = 50;<br/>
+&nbsp;&nbsp;&nbsp;for i=1:length(regstats)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if regstats(i).Area>=areamin<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nucleoidareaarray = [nucleoidareaarray regstats(i).Area];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end<br/>
+</font></p>
+
+<p>Here is another script provided with the example that displays a histogram of
+nucleoid areas:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;get_nucleoid_area_pixilated
+</font></p>
+
+<center><a href="example_mt_nucleoid_7.gif" target="_blank">
+<img src="example_mt_nucleoid_7.gif" width="450" border="0" alt="Histogram of the nucleoid areas" />
+</a></center>
+
+<p><b>13.</b> Now, let's calculate the fraction of the cell occupied by
+nucleoids. This time we don't need the regoinprops function. We calculate the
+areas of both the cell and the nucleoid as sums of pixel values for the masks,
+as the masks have value 0 for the pixels outside and 1 for the pixels inside
+the object:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;cellarea = sum(cellmask(:));<br/>
+&nbsp;&nbsp;&nbsp;nucleoidarea = sum(nucleoidmask(:));<br/>
+</font></p>
+
+<p>To get a fraction, simply divide one by the other:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;nucleoidarea/cellarea
+</font></p>
+
+<p>Another script provided with the example displays a histogram of the relative
+areas occupied by nucleoids:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;get_nucleoid_relative_area_pixilated
+</font></p>
+
+<center><a href="example_mt_nucleoid_8.gif" target="_blank">
+<img src="example_mt_nucleoid_8.gif" width="450" border="0" alt="Histogram of relative nucleoid areas" />
+</a></center>
+
+<p><b>14.</b> Finally, let's calculate the average intensity of the signal
+inside cells and inside nucleoids for every cell, and display as two histograms.
+For this, an extra step of removing the background from the fluorescence image
+is required. Run MicrobeTracker, load phase contrast and fluorescence images,
+load parameters, select <b>All</b> radio button on the
+<a href="helpMicrobeTrackerButtons.htm#background">Background subtraction</a>
+panel and click <b>Subtract bgrnd</b>, then click <b>Save vis. signal</b> and
+save the buckground-subtreacted fluorescence image to a new file (here
+<font face="Courier">fluo_subtracted.tif</font> was used). See the image below
+for a sequence of operations in MicrobeTracker:</p>
+
+<center><a href="example_mt_nucleoid_9.gif" target="_blank">
+<img src="example_mt_nucleoid_9.gif" width="500" border="0" alt="Background subtraction" />
+</a></center>
+
+<p>To calculate the total signal in the nucleoid sum the image pixels in the
+mask:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;sum(img1(nucleoidmask))
+</font></p>
+
+<p>And divide them by the total area, i.e. for the nucleoids and for the cells:
+</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;nucleoidint = sum(img1(nucleoidmask))/sum(nucleoidmask(:));<br/>
+&nbsp;&nbsp;&nbsp;cellint = sum(img1(cellmask))/sum(cellmask(:));
+</font></p>
+
+<p>The rest of the procedure is similar to the procedures described above. The
+whole script calculating the intensities (total signal divided by the area) in
+nucleoids and in the cells (including nucleoids) is called
+<font face="Courier">get_nucleoid_intensities_pixilated.m</font>. Now execute
+it:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;get_nucleoid_intensities_pixilated
+</font></p>
+
+<center><a href="example_mt_nucleoid_10.gif" target="_blank">
+<img src="example_mt_nucleoid_10.gif" width="450" border="0" alt="Histogram of nucleoid/cell intensities" />
+</a></center>
+
+
+
+<p align="left"><b><font size="4">Subpixel-resolution processing</font></b></p>
+
+<p><b>1.</b> The beginning of subpixel-resolution processing is the same up to
+the point of determining the threshold. I.e. for cell #1 on frame #1:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;load('meshes.mat','cellList')<br/>
+&nbsp;&nbsp;&nbsp;image = im2double(loadimagestack('fluo.tif'));<br/>
+&nbsp;&nbsp;&nbsp;box = cellList{1}{1}.box;<br/>
+&nbsp;&nbsp;&nbsp;mesh = cellList{1}{1}.mesh;<br/>
+&nbsp;&nbsp;&nbsp;x0 = [mesh(:,1);flipud(mesh(1:end-1,3))]-box(1)+1;<br/>
+&nbsp;&nbsp;&nbsp;y0 = [mesh(:,2);flipud(mesh(1:end-1,4))]-box(2)+1;<br/>
+&nbsp;&nbsp;&nbsp;img1 = imcrop(image,box);<br/>
+&nbsp;&nbsp;&nbsp;mask = poly2mask(x0,y0,box(4)+1,box(3)+1);<br/>
+&nbsp;&nbsp;&nbsp;img2 = img1-min(img1(:));<br/>
+&nbsp;&nbsp;&nbsp;img2 = img2/max(img2(:));<br/>
+&nbsp;&nbsp;&nbsp;g = graythresh(img2(mask));
+</font></p>
+
+<p><b>2.</b> Then we find the outline of the nucleois or nucleoids in the cell.
+First, set the value of the pixels outside of the cell to zero so that no
+objects are detected outside. However, a fraction of a pixel may be inside of
+the cell even though its center is outside. Therefore, we first expand the cell
+mask by one pixel outwards:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;expandedmask = imdilate(mask,strel('square',3));
+</font></p>
+
+<p>And then set the values of the outside pixels to zero (the ~ sign means
+negation):</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;img2(~expandedmask)=0;
+</font></p>
+
+<p>Now we can determine the contours at subpixel resolution by using MATLAB's
+<a href="http://www.mathworks.com/help/techdoc/ref/contourf.html">contourf</a>
+function. This function uses linear interpolation between pixels to get the
+outline as precise as the information in the image allows, not limited to the
+pixel size:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;c = contourf(img2,[g g]);
+</font></p>
+
+<p>The format of the output will be explained below.</p>
+
+<p><b>2.</b> Now lets parse the contour structure obtained with the contourf
+command. The structure consists of the lines of x and y coordinates of
+individual contours, separated by the values of the polygons (equal to g here)
+and the number of vertices in each polygon. See
+<a href="http://www.mathworks.com/help/techdoc/ref/contourgroupproperties.html#ContourMatrix">contour
+matrix</a> description for details. To parse the structure, we can go through,
+extracting the individual polygons (with coordinates of the vertices x and y) on
+the way:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;ind = 1;<br/>
+&nbsp;&nbsp;&nbsp;while ind&#60;size(c,2)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctr = c(:,ind+1:ind+c(2,ind))';<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ind = ind+c(2,ind)+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x1 = ctr(:,1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y1 = ctr(:,2);<br/>
+&nbsp;&nbsp;&nbsp;end
+</font></p>
+
+<p><b>3.</b> In order to take only the portions of the polygons inclosed in the
+cell outline, we can use MATLAB's
+<a href="http://www.mathworks.com/help/techdoc/ref/polybool.html">polybool</a>
+function:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;[x2,y2] = polybool('intersection',x0,y0,x1,y1);
+</font></p>
+
+<p>Note that polybool function assumes that the contours have clockwise
+orientation, and though it works, it displays a warning otherwise. To convert
+counterclockwise-oriented contours to clockwise orientation, use MATLAB's
+<a href="http://www.mathworks.com/help/toolbox/map/ref/poly2cw.html">poly2cw</a>
+function (this step is not shown here, but included in the final script).</p>
+
+<p>Let's display the (x1,y1) and (x2,y2) polygons to see what we achieved so
+far. Copy and paste the code below to MATLAB's command window (assuming the
+contour c-structure has been already generated). The cell outline will be
+plotted in yellow color, the original polygons in green, and their portions
+inside the cell in red:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;imshow(img1,[])<br/>
+&nbsp;&nbsp;&nbsp;set(gca,'pos',[0 0 1 1])<br/>
+&nbsp;&nbsp;&nbsp;hold on<br/>
+&nbsp;&nbsp;&nbsp;plot(x0,y0,'y')<br/>
+&nbsp;&nbsp;&nbsp;ind = 1;<br/>
+&nbsp;&nbsp;&nbsp;while ind&#60;size(c,2)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctr = c(:,ind+1:ind+c(2,ind))';<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ind = ind+c(2,ind)+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x1 = ctr(:,1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y1 = ctr(:,2);<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[x2,y2] = polybool('intersection',x0,y0,x1,y1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plot(x1,y1,'g')<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plot(x2,y2,'r')<br/>
+&nbsp;&nbsp;&nbsp;end
+</font></p>
+
+<center><a href="example_mt_nucleoid_11.gif" target="_blank">
+<img src="example_mt_nucleoid_11.gif" width="250" border="0" alt="Outlines of nucleoids" />
+</a></center>
+
+<p><b>4.</b> Now separate the outlines of the nucleoids from the outlines of the
+included empty areas. This can be done by determining the orientation of the
+polygons included in the contour c-structure: the outer polygons will have
+clockwise orientation, while the internal ones - counterclockwise. To determine
+the orientation or a polygon, MATLAB's
+<a href="http://www.mathworks.com/help/toolbox/map/ref/ispolycw.html">ispolycw</a>
+function can be used (or a faster MicrobeTracker's isContourClockwise function).
+</p>
+
+<p>Run included <font face="Courier">get_nucleoid_subpixel_vis.m</font> script
+in debug mode to visualize the nucleoids in every cell one-by-one. For this,
+open the script in the editor, put a breakpoint in line 38, and run the script.
+The nucleoids will be shown as cyan patches, the "holes" in them will be colored
+yellow.</p>
+
+<center><a href="example_mt_nucleoid_12.gif" target="_blank">
+<img src="example_mt_nucleoid_12.gif" width="650" border="0" alt="Running a script in debug mode" />
+</a></center>
+
+<center><a href="example_mt_nucleoid_13.gif" target="_blank">
+<img src="example_mt_nucleoid_13.gif" width="250" border="0" alt="Filled nucleoids" />
+</a></center>
+
+<p><b>5.</b> Finally, let's calculate the relative areas occupied by nucleoids.
+For this, go through the nucleoid regions and add the areas of those with
+clockwise orientation (external), substracting those with counterclockwise
+orientation (internal):</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;cellarea = polyarea(x0,y0);<br/>
+&nbsp;&nbsp;&nbsp;nucleoidarea = 0;<br/>
+&nbsp;&nbsp;&nbsp;ind = 1;<br/>
+&nbsp;&nbsp;&nbsp;while ind&#60;size(c,2)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctr = c(:,ind+1:ind+c(2,ind))';<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ind = ind+c(2,ind)+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x1 = ctr(:,1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y1 = ctr(:,2);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[x2,y2] = polybool('intersection',x0,y0,x1,y1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ispolycw(x1,y1)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;nucleoidarea = nucleoidarea+polyarea(x2,y2);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;nucleoidarea = nucleoidarea-polyarea(x2,y2);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end
+</font></p>
+
+<p>The relative area will be a ratio of <font face="Courier">nucleoidarea</font>
+to <font face="Courier">cellarea</font>:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;nucleoidarea/cellarea
+</font></p>
+
+<p>The whole script calculating this ratio for every cell and displaying it in
+for of a hystogram is called
+<font face="Courier">get_nucleoid_relative_area_subpixel.m</font>. Now execute
+it:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;get_nucleoid_relative_area_subpixel
+</font></p>
+
+<center><a href="example_mt_nucleoid_14.gif" target="_blank">
+<img src="example_mt_nucleoid_14.gif" width="450" border="0" alt="Histogram of relative nucleoid areas" />
+</a></center>
+
+<p>It is not difficult to get individual nucleoid areas. However, the problem of
+precisely integrating the signal inside arbitrary polygons is significantly more
+challenging. Those who are interested can refer to
+<font face="Courier">getOneSignalC</font> function in MicrobeTracker's code
+itself.</p>
+
+<!-- Start replacement block 3 -->
+<br>
+<b>Top pages: <a href="helpQuickStart.htm">Quick Start</a>,
+<a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

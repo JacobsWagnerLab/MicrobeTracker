@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Output Format
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="center">
+<img border="0" src="cellList%20scheme.gif" width="684"></p>
+<p>
+<img border="0" src="Mesh%20scheme.gif" align="right" width="350" height="265">
+MicrobeTracker saves data in MATLAB format, creating standard .mat files, which 
+can be opened with MATLAB without running MicrobeTracker. Among other variables,
+it saves the variable <b>cellList</b>, the only one that is intended for the
+user. To load a saved file in MATLAB, just drag and drop it into the open window
+or use the <i>load</i> command.</p>
+<p>The hierarchical organization of the variable is shown in the image above. It 
+is a MATLAB <i>cell array</i>, with each <i>cell</i> of the arragy corresponding
+to one image frame. Each <i>cell</i> of this cell (subarray) is in turn a cell
+array corresponding to a real (that is, biological!) cell. Each of those is a
+<i>structure</i> with several fields describing different properties of the 
+cell. For example, to access the field "algorithm" for the cell 4 on frame 5 
+type: "cellList{5}{4}.algorithm". The fields of this structure are:</p>
+<p>
+</p>
+<ul>
+  <li><b>algorithm</b> - the algorithm used to obtain meshes, see Parameters 
+  section.</li>
+  <li><b>birthframe</b> - the frame on which the cell first appeared in a 
+  timelapse. It is equal to the frame number for independent frames.</li>
+  <li><b>model</b> - the data set describing the shape in MicrobeTracker units, it 
+  is only used by MicrobeTracker to continue detection in timelapses.</li>
+  <li><b>mesh</b> - the data set describing the shape in geometrical units. This 
+  is a Nx4 matrix (N rows and 4 columns) with the structure shown on the image to 
+  the right. The left two rows of the matrix correspond to the left side of the 
+  cell, for the x and y coordinates respectively. The right two columns 
+  correspond to the right side of the cell. The first row corresponds to the 
+  first pair of points (a cell pole), the second - to the second pair of points 
+  etc. If the cell is aligned (i.e. its polarity is set either manually or 
+  automatically during divisions), then the first row corresponds to the &quot;old 
+  pole&quot;, otherwise the vertical orientation of the matrix is random.</li>
+  <li><b>polarity</b> - this property indicates whether the polarity is set 
+  (polarity=1) or not set (polarity=0).</li>
+  <li><b>ancestors/descendents</b> - the list of ancestors or descendents in 
+  genealogical order. If a cell divides, one of the two (&quot;mother&quot;) keeps the 
+  number, and the other (&quot;daughter&quot;) gets a new one. The daughter keeps the 
+  number of the mother, as well as the grandmother, great-grandmother etc. in 
+  the field <b>ancestors</b>. The mother in turn remember the names of each 
+  daughter in the field <b>descendents</b>. For a more detailed description of
+  cell numbering see <a href="helpCellNumbering.htm">Cell Numbering</a> page.
+  <img border="0" src="Steplength-area-volume.gif" align="right" width="281" height="237"></li>
+  <li><b>divisions</b> - the frame numbers of each division this cell came 
+  through as the mother. The daughter remembers only the frame when it split of 
+  as <b>birthframe</b>.</li>
+  <li><b>timelapse</b> - indicates whether the cell is a part of a time-lapse
+  series.</li>
+  <li><b>box</b> - the box coordinates (1x4 array with the format: top x, top y, 
+  width, height), that includes the mesh inside. It should be used if cropping 
+  the fragment of the image that contains this particular cell.</li>
+  <li><b>length/area/volume</b> - the length, area, and volume of the cell. The 
+  length is the length of the centerline. The area is the area inside the mesh 
+  outline. The volume is estimated by assuming the height of each segment is the 
+  same as its width and calculated by summing the volume of the cut cones 
+  corresponding to each segment.</li>
+  <li><b>steplength/steparea/stepvolume</b> - the length, area, and volume of 
+  each segment of the mesh inside the cell. the order is from the old pole to 
+  the new one when the polarity is set, or randomly beginning from one side, if not.</li>
+  <li><b>lengthvector</b> - the coordinates along the centerline of the centers 
+  of each segment. The spacing can be different from the default of 1 pixel and 
+  the polar segments can be different from the set spacing, thus this variable 
+  is more accurate than the number of the row to represent the coordinate.</li>
+  <li><b>signal0/signal1/signal2</b> - the calculated signal along the cell. 
+  Usually <b>signal0</b> is reserved for the phase contrast, <b>signal1</b> for 
+  the  images loaded as signal 1 etc.; those these names can be changed (see
+  <b>Detection and analysis</b> section).</li>
+  <li><b>spots</b> - unlike the rest of the he fields, this one is added by spot
+  dection tools, sych as a <a href="helpSpotFinderM.htm">SpotFinderM</a>,
+  <a href="helpSpotFinder.htm">SpotFinderZ</a>, or
+  <a href="helppeakfinder.htm">peakfinder</a>. This field is a separate
+  structure that contains information about the location and intensity of
+  spots detected in a cell. For a detailed description, see the
+  <a href="helpSpotFinder.htm#Output_format">SpotFinder help page</a>.
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

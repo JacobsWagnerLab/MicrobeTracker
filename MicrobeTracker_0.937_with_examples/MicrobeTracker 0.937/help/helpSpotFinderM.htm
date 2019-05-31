@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+SpotFinderM
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<img border="0" src="SpotFinderM.gif" align="right" width="288" height="247">
+<p class="MsoNormal">A GUI-based program which manually detects spots and places 
+them into previously detected meshes. 
+Currently the program runs from MATLAB only.&nbsp; </p>
+<p class="MsoNormal">To use:</p>
+<ul>
+  <li>
+  <p class="MsoNormal">Load (fluorescence) signal images selecting the folder 
+  with a TIFF files sequence. </li>
+  <li>
+  <p class="MsoNormal">Load meshes selecting the file with meshes, previously 
+  detected with <b>MicrobeTracker</b>. The data may already contain spots, but this 
+  is not necessary.</li>
+  <li>
+  <p class="MsoNormal">When the files are loaded, the program will not display 
+  the images automatically, you have to click on any navigation button described 
+  below. The frame and cell number will be displayed to the image window title.</li>
+  <li>
+  <p class="MsoNormal">Buttons <b>Previous cell</b> / <b>Next cell</b> will 
+  cycle through all cells and frames.</li>
+  <li>
+  <p class="MsoNormal">Buttons <b>Frame-1</b> / <b>Frame+1</b> cycle through 
+  each frame for the same cell.</li>
+  <li>
+  <p class="MsoNormal">Buttons <b>Cell-1</b> / <b>Cell+1</b> cycle through each 
+  cell on the same frame.</li>
+  <li>
+  <p class="MsoNormal">Only all spots together can be deleted for a particular 
+  cell with <b>Clear spots</b> button.</li>
+  <li>
+  <p class="MsoNormal">After you are done, save the data with the <b>Save meshes</b> 
+  button.</li>
+  <li>
+  <p class="MsoNormal">By default the spots data is saved into <b>spots</b> 
+  substructure in the <b>cellList{frame}{cell}</b> structure corresponding to
+  each cell. To change the name of the substructure, change it in the
+  <b>Field</b> box.</li>
+  <li>
+  <p class="MsoNormal">All manually detected spots will have zero background,
+  height, width, and magnitude (i.e. the <b>b</b>, <b>w</b>, <b>h</b>, and
+  <b>magnitude</b> field in the <b>spots</b> substructure will only contain
+  zeros).</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

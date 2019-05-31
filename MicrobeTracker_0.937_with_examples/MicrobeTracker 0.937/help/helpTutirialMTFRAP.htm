@@ -1,0 +1,238 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker - Quick Start</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Tutorial: Accessing internal variables
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This tutorial is intended to demonstrate additional
+functionality of <a href="helpMicrobeTracker.htm">MicrobeTracker</a> by acessing
+internal variables and performing scipting. The tutorial is based on the
+analysis of the Fluorescence Recovery After Photobleaching (FRAP) data of free
+GFP in filamentous (FtsZ-depleted) <i>Caulobacter crescentus</i> cells. For a
+description of the cell detection procedure and other steps of MicrobeTracker
+operation see <a href="helpMicrobeTrackerProtocols.htm">MicrobeTracker Protocols</a>
+section, for the full list of tutorials see <a href="helpQuickStart.htm">Quick
+Start</a> section of the help. This tutorial assumes that the
+<a href="helpQuickStart.htm#Installation">installation procedure</a> has been
+already performed as described.</p>
+
+<p>The data for the tutorials is not available by default. Please, make sure you
+download the version of MicrobeTracker "with examples" from the
+<a href="http://microbetracker.org/download/">MicrobeTracker website</a>.</p>
+
+<p>The images are of <i>C. crescentus</i> cells expressing free GFP protein from
+the Pxyl promoter. The images were taken by Paula Montero Llopis (Jacobs-Wagner
+lab) in the <i>stream acquisition</i> mode.</p>
+
+<p>In this experiment, a phase contrast image was taken first followed by a
+fluorescence image taken with the settings optimized for GFP. Then one side of
+the cell was photobleached with a laser and immediately after that a series of
+fluorescence images was taken at a relatively high frame rate (~6 frames/s). At
+this frame rate switching the filters to take both phase contrast and
+fluorescence images is not possible, therefore only one phase contrast image was
+taken. Fortunately, the length of the experiment was also short so that the
+growth of the cell could be neglected and therefore the phase contrast image is
+representative of the cell shape in all frames. However, some small (but
+substantial for the analysis) drift may happen and has to be compensated. The
+fluorescence images taken before and after photobleaching are merged to a single
+multipage TIFF file. This tutorial demonstrates how this series images can be
+used to constract a kymograph, which can be then further analyzed to obtain the
+diffusion coefficient of GFP in this cell.</p>
+
+
+<p align="left"><b><font size="4">Starting tutorial / MicrobeTracker</font></b></p>
+
+<p><b>1.</b> Start MATLAB. Set the working path in MATLAB to the folder of the
+example: <font face="Courier">...\MicrobeTracker...\examples\microbetracker_frap</font>
+(see the image below, click on the image for its full resolution version).</p>
+
+<center><a href="example_mt_frap_1.gif" target="_blank">
+<img src="example_mt_frap_1.gif" width="500" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>2.</b> Type <font face="Courier">microbeTracker</font> in MATLAB's command
+window to start MicrobeTracker. A new MicrobeTracker window will open.</p>
+
+
+<p align="left"><b><font size="4">Manual mode</font></b></p>
+
+<p>In this section the steps for processing the data will be performed in manual
+mode. In the following section the same procedure will be repeated using
+internal scripting of MicrobeTracker.</p>
+
+<p><b>1.</b> Select the <b>stack</b> checkbox in order to load images from
+single (single or multipage) TIFF files rather than loading all TIFF files in a
+floder.<p/>
+
+<p><b>2.</b> Click <b>Load phase</b> and select the <font face="Courier">phase.tif</font>
+file in the example folder to load the phase contrast image corresponding to the
+frame before.<p/>
+
+<p><b>3.</b> Click <b>Load signal 1</b> and select the <font face="Courier">fluo
+stack.tif</font> file in the example folder to load the stack of fluorescence
+images.<p/>
+
+<p><b>4.</b> Click <b>Load parameters</b> and select the
+<font face="Courier">alg4.set</font> file in the MicrobeTracker folder to load
+the set of parameters required for processing the images.<p/>
+
+<center><a href="example_mt_frap_2.gif" target="_blank">
+<img src="example_mt_frap_2.gif" width="350" border="0" alt="Loading images and parameters" />
+</a></center>
+
+<p><b>5.</b> Click <b>This frame</b> button on the <b>Detection & analysis</b>
+panel to perform cell detection. Here the <b>Save on each frame</b> checkbox was
+unselected before procesing to not generate the temporary file and the
+<b>Yellow</b> color was selected for the outline for better visibility.<p/>
+
+<p><b>6.</b> Select <b>All</b> radiobutton on the background subtraction panel
+and click <b>Subtract bgrnd</b> to subtract background. Notice that a single
+phase contrast image is used for every fluorescence image. Either one phase
+contrast image can be used or one per each fluorescence image.<p/>
+
+<center><a href="example_mt_frap_3.gif" target="_blank">
+<img src="example_mt_frap_3.gif" width="350" border="0" alt="Cell detection & background subtraction" />
+</a></center>
+
+<p><b>7.</b> Make the necessary internal variables accessible from outside of
+MicrobeTracker. Type in MATLAB's Command Window:<p/>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;global cellList rawS1Data
+</font></p>
+
+<p><b>8.</b> At this stage, the data variable <font face="Courier">cellList</font>
+has the cell outline in the first frame only. Replicate the cellList to extend
+the outline on the rest of the frames corresponding to the fluorescence images.
+Type in MATLAB's Command Window:<p/>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;cellList = repmat(cellList(1),size(rawS1Data,3));
+</font></p>
+
+<p><b>9.</b> Align the cell outlines to the images. On this step, the outlines
+will be moved at subpixel resolution to match the drift in the fluorescence
+images. Type in MATLAB's Command Window:<p/>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;[~,cellList]=subpixelalign(rawS1Data,cellList);
+</font></p>
+
+<p><b>10.</b> Add the signal to the cell data. In MicrobeTracker's window select
+<b>Reuse meshes</b> radio button and click <b>All frames</b> button. Here
+fluorescence images were selected by selectiing <b>Signal 1</b>.<p/>
+
+<center><a href="example_mt_frap_4.gif" target="_blank">
+<img src="example_mt_frap_4.gif" width="350" border="0" alt="Adding signal" />
+</a></center>
+
+<p><b>11.</b> Save the data by clicking <b>Save analysis</b> button and
+choosing a file name you like.<p/>
+
+<p>The processing will be continued in the <b>Visualizing results</b> section
+below.<p/>
+
+
+<p align="left"><b><font size="4">Scripting mode</font></b></p>
+
+<p>In this section the steps for processing the data will be performed in the
+scripting mode. This method is useful when the same analysis has to be performed
+for many cells. Automatic procesing will save user's time and will guarantee
+consistent results, free from mistakes of omiting one of the processing steps.
+</p>
+
+<p>If you are continuing after going through the previous section (<b>Manual
+mode</b>), you can either close the MicrobeTracker window and start it again, or
+simply continue in this window. The script will work in either case.</p>
+
+<p><b>1.</b> Open the <a href="helpTextBatchMode.htm">Text-based Batch
+Mode</a> by clicking <b>Batch processing</b> button in MicrobeTracker and then
+by clicking <b>Text mode</b> button in the
+<a href="helpMicrobeTrackerButtons.htm#batch">Batch Processing</a> window.<p/>
+
+<center><a href="example_mt_frap_5.gif" target="_blank">
+<img src="example_mt_frap_5.gif" width="350" border="0" alt="Batch Mode" />
+</a></center>
+
+<p><b>2.</b> Type the following script in the Batch Processing window (or copy
+and paste it there).<p/>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;loadimagestack(1,'phase.tif');<br/>
+&nbsp;&nbsp;&nbsp;loadimagestack(3,'fluo stack.tif');<br/>
+&nbsp;&nbsp;&nbsp;subtractbgr(3,[],0);<br/>
+&nbsp;&nbsp;&nbsp;process(1,3,[],[0 0 0 0],'','','',0,'','');<br/>
+&nbsp;&nbsp;&nbsp;cellList = repmat(cellList(1),1,size(rawS1Data,3));<br/>
+&nbsp;&nbsp;&nbsp;[~,cellList]=subpixelalign(rawS1Data,cellList);<br/>
+&nbsp;&nbsp;&nbsp;process('',4,[],[0 0 1 0],'','','',0,'','');<br/>
+&nbsp;&nbsp;&nbsp;savemesh('temp.mat','',false,'');
+</font></p>
+
+<p><b>3.</b> Click <b>Run</b> button to perform the processing. The data will be
+saved to a file named <font face="Courier">temp.mat</font>, indicated in the
+last line of the script.<p/>
+
+<center><a href="example_mt_frap_6.gif" target="_blank">
+<img src="example_mt_frap_6.gif" width="350" border="0" alt="Text Batch Mode" />
+</a></center>
+
+<p>If you wish to process multiple files, you can use any MATLAB's commands to
+create new variables or to loop through a sequence of files to process. For
+example, assume you have files <font face="Courier">phase 1.tif, phase 2.tif</font>,...
+as well as <font face="Courier">fluo stack 1.tiff, fluo stack 2.tif</font>, etc.
+with the total of 20 files of each type, than the script will look like this:
+</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;for i=1:20<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loadimagestack(1,['phase' num2str(i) '.tif']);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loadimagestack(3,['fluo stack' num2str(i) '.tif']);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subtractbgr(3,[],0);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process(1,3,[],[0 0 0 0],'','','',0,'','');<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellList = repmat(cellList(1),1,size(rawS1Data,3));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[~,cellList]=subpixelalign(rawS1Data,cellList);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process('',4,[],[0 0 1 0],'','','',0,'','');<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;savemesh(['temp' num2str(i) '.mat'],'',false,'');<br/>
+&nbsp;&nbsp;&nbsp;end
+</font></p>
+
+<p align="left"><b><font size="4">Visualizing results</font></b></p>
+
+<p>Close MicrobeTracker and load the saved data by dragging-and-dropping the
+saved file (<font face="Courier">temp.mat</font> if created in the <b>Scripting
+mode</b>). Then use <a href="helpkymograph.htm">kymograph</a> command in
+MATLAB's Command Window:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;kymograph(cellList,1);
+</font></p>
+
+<center><a href="example_mt_frap_7.gif" target="_blank">
+<img src="example_mt_frap_7.gif" width="350" border="0" alt="Basic kymograph" />
+</a></center>
+
+<p>In order to get the kymograph matrix for further analysis (called
+<font face="Courier">kgraph</font> below), type:</p>
+
+<p><font face="Courier" color=#0000AA>
+&nbsp;&nbsp;&nbsp;kgraph = kymograph(cellList,1);
+</font></p>
+
+<!-- Start replacement block 3 -->
+<br>
+<b>Top pages: <a href="helpQuickStart.htm">Quick Start</a>,
+<a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

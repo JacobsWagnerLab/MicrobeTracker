@@ -1,0 +1,77 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+inthist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">inthist(cellList)</font></p>
+<p><font face="Courier">inthist(cellList1,cellList2,...)</font></p>
+<p><font face="Courier">inthist(cellList1,cellList2,signal1,signal2,...)</font></p>
+<p><font face="Courier">inthist(cellList,xarray) </font></p>
+<p><font face="Courier">inthist(cellList1,cellList2,xarray)</font></p>
+<p><font face="Courier">inthist(cellList1,img2int)</font></p>
+<p><font face="Courier">inthist(cellList1,img2int1,cellList2,img2int2)</font></p>
+<p><font face="Courier">inthist(cellList1,cellList2,'overlap')</font></p>
+<p><font face="Courier">intlist = inthist(cellList)</font></p>
+<p><font face="Courier">inthist(...'nooutput')</font></p>
+<p><font face="Courier">inthist(...'nodisp')</font></p>
+<p><font face="Courier">[intlist1,intlist2] = inthist(cellList1,cellList2);</font></p>
+
+<p>This function plots a histogram of the <i>total</i> intensity inside every
+cell in a population. Note, the background has to be subtracted before detecting
+the signal in <b>MicrobeTracker</b>.</p>
+<ul>
+  <li>
+  <p>&lt;cellList&gt; is an array that contains the meshes. You can 
+  drag and drop the file with the data into MATLAB workspace or open it using 
+  MATLAB Import Tool. The default name of the variable is <b>cellList</b>, but 
+  it can be renamed.</li>
+  <li>
+  <p>&lt;cellList1&gt;, &lt;cellList2&gt; - you can load two arrays, they will
+  be plotted together for comparison.</li>
+  <li>
+  <p>&lt;signal1&gt;, &lt;signal2&gt; - the signal field which will be 
+  processed. Must be in single quotes and must start from the word 'signal'. The 
+  default is 'signal1'.</li>
+  <li>
+  <p>&lt;xarray&gt; - array of x values for the histogram, which serve the
+  the centers of bins of the histogram (the boundaries will be in between, for
+  example [1 2 3 4 5] to display all the cells with the intensity less than 1.5
+  units in the first bin, between 1.5 and 2.5 units in the second, etc.).</li>
+  <li>
+  <p>&lt;img2int&gt;, &lt;img2int1&gt;, &lt;img2int2&gt; - conversion factors
+  from image units. Use only if normalization is known.</li>
+  <li>
+  <p>'overlap' - indicates this if you wish the histograms to overlap, otherwise
+  they will be displayed separately.</li>
+  <li>
+  <p>&lt;intlist&gt;, &lt;intlist1&gt;, &lt;intlist2&gt; - arrays containing the
+  length of every cell to save and plot separately.</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks standard text output (type of data processed, mean,
+  and standard deviation; only a figure is displayed).</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks figure output (only text output is produced).</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

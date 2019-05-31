@@ -1,0 +1,199 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Parameter testing mode
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<ul>
+  <li>
+
+<p align="left"><a href="#Segmentation"><b>Segmentation</b></a></p>
+  </li>
+  <li>
+  <p align="left"><b><a href="#Alignment">Alignment</a></b></li>
+</ul>
+
+<p align="center">
+<img border="0" src="Parameter%20test%20mode%20panel.gif" width="218" height="50"></p>
+<p align="left">The panel shown above is located in the lover right corner of 
+MicrobeTracker window. The mode is designed to display normally hidden 
+intermediate images for the purposes of choosing the optimal parameters for a 
+particular image. There are two parameter testing regimes: <b>Segmentation</b> and 
+<b>Alignment</b>. Segmentation mode will preview the segmented image before the 
+alignment started with the current parameter set (the only mode is algorithm 1 
+is selected), while Alignment mode will display the process of the active 
+contour fitting to each cell.&nbsp; </p>
+
+<p align="center"><font size="6"><a name="Segmentation">Segmentation</a></font></p>
+<p class="MsoNormal">
+<img border="0" src="Segmentation%20test%20illustration.gif" align="right" width="459" height="268">This 
+mode previews the segmented image for the current frame before the contour 
+alignment starts and opens a separate MATLAB figure with the result. If 
+<b>Selected area</b> is chosen, it only processes this area (see the image to the 
+right). If no area is selected, the whole image gets processed.</p>
+
+<p>This regime consists of three steps, each of the affected only by a small number
+of parameters.</p>
+
+<p><b>1.</b> Thresholding:</p>
+<ul>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#thresFactorM>thresFactorM</a></font>
+    (correction to the automatically detected background)</p>
+  </li>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#threshminlevel>threshminlevel</a></font>
+    (fraction of pixels discarder in automatic background detection)</p>
+  </li>
+</ul>
+
+<p><b>2.</b> <a href="helpValleyDetection.htm">Edge/valley detection</a>:</p>
+<ul>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgemode>edgemode</a></font>
+&#9472; "none" (or 0) - no edge detection, "log" (or 1) - Laplacian of Gaussian (LoG),
+"valley" (or 2) - Valley detection, "logvalley" (or 3) - both;</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgeSigmaL>edgeSigmaL</a></font>
+(parameter for LoG algorithm)</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#edgeSigmaV>edgeSigmaV</a></font>
+(parameter for Valley detection)</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#valleythresh1>valleythresh1</a></font>
+(parameter for Valley detection)</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#valleythresh2>valleythresh2</a></font>
+(parameter for Valley detection)</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#thresFactorM>thresFactorM</a></font>
+(thresholding parameter)</p>
+  </li>
+  <li>
+<p class="MsoNormal">
+<font face="Courier">edgedetection, edgeSigma, logmode</font> &#9472; obsolete parameters.</p>
+  </li>
+</ul>
+
+<p><b>3.</b> Splitting regions:</p>
+<ul>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#splitregions>splitregions</a></font>
+    (parameter that determines whether a large region needs to be split)</p>
+  </li>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#areaMin>areaMin</a></font>
+    (smallerst area of a region in sq. pixels, all smaller regions are discarder)</p>
+  </li>
+  <li>
+    <p><font face="Courier"><a href=helpMicrobeTrackerParameters.htm#areaMax>areaMax</a></font>
+    (largest area of the region in sq. pixels, all larger regions are split if
+    <font face="Courier">splitregions</font> is selected or discarder otherwise)</p>
+  </li>
+</ul>
+    
+<p>In <a href="helpAlgorithms.htm#algorithm1">algorithm 1</a>, every segment of
+the correct size range is outlined directly. In the rest of the algorithms, the
+segmentation is followed by contour creation and alignment.</p>
+
+<p align="center" clear=all><font size="6"><a name="Alignment">Alignment</a></font></p>
+
+<p align="center"></p>
+
+<p class="MsoNormal">
+<img border="0" src="Alignment_test_mode_window.gif" align="right" width="440" height="184">The <b>Alignment</b> button 
+on the <b>Parameter test mode</b> panel lets the user to see the process of alignment dynamically. 
+After activating the mode, click any processing button (such as <b>All frames</b>, 
+<b>This 
+frame</b>, <b>Range</b>, buttons for manual operations) to see the how alignment happens.&nbsp; 
+Note, MicrobeTracker still saves the data in memory and to the disk after each 
+frame (if selected), so be careful to not erase your data!</p>
+
+<p class="MsoNormal">This regime when activated is equivalent to
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#fitDisplay>fitDisplay</a></font> and
+<font face="Courier"><a href=helpMicrobeTrackerParameters.htm#fitDisplay1>fitDisplay1</a></font>
+parameters present and set to 1. While <font face="Courier">fitDisplay</font>
+allows the user to see the alignment process to the image,
+<font face="Courier">fitDisplay1</font> allows for seeing alignment to the
+roughly segmented region in algorithms 2 and 3 only (it will have no effect in 
+algorithm 4). The alignment procedure is different depending on what
+<a href="helpAlgorithms.htm">cell outlining algorithm</a> is used. For example,
+since there is no alignment in algorithm 1, these parameters and the Alignment
+button will have no effect.</p>
+
+<p class="MsoNormal">Buttons of the alignment tool:</p>
+
+<ul>
+  <li>
+
+<p class="MsoNormal"><b>Next step</b> - proceed one step and display the new outline</p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>+100 steps</b> - perform 99 steps silently and display the 
+outline of the 100's one</p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Skip cell</b> - finish the alignment of this cell silently<img border="0" src="Color_colde_for_algorithm_4.gif" align="right" width="265" height="242"></p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Continue</b> - finish the alignment of this cell displaying 
+every step without the need to press any button again</p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Debug</b> - stop microbeTracker in debug mode (for example, to 
+see the actual values of the forces)</p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Stop</b> - terminate the process and exit MicrobeTracker 
+(equivalent to Ctrl+C keyboard combination)</p>
+
+  </li>
+</ul>
+
+<p class="MsoNormal">
+The 
+color codes used to display the outline and forces for algorithm 4 are shown on the second 
+figure. Algorithms 2 and 3 use only the image forces, the constrains are 
+implemented in a different way and are not displayed.</p>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>See also: <a href="helpMicrobeTrackerParameters.htm">
+Parameters</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

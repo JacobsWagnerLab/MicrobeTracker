@@ -1,0 +1,232 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker - Quick Start</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Quick Start
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This page describes in a simplified way the first steps required
+to start using <a href="helpMicrobeTracker.htm">MicrobeTracker</a> and
+<a href="helpTools.htm">MicrobeTracker tools</a>. See also more detailed
+tutorials based on the included datasets. Overall, the tutorials are listed in
+the order of increasing complexity:</p>
+<ul>
+  <li>
+<a href="helpTutirialMTEcoli.htm">Cell detection</a> (cell detection and shape analysis of <i>E. coli</i> cells),<br/>
+  </li>
+  <li>
+<a href="helpTutirialMTCcres.htm">Fluorescence profiles</a> (obtaining fluorescence profile of <i>C. crescentus</i> cells in time-lapse series and using MATLAB for theis analysis),<br/>
+  </li>
+  <li>
+<a href="helpTutirialMTFRAP.htm">Accessing internal variables</a> (obtaining a kymograph from a FRAP experiment).
+  </li>
+  <li>
+<a href="helpTutirialMTNucleoid.htm">Extending MicrobeTracker</a> (obtaining outlines and properties of nucleoids or other intracellular objects).
+  </li>
+</ul>
+
+<p align="left">Additionally, the help pages for some tools have extended
+examples of their usage:</p>
+<ul>
+  <li>
+    <a href="helpSpotFinder.htm#Usage_example">SpotFinderZ</a> (finding round / diffraction-limited spots in cells),
+  </li>
+  <li>
+    <a href="helpSpotFinderF.htm#example">SpotFinderF</a> (finding round / diffraction-limited spots in an image),
+  </li>
+</ul>
+
+<p align="center"><font size="5">Contents</font></p>
+
+<ul>
+  <li>
+<p align="left"><b><a href="#Installation">Installation</a></b></p>
+  </li>
+  <li>
+<p align="left"><b><a href="#MicrobeTracker">MicrobeTracker</a></b></p>
+  </li>
+  <li>
+<p align="left"><b><a href="#tools">Tools</a></b></p>
+  </li>
+</ul>
+
+<p align="center"><font size="5"><a name="Installation">Installation</a></font></p>
+<p class="MsoNormal">MicrobeTracker requires MATLAB with Image Processing
+Toolbox to run, though it can be compiled and will run stand-alone. However,
+MATLAB will still be needed to view or process the output files and run the
+tools. Here are the instructions how to install the MATLAB-based version:</p>
+<ul>
+  <li>
+<p class="MsoNormal">Unpack or copy the content of MicrobeTracker package into
+any folder.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Add this folder to the list of default paths in MATLAB (in
+MATLAB select File&gt;Set Path&gt;Add folder, then select the MicrobeTracker
+folder and click Save)</p>
+  </li>
+  <li>
+<p class="MsoNormal">Now you can run MicrobeTracker by typing microbeTracker in
+MATLAB workspace window and the rest of the functions by typing the function's
+name.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Optionally, you can add support for images in other formats
+than series of single-page TIFF files and multi-page TIFF files by installing
+<a href="http://www.loci.wisc.edu/software/bio-formats">Bioformats software</a>
+(the images in this case have to be in separate stack files for each filter
+block / color). To do so, exit MicrobeTracker, download
+<a href="http://www.loci.wisc.edu/files/software/loci_tools.jar">loci_tools.jar</a>
+file, and place it to the MicrobeTracker folder.</p>
+  </li>
+  <li>
+<p class="MsoNormal">For program and functions description see help either by
+clicking Help button in MicrobeTracker (for the program itself) or opening help
+(htm) file from the MicrobeTracker folder (for the rest of the functions).</p>
+  </li>
+  <li>
+<p class="MsoNormal">Sometimes MicrobeTrackers's compiled functions will not run
+because of some libraries missing on your operating system. To test, type in
+MATLAB command window <font face="Courier">a=intxy2C(0,0,0,0)</font>, which
+should return an empty matrix, not an error. If it returns an error, install the
+compatible C++ compiler, which can be found on
+<a href="http://www.mathworks.com/cgi-bin/texis/webinator/search/?query=Supported+and+Compatible+Compilers&db=MSS&prox=page&rorder=750&rprox=750&rdfreq=500&rwfreq=500&rlead=250&sufs=0&order=r&is_summary_on=1&ResultCount=10&submitButtonName=Search">
+MathWorks website</a> (e.g. <a href="http://www.mathworks.com/support/compilers/R2011a/win32.html">
+for version 2011a</a>; make sure you select your operating system).</p>
+  </li>
+</ul>
+
+<p align="center"><font size="5"><a name="MicrobeTracker">MicrobeTracker</a></font></p>
+<ol>
+  <li>
+<p class="MsoNormal">Prepare the image files to load. If you are using the
+program for the first use, select images with very clearly visible and well
+separated cells. This description will focus on using phase contrast microscopy
+(called simply <i>phase</i> below) images, see the detailed help for
+<a href="helpMicrobeTrackerParameters.htm">diffuse
+fluorescence</a> or <a href="helpintegdic.htm">DIC</a>. The files must be in
+TIFF format placed in a separate folders for phase and corresponding
+fluorescence images. If the files have to be in a Make sure that the particular
+order (e.g. timelapse), nake sure that they are sorted correctly by the
+operating system. Usually the files have the same base name followed by a
+number. In this case the numbers have to be x01, x02, ... , x09, x10, x11, ...
+as opposed to x1, x2, ... , x10, ...</p>
+  </li>
+  <li>
+<p class="MsoNormal">Load the phase images by clicking 'Load phase data' button 
+on the top panel and selecting the folder with the images. If fluorescence 
+images are used as well, load them clicking 'Load signal 1' button.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Load parameter set by clicking 'Load parameters' button 
+from the Parameters panel. Typically select 'alg4.set' from the MicrobeTracker 
+folder. It is based on algorithm 4, designed to work with any rod-shaped cells, 
+any curvature and length. See <a href="helpMicrobeTrackerAdjusting.htm">
+the detailed help</a> to figure out what algorithm to use for specific cases.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Adjust the most critical parameters by modifying the text
+in the 'Parameter' control on the bottom right: <br>
+- set areaMin and areaMax so that the area of all good cells falls into the 
+range between these two values. If not known precisely, set areaMin much smaller 
+and areaMax much larger, and then adjust them more presizely (the area of a
+detected cell can be seen on the 'Information' panel on the bottom left once the
+cell is selected).<br>
+- set cellwidth to the width of the cell in pixels (approximately).<br>
+- for filamentous cells increase <font face="Courier">fsmooth</font>, to measure
+variations in cell width reduce <font face="Courier">wspringconstant</font>, for
+curved cells reduce <font face="Courier">rigidityB</font>, for timelapses with
+dividing cells set <font face="Courier">splitThreshold</font> to ~ 0.4, see the 
+detailed help for other parameters.</p>
+  </li>
+  <li>
+<p class="MsoNormal">If fluorescence needs to be added, subtract the background 
+by selecting 'All' and clicking 'Subtract bgrnd' button on the 'Background 
+subtraction' panel (bottom center) and select 'Compute signal 1 profile' on 
+the 'Detection &amp; analysis' panel.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Select 'Time lapse' or 'Independent frames' mode on the 
+'Detection &amp; analysis' panel.</p>
+  </li>
+  <li>
+<p class="MsoNormal">Click on 'This frame' button to see the performance on one 
+frame. Wait for up to a few minutes to process the frame.</p>
+  </li>
+  <li>
+<p class="MsoNormal">If the detection was good, click 'All frames' to process 
+the whole image set. This may take up to several hours, depending on the number 
+and size of the images.</p>
+  </li>
+  <li>
+<p class="MsoNormal">After the program finishes working, save the results by 
+clicking 'Save analysis' button.</p>
+  </li>
+</ol>
+<p align="center"><font size="5"><a name="tools">Tools</a></font></p>
+<p align="left">
+This section describes how to use the functions for cell dimensions and 
+intensity statistics. This description is primarily for those who have no MATLAB 
+experience in order to start using the functions. If you are familiar with basic 
+MATLAB concepts, refer directly to <a href="helpTools.htm">the description of the 
+functions</a>.</p>
+
+<ol>
+  <li>Load the cellList variabe into MATLAB workspace. To do so, drag and drop
+  the meshes (results) file into the workspace or type
+  <font face="Courier">load('&lt;filename&gt;')</font> (substitute
+  &lt;filename&gt; with the name of the file). You only need the variable called
+  cellList.</li>
+  <li>Now run a function according to <a href="helpTools.htm">its description
+  </a>. For example, to plot a histogram of cell lengths, type:<br>
+  <font face="Courier">&nbsp;&nbsp;&nbsp; figure<br>
+&nbsp;&nbsp;&nbsp; lengthhist(cellList)</font><br>
+  here the command <font face="Courier">figure</font> produces a new figure.
+  Otherwise the histogram will replot the existing figure or will be plotted
+  inside the MicrobeTracker window.</li>
+</ol>
+<p>In order to compare data from two experiments on the same plot you will need 
+cellList from both loaded at the same time. For this rename this variable after 
+loading, for example:</p>
+<ol>
+  <li>Load the first file the same way as above. Then rename the cellList:<br>
+  <font face="Courier">&nbsp;&nbsp;&nbsp; list1 = cellList;</font></li>
+  <li>Now load the second file and rename the cellList:<br>
+  <font face="Courier">&nbsp;&nbsp;&nbsp; list2 = cellList;</font></li>
+  <li>Now run the function with two arguments:<br>
+  <font face="Courier">&nbsp;&nbsp;&nbsp; figure<br>
+&nbsp;&nbsp;&nbsp; lengthhist(list1,list2)</font></li>
+</ol>
+<p>In order to specify additional parameters, put them after cellList. Most of 
+the other parameters are optional and the order is not important. If the order is 
+important (when the function cannot distinguish the parameters based on the 
+variable type), place an empty array [] to omit a parameter. For example, to show 
+an overlapping histogram (i.e. plotting the overlaps of bars with another color), 
+type:<br>
+<font face="Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+meanwidthhist(cellList1,cellList2,'overlap')</font></p>
+<p><font face="Times New Roman">To specify the x-axis (an array of lengths of
+the cell in which the bin centers will be placed), type:<br>
+</font><font face="Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+meanwidthhist(cellList1,cellList2,5:10:100)</font></p>
+<p><font face="Times New Roman">The record 5:10:100 means that the 
+centers will be places in positions from 5 to 100 pixels with the step of 10. 
+Usually specify the position of the first bin center at one half of the bin
+width, so that the bins start from zero.</font></p>
+
+<!-- Start replacement block 3 -->
+<br>
+<b>Top page: <a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

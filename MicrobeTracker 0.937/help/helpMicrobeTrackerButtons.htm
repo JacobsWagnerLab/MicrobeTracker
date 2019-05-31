@@ -1,0 +1,341 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Buttons and Controls
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>This section describes the interface and various regimes and tools available
+in the program. It concentrates primarily on location of the controls and
+availability of the tools, while for a sequence of actions required to perform a
+particular image analysis task you should refer to
+<a href="helpQuickStart.htm">Quick start</a> and
+<a href="helpMicrobeTrackerAdjusting.htm">Adjusting parameters</a> sections of
+the help.
+</p>
+<p>The tasks that MicrobeTracker performs are organized into several groups
+represented by different panels of the main window, which is shown on the image
+below. Each subsection describes in detail one of these panels.
+</p>
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="center">
+    <tr>
+      <td>
+        <img border="0" src="MT_panels_outline.gif">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<p align="left">
+<b><font size="4">Top panel</font></b></p>
+<p align="center">
+<img border="0" src="Top%20panel%201.gif"></p>
+<p><b>1. Loading images</b></p>
+<ul>
+  <li><b>Load phase data</b> - loads a set* of phase contrast images (or diffuse
+  fluorescence images**). By default, MicrobeTracker reads TIFF image
+  series and will load every image in the selected folder. To exclude one of
+  the images in a set, simply remove it from the folder. If
+  <a href="http://www.loci.wisc.edu/software/bio-formats">BioFormats software</a>
+  is installed (simply copy loci_tools.jar to MicrobeTracker folder), single
+  channel stack files produced by several popular microscope control programs
+  (.stk, .nd2, etc.) can be opened as well. Alternatively, MicrobeTracker will
+  open multipage TIFF images. To use stacks files or multipage TIFFs, the
+  checkbox 'stack' has to be selected.</li>
+  <li><b>Load signal 1 / Load signal 2</b> - loads fluorescence images for 
+  quantification. These images are not used for cell detection; the fluorescence 
+  signal quantification can be done simultaneously during detection or at a 
+  later time following cell detection.</li>
+</ul>
+<p>* The program alone works only with TIFF images. The files have to be converted
+to TIFF, have the extension .tif or .tiff, and have to be placed into a separate
+folder (every TIFF file from this folder will be loaded, any other file will be
+ignored). You can easily convert most common formats to TIFF with the help of
+<a href="http://rsbweb.nih.gov/ij/">ImageJ</a>.</p>
+<p>** If fluorescence images (or any other images with light cells on dark
+background) are selected, add <font face="Courier">invertimage</font> parameter
+to the list of parameters and set it to 1.</p>
+<p><b>2. Aligning images (for timelapses only)</b></p>
+<p>The alignment procedure (started by the <b>Align</b> button) uses correlation 
+between successive images in order to compensate for possible microscope stage 
+or sample drift during image acquisition. The 
+alignment information is not displayed, and its presence is denoted by active 
+buttons <b>Save</b>, <b>Shift</b>, and <b>Reset</b>. This information will be 
+used by the detection routines, but the positions of meshes will be relative to 
+non-shifted frames. The <b>Shift</b> button will shift the images (phase 
+contrast and fluorescence) and the meshes and will replace them in memory. This
+is designed to review the quality of shifting and to output movies. As a general
+rule, it is not recommended to use the Shift button in other cases. The shift
+depends on <font face="Courier">aligndepth</font> parameter, which is 1 by
+default and should be increased to 10-20 for slow-drifting image series.</p>
+<p>The alignment information can be saved using <b>Save</b> button and loaded 
+using <b>Load</b>. <b>Reset</b> rezeros the alignment information in memory (but 
+cannot shift the images back).</p>
+<p><b><font size="4">Bottom panel</font></b></p>
+<p align="center">
+<img border="0" src="Bottom%20panel.gif"></p>
+<p align="left"><b>1. Information</b></p>
+<p align="left">This panel is used to display the information about the images 
+and cells. <b>Image</b> field displays the folder name (only the bottom level) 
+and the <b>Current frame</b> the number of the image displayed at the moment (as 
+sorted automatically). The next several fields display the information about the 
+selected cell or cells, only  if at least one cell is selected. All
+length-related numeric information is measured in pixels. The last field
+displays the cursor position in pixels relative to the image, which can be used
+for cropping and outputting images.</p>
+<p align="left"><b>2. General image display</b></p>
+<p align="left">Checking the checkbox will display a separate zoomable window. 
+Its zoom level can be set by the<b> </b>+ and - buttons, by the number window 
+and by the scrolling wheel of the mouse when the cursor is inside the zoomable 
+window. The next line regulates the visible output, which is always performed to 
+the <b>Log window</b> (select the checkbox to display) and can be performed to 
+the MATLAB workspace (select <b>WS</b> checkbox). <b>Contrast</b> regulates image contrast. <b>Clone</b> is the simplest 
+way of outputting, which replicates the zoomable window in a new window with the menu 
+that allows saving and coping. <b>Export</b> calls a simple 
+<a href="helpImageExportTool.htm">Image export tool</a> in a separate 
+window, which allows the user to save the desired region with the meshes and possibly 
+saves multiple frames and makes movies (only on 32bit systems).</p>
+<p align="left"><b>3. Objects to display</b></p>
+<p align="left">This panel allows the user to show/hide meshes, selects their color (black or 
+white), and selects which image (phase contrast or fluorescence) to display.</p>
+<p align="left"><b>4. Selection</b></p>
+<p align="left">Allows the user to select cells. <b>Select all</b> selects all
+cells on the frame, <b>Select group</b> selects a group of cells in the
+indicated range (the range 11:15 indicated on the figure will select the cells with the
+numbers from 11 to 15), <b>Invert</b> inverts the selection. Holding keyboard
+<b>Shift</b> button allows for the selecting of multiple cells by clicking on
+them. Hold <b>Shift</b> or <b>Control</b> (at the beginning of dragging) and
+dragging the cursor  to select a group of cells. In this case all cells that
+completely fall into the chosen area get selected. Holding <b>Shift</b> inverts
+the selection in the area and holding <b>Control</b> deselects all other cells.
+The selected cells can be either deleted (using <b>Delete</b> keyboard button or
+<b>Delete</b> button on the panel) or used to continue detection in timelapses
+for the selected cells only. To undo the last deletion operation, press
+<b>Control + Z</b> on the kerboard.</p>
+<a name="polarity"></a><p align="left"><b>5. Polarity</b></p>
+<p align="left">This group of buttons allows to manually set cell polarity. 
+Click <b>Set</b> and then label one of the cell's poles as &quot;old pole&quot; (a 
+little stalk will be displayed and the cell will be marked as having the 
+polarity set). The polarity can be removed (i.e. considered unknown) if you 
+press <b>Remove</b> and then click on the cell. Note, the polarity is set 
+automatically in timelapses when a cell divides.</p>
+
+<p align="left"><b>6. Manual</b></p>
+
+<p align="left">Use this group of buttons to split, join, or refine selected
+cells or add new cells. Additional information on usage of the tools,
+particularly the changes in cell numbering and lineage data, is provided on the
+<a href="helpManualOperations.htm"><b>Manual Operations</b></a> page.</p>
+<ul>
+  <li><b>Join</b> - In order to join at least two cells must be selected. The
+  program will detect the closest poles of these cells and will try to make one
+  cell by joining the poles.</li>
+  <li><b>Split</b> - The split regime operates in two modes.
+  The first (semi-autmatic) mode is called by clicking the <b>Split</b> button
+  and requires exactly one cell to be selected. This mode will determine the
+  splitting point automatically by finding the minimum "valley" in the phase
+  image corresponding to the cell.</li>
+  <li><b>Split + Shift</b> - The second mode is called by clicking <b>Split</b>
+  while holding keyboard <b>Shift</b> button. This mode requires the user to
+  pick the splitting point. The cell does not need to be selected in advance -
+  the clicked one will be taken. To exit this mode click outside of the cells of
+  press <b>Escape</b>. This mode currently operates only when the mesh is
+  available.</li>
+  <li><b>Refine</b> - In order to refine cells at least one cell must be
+  selected. The program will run cell detection routine with the current
+  parameters taking the current cell shape for the starting point.</li>
+  <li><b>Add</b> - Cell addition only works if algorithm 1 or 4 is selected;
+  in case of algorithm 1 you have to click on the contour, and in case of
+  algorithm 4 on the centerline (the width is then determined by
+  <font face="Courier">cellwidth</font> paramerer); to terminate double click or
+  press <b>Enter</b>, to cancel press <b>Escape</b>.</li>
+  <li><b>Add+Shift</b> - Hold <b>Shift</b> <u>while finishing cell addition</u>
+  to call a dialog asking for the new cell number. This number must be a
+  positive integer and must nor exist on the current or any later frame.</li>
+</ul>
+<p>If any of the manual operations fails, no change is made, otherwise the
+program replaces the cells in memory, but <u>does not</u> save them to the disk.
+Note that the program in these modes also does not automatically integrate
+the signal, which has to be added to the meshes separately (for example, by
+running it on the selected meshes in 'Reuse meshes' mode, see
+<a href="#Detection">below</a>). To undo the last manual operation, press
+<b>Control + Z</b> on the kerboard.</p>
+<a name="background"></a><p align="left"><b>7. Background subtraction</b></p>
+<p align="left">Subtracts background from fluorescence images. Meshes 
+are not used here; the result does not depend on their presence. The &quot;empty&quot; 
+area used to calculate the background intensity is determined as the light area
+on phase images. If Visible option is selected, the background is subtracted
+from the fluorescence image set currently being displayed (or none, if phase
+contrast images are displayed), otherwise - from all fluorescence images. The
+subtracted images can be saved using <b>Save visible signal</b> button.</p>
+<a name="training"></a><p align="left"><b>8. Training</b></p>
+<p align="left">This panel is used to train the algorithm, required for 
+algorithms 2 and 3 (which use the PDM). The default file is already created for 
+strain CB15N <i>Caulobacter crescentus</i> cells. The default number of points is 52. 
+For training you will need an analysis file with a large set of the cells of 
+correct type, detected using a different method, usually algorithm 1. You can 
+use multiple files, which will be combined. Enter the number of points (about 
+the length of the cell in pixels), algorithm (2 or 3), then click <b>Train</b> 
+and select the data file(s) and the file to save the results. </p>
+<p align="center">
+<img border="0" src="Detection%20panel.gif" align="right" width="217" height="317"></p>
+<p align="left"><b><font size="4"><a name="Detection">Detection and analysis</a></font></b></p>
+<p align="left">This panel is used to perform  detection of cells and 
+quantification of fluorescence. The buttons on top of the panel start the 
+operation for the selected group of frames: all frames, current frame or a range 
+of frames. The next set of radio buttons defines whether the images should be 
+treated as a timelapse (the previous image is used as a guess for the next), 
+timelapse that starts from a frame number other than one, independent frames
+(set of spatially different images), or that the detection should not be
+performed at all, only fluorescence image quantification (reuse meshes).</p>
+<p align="left">The detection can 
+also be performed for selected cells only (check Selected cells only). This is
+useful in timelapses when  different parameters are desired for some cells or
+when the detection of all takes too much time. Alternatively it can be performed
+for a selected area (check Selected area and select an area holding the Shift
+button). The area selection will stay when selecting new frames or performing
+analysis on multiple frames. The threshold calculation will only be performed in
+this region, therefore this regime can be used to eliminate extremely bright or
+dark junk particles in the field of view.</p>
+<p align="left">The next block indicates whether the fluorescence signal should 
+be quantified. By default phase signal will be saved in field
+&quot;signal0&quot; (see section &quot;Output format&quot;), 1st fluorescence
+signal in field &quot;signal1&quot;, the second - &quot;signal2&quot;, though
+the number can be changed or even replaced with a word or a symbol. This
+quantification can be performed while detecting cells or in post-processing, 
+i.e. when the &quot;Reuse meshes&quot; regime is selected (you can run detection
+in the "reuse meshes" regime in order to add the signal to the meshes, which may
+be preferable to do at this stage because of larger memory requirements during
+cell detection). In any case background subtraction before the operation is
+recommended for most applications.</p>
+<p align="left">Additionally, you can save the data during processing. By 
+default, data is saved to the file &quot;tempresults.mat&quot; in the current 
+MATLAB folder 
+after each frame. Saving takes time, but allows to recover the data if the 
+program should crash.</p>
+<p align="left"><a name="batch"><b><font size="4">Batch processing</font></b></a></p>
+<p align="left">Most operations that MicrobeTracker performs can be automated.
+There are two modes designed for this purpose: graphical and text-based.</p>
+<p align="center"><center>
+  <div style="max-width: 750px; overflow: auto;">
+    <img border="0" src="Batch%20mode.gif">
+  </div>
+</center></p>
+<p align="left">The graphical mode is a simpler and more widely used mode. It is
+called by Batch Processing button, which opens a new window for this purpose,
+shown above. Here in each line the user selects where to get files (images,
+meshes, parameters). The files currently loaded remain loaded, so you do not
+have to reload all of them if you want to keep some of them, for example, the
+parameter set. Then you enter which operations you want to perform: currently,
+these are background subtraction, cell detection, and signal quantification. To
+load images from stack files (if optional Bioformats software is installed),
+check the 'stack' box in front of the appropriate button. To remove a selected
+file or folder name (to not load it), click on the name itself. At the end of
+processing of the whole stack (but not after each frame) the mesh can be saved
+into the indicated file. The only specific option for batch processing is "+
+prev. frame", which allows to add signal to the frame before processing a range
+as well, while identifying cells only within the range. This is designed to pick
+&quot;good&quot; cells on the first frame manually and then process the rest of
+the frames and add signal to all frames, including the first one.</p>
+<p align="left">Lines for the jobs can be added or removed using buttons on the 
+right bottom side. The batch list can be saved and loaded. It is saved in a text 
+format, so you can edit the text file directly; this is useful if the jobs are 
+similar and if there are too many of them. In the latter case you can run the
+text file directly, without loading it (there is a limit of 32 jobs if you 
+try to load or enter them from the interface window).</p>
+<p align="left"><a href="helpTextBatchMode.htm">The text-based batch
+mode</a> is called by clicking the
+<b>Text mode</b> button. The graphical mode batch window will disappear and will
+be replaced with the text one.  The window is a simple text editor, which allows
+you to type, save and load text files. The files can also be prepared in an
+external editor. This window is designed to prepare a simple script, with will
+be interpreted by MicrobeTracker when you click <b>Run</b>. The list of
+MicrobeTracker-specific commands is shown on top of the window, the interpreter
+also accepts MATLAB expressions. This mode was not been rigorously tested yet,
+but in principle it allows for a wider range of possibilities than the graphical
+mode.</p>
+<p align="left"><b><font size="4">Saving analysis</font></b></p>
+<p align="left">Saving/loading is straightforward. Click "Save analysis" button
+to save the tracking data to a file and "Load analysis" to load it from a file.
+The last parameter set used gets saved automatically, but to load it together
+with the analysis the checkbox "Load params" needs to be selected. In addition,
+there is an option to save only selected cells, for this select "Selection only"
+when saving the results.</p>
+
+<p align="left"><b><font size="4">Parameters</font></b></p>
+<p align="left">The last control field is designed to enter the
+<a href="helpMicrobeTrackerParameters.htm">parameters</a>. They 
+are saved as a simple text file, which can be saved and loaded independently, it
+is also saved automatically with the analysis and it can be loaded together with 
+the analysis. In the analysis file, only the last version of the parameters is 
+kept. The default parameter set if for algorithm 2. Algorithm 1 requires only a 
+few parameters and should be changed manually. The default sets for algorithms 
+2, 3, and 4 (usually the best) are called &quot;alg2.set&quot;, &quot;alg3.set&quot;, and &quot;alg4.set&quot; 
+respectively. For the description of individual parameters, see section 
+&quot;Parameters&quot; below.</p>
+
+<p align="left"><b><font size="4">Parameter testing mode</font></b></p>
+<p align="left"><a href="helpParameterTestMode.htm">Parameter testing mode</a> is 
+designed to display normally hidden intermediate images for the purposes of 
+choosing the optimal parameters for a particular image. There are two parameter 
+testing regimes: Segmentation and Alignment. Segmentation mode lets the user to
+preview the segmented image with the current parameter set before doing the
+contour alignment, while Alignment mode will display the process of the active
+contour fitting to each cell. This mode is only available in algorithms 2-4,
+where such alignment is used.</p>
+
+<a name="shiftfluo"></a><p align="left"><b><font size="4">Shift of fluoresence images relative to phase</font></b></p>
+<p align="left">This regimes allowes to correct for fluorescence images shifted
+relative to the phase contrast image used to determine cell outlines. The regime
+is called by pressing the keyboard <b>f</b> button. A menu appears, which allows
+to set the shifts in x and y direction, which are real numbers measured in
+pixels. When you press shift, the meshes in the corresponding fuorescence signal
+image will be displayed shifted and will also be shifted when the signal profile
+is calculated by MicrobeTracker. Try different shifts manually so that the meshes
+look correctly on to of the fluorescence (signal) images. The shift information
+can be saved by pressing the <b>r</b> or <b>t</b> (Save As) buttons, and can be
+loaded by pressing the <b>y</b> button. This information is also saved with the
+meshes, but is not loaded automatically when the meshes are loaded.</p>
+
+<p align="left">
+<b><font size="4">Keyboard shortcuts</font></b></p>
+<ul>
+  <li><b>Delete</b> - Delete selected cells</li>
+  <li><b>i</b> - Invert selection</li>
+  <li><b>a</b> - Select all cells</li>
+  <li><b>g</b> - Select a group of cells (according to their numbers)</li>
+  <li><b>Up</b> - Go to the previous frame</li>
+  <li><b>Down</b> - Go to the next frame</li>
+  <li><b>s</b> - Save meshes</li>
+  <li><b>l</b> - Load meshes</li>
+  <li><b>Enter</b> - Finish manually adding a cell (in manually adding cell regime)</li>
+  <li><b>Escape</b> - Terminate manually adding a cell (in manually adding cell regime)</li>
+  <li><b>Control+Z</b> - Undo the last manual operation or deletion</li>
+  <li><b>q</b> - Save the list of selected cells to file</li>
+  <li><b>w</b> - Save As the list of selected cells to file</li>
+  <li><b>e</b> - Load the list of selected cells from file</li>
+  <li><b>f</b> - Set the shift of fluorescence images relative to the phase one</li>
+  <li><b>r</b> - Save the shift of fluorescence images to file</li>
+  <li><b>t</b> - Save As the shift of fluorescence images to file</li>
+  <li><b>y</b> - Load the shift of fluorescence images from file</li>
+</ul>
+
+<!-- Start replacement block 3 -->tt
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

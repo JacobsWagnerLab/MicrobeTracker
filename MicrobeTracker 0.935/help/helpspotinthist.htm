@@ -1,0 +1,76 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+spotinthist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">spotinthist(cellList)</font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,...)</font></p>
+<p><font face="Courier">spotinthist(cellList,xarray) </font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,xarray)</font></p>
+<p><font face="Courier">spotinthist(cellList1,normfactor)</font></p>
+<p><font face="Courier">spotinthist(cellList1,normfactor1,cellList2,normfactor2)</font></p>
+<p><font face="Courier">spotinthist(cellList1,cellList2,'overlap')&nbsp; </font></p>
+<p><font face="Courier">[intlist] =  spotinthist(cellList)</font></p>
+<p><font face="Courier">[intlist1,intlist2] = spotinthist(cellList1,cellList2)</font></p>
+<p><font face="Courier">spotinthist(...'nooutput')&nbsp; </font></p>
+
+<p>This function plots a histogram of the intensities of all spots in every cell 
+in a population. Note, the cells manually detected with <b>spotfinderM</b> will 
+all have zero intensity.</p>
+
+<ul>
+  <li>
+    &lt;cellList&gt; - an array that contains cell meshes. You can 
+    drag and drop the file with the data into MATLAB workspace or open it using 
+    MATLAB Import Tool. The default name of the variable is <b>cellList</b>, but 
+    it can be renamed.
+  </li>
+  <li>
+    &lt;cellList1&gt;, &lt;cellList2&gt; - you can load two arrays, they will
+    be plotted together for comparison.
+  </li>
+  <li>
+    &lt;xarray&gt; - an array of x values for the histogram, which serve the
+    centers of bins of the histogram (the boundaries will be in between, for
+    example [1 2 3 4 5] to display all the spots with intensities less than 1.5 
+    in the first bin, between 1.5 and 2.5 in the second, etc.).
+  </li>
+  <li>
+    &lt;normfactor&gt;, &lt;normfactor1&gt;, &lt;normfactor2&gt; - conversion
+    factors from image units. Use only if normalization is known.
+  </li>
+  <li>
+    'overlap' - indicate this if you wish the histograms to overlap,
+    otherwise they will be displayed separately.
+  </li>
+  <li>
+    &lt;intlist&gt;, &lt;intlist1&gt;, &lt;intlist2&gt; - arrays containing
+    the intensity of every spot to save and plot separately.
+  </li>
+  <li>
+    &lt;nooutput&gt; - blocks standard output (type of data processed, mean,
+    and standard deviation).
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">MicrobeTracker Tools</a>,
+<a href="../help.htm">MicrobeTracker Suite</a></b>.</p>
+<!-- End replacement block 3 -->
+</body>
+</html>

@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+meaninthist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">meaninthist(cellList)</font></p>
+<p><font face="Courier">meaninthist(cellList1,cellList2,...)</font></p>
+<p><font face="Courier">meaninthist(cellList1,cellList2,signal1,signal2,...)</font></p>
+<p><font face="Courier">meaninthist(cellList,xarray) </font></p>
+<p><font face="Courier">meaninthist(cellList1,cellList2,xarray)</font></p>
+<p><font face="Courier">meaninthist(cellList1,normfactor)</font></p>
+<p><font face="Courier">meaninthist(cellList1,normfactor1,cellList2,normfactor2)</font></p>
+<p><font face="Courier">meaninthist(cellList1,cellList2,'overlap')&nbsp; </font></p>
+<p><font face="Courier">meaninthist(...'nooutput')</font></p>
+<p><font face="Courier">meaninthist(...'nodisp')</font></p>
+<p><font face="Courier">intlist = meaninthist(cellList)</font></p>
+<p><font face="Courier">[intlist1,intlist2] = meaninthist(cellList1,cellList2)</font></p>
+
+<p>This function plots a histogram of the <i>mean</i> intensity 
+inside every cell 
+in a population, i.e. <i>total</i> intensity divided by the <i>area</i> of the 
+cell. Note, the background has to be subtracted before detecting the signal in
+<b>MicrobeTracker</b>.</p>
+<ul>
+  <li>
+  <p>&lt;cellList&gt; is an array that contains the meshes. You can 
+  drag and drop the file with the data into MATLAB workspace or open it using 
+  MATLAB Import Tool. The default name of the variable is <b>cellList</b>, but 
+  it can be renamed.</li>
+  <li>
+  <p>&lt;cellList1&gt;, &lt;cellList2&gt; &#727; you can load two or more
+  arrays, they will be plotted together for comparison.</li>
+  <li>
+  <p>&lt;signal1&gt;, &lt;signal2&gt; - the signal field which will be 
+  processed. Must be in single quotes and must start from the word 'signal'. The 
+  default is 'signal1'.</li>
+  <li>
+  <p>&lt;xarray&gt; &#727; array of x values for the histogram, which serve the
+  centers of bins of the histogram (the boundaries will be in between, for
+  example [1 2 3 4 5] to display all the cells with intensities less than 1.5 in
+  the first bin, between 1.5 and 2.5 in the second, etc.).</li>
+  <li>
+  <p>&lt;normfactor&gt;, &lt;normfactor1&gt;, &lt;normfactor2&gt; &#727; 
+  conversion factors from image units. Use only if normalization is known.</li>
+  <li>
+  <p>'overlap' &#727; indicate this if you wish the histograms to overlap,
+  otherwise they will be displayed separately. The default colors for
+  overlapping bars are red (first set), green (second set), and yellow
+  (overlap).</li>
+  <li>
+  <p>&lt;intlist&gt;, &lt;intlist1&gt;, &lt;intlist2&gt; &#727; arrays
+  containing the length of every cell to save and plot separately.</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks standard text output (type of data processed, mean,
+  and standard deviation; only a figure is displayed).</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks figure output (only text output is produced).</li>
+</ul>
+
+<p><b><font size="4">Example</font></b><p>
+&gt;&gt;% First load the data from two files and assign it to two different variables 
+(here c1 and c2)<br>
+&gt;&gt;load('c:\test\example1.mat')<br>
+&gt;&gt;c1 = cellList;<br>
+&gt;&gt;load('c:\test\example2.mat')<br>
+&gt;&gt;c2 = cellList;<br>
+&gt;&gt;% Now plot a histogram<br>
+&gt;&gt;meaninthist(c1,c2)<p>
+<img border="0" src="meaninthist1.gif" width="560" height="420"><p>
+Mean intensity inside cells, image units<br>
+Processed 2 datasets<br>
+Set 1: mean 0.00011441, std 2.5648e-005<br>
+Set 1: mean 0.00010174, std 3.2709e-005<p>
+&gt;&gt;% Now plot an overlapping-style histogram also 
+using a scaling factor 100<br>
+&gt;&gt;meaninthist(c1,c2,100,'overlap')<p>
+<img border="0" src="meaninthist2.gif" width="560" height="420"><p>
+Mean intensity inside cells, normalized<br>
+Processed 2 datasets<br>
+Set 1: mean 0.011441, std 0.0025648<br>
+Set 1: mean 0.010174, std 0.0032709<p><b>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

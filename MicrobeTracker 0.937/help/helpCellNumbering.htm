@@ -1,0 +1,116 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Cell Numbering
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>If you are unfamiliar with the data output format of Microbetracker, read the
+<a href="helpMicrobeTrackerOutput.htm">Output Format</a> page first for a
+description.</p>
+
+<p>Each cell is assigned an individual number, which corresponds to the location
+of the corresponding information in the <font face="Courier">cellList</font>
+structure. To access the data structure, which corresponds to cell number c on
+frame f, load <font face="Courier">cellList</font> into MATLAB workspace and
+type: <font face="Courier">cellList{f}{c}</font>.</p>
+
+<p>Cell numbering is different depending on whether the Timelapse or Individual
+Frames mode was selected.</p>
+
+<p align="left"><b><font size="4">Cell numbering in Individual Frames mode</font></b></p>
+
+<p>In the Individual frames mode and on the first frame of the Timelapse mode
+MicrobeTracker assigns consecuitive integer numbers to the cells in the order of
+their detection. Typically the order depends on the cell position in the image
+(left-to-right), except for the cases when a cell was created by division of an
+previously detected cell.</p>
+
+<p>When the user manualy deletes a cell, the numbering of other cells does not
+change, and the data structure corresponding to the deleted cell becomes empty.
+Therefore, <font face="Courier">cellList{f}{c}</font> will display an empty
+array ([]) and accessing individual fields in this array will generate an error.
+In data processing code you should check if the particular cell is not empty,
+i.e. only proceed if for cell c on frame f the expression <font face="Courier">
+~isempty(cellList{f}{c})</font> is true.</p>
+
+<p align="left"><b><font size="4">Cell numbering in Timelapse mode</font></b></p>
+
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse:
+  collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+        <img border="0" src="numbering_diagram.gif">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<p>Cell numbering is the same as above on the first frame of the Timelapse mode.
+However, the program will keep the number of each cell as the time progresses.
+Therefore, if some cells are lost over time, some elements of
+<font face="Courier">cellList</font> become empty.</p>
+
+<p>When a cell divides, one of the new cells, the "mother cell", keeps the
+number of the original cell. The other cell, the "daughter cell", acquires a new
+number. In order to generate this number, the program keeps the total number of
+cells on the first frame as <font face="Courier">CellListN</font> array. The
+daughter's cell number <i>d</i> is generated according to the formula:<p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<i>d</i> = <i>c</i> + <i>N</i>·2<sup>(<i>g</i>-1)</sup></p>
+
+<p>where <i>c</i> is the mother's cell number, <i>N</i> is the base number of
+cells (typically the number of cells on the first frame), and <i>g</i> is the
+generation number, i.e. 1 for the 1st division in the history of the cell, 2 for
+2 divisions, etc. An example of cell numbering is shown in the figure (on the
+right), assuming that the starting cell number is 3 (arbitrarily chosen) and the
+number of cells on the first frame is 10 (also arbitrarily chosen).</p>
+
+<p>The data structure of each cell contains four fields, which store the cell's
+history. These fields are:</p>
+
+<ul>
+  <li>
+    <b>birthframe</b> - the frame when the cell with this number first appeared.
+  </li>
+  <li>
+    <b>divisions</b> - frame numbers of the divisions the cell with this number
+    has gone through. The division, which gave birth to this cell counts, but
+    the 1st frame, when the cell's appearance did not result from a division,
+    does not.
+  </li>
+  <li>
+    <b>ancestors</b> - the numbers of all direct ancestors of the cell in the
+    order of division.
+  </li>
+  <li>
+    <b>descendants</b> - the numbers of all direct descendants of the cell in
+    the order of division. 
+  </li>
+</ul>
+
+<p>When the old pole of the cell is known (marked with a solid "stalk" on the
+figure), it is labeled with the field <font face="Courier">polarity=1</font> in
+the corresponding data structure. In this case, at the next division the mother
+cell appears on the old pole side of the cell. When the orientation is unknown,
+it is selected randomly (dashed "stalk" on the figure).
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTrackerOutput.htm">
+Output Format</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

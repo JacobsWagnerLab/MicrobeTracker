@@ -1,0 +1,198 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+joinspots
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p class="MsoNormal">A GUI-based program which for linking spots detected with
+SpotFinder family tools (<a herf="helpSpotFinder.htm">SpotFinderZ</a>,
+<a herf="helpSpotFinderM.htm">SpotfinderM</a>,
+<a herf="helppeakfinder.htm">peakfinder</a>). The program can perform automatic
+joining with a possibility of manual control and correction.</p>
+
+<p align="center"><font size="5">Usage</font></p>
+
+<p align="left"><font size="4"><b>Initial setup</b></font></p>
+
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+        <img border="0" src="joinspotsini.gif">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p align="center">Initial setup window of joinspots
+      </td>
+    </tr>
+  </table>
+</div>
+
+<p>When started, the program opens the initial setup window, where the user
+can select the dataset and the parameters of detection. The window will
+dissapear when the operation starts, and therefore the parameter can no longer
+be changed. The window has the following controls:</p>
+
+<ul>
+  <li>
+    <b>Folder with images</b> - folder with images that were used for spot
+    detection to be used for manual control. When the checkbox is selected a
+    file with images will be opened - either a multipage TIFF or one of the
+    formats supported by Bioformats when this software is present.
+  </li>
+  <li>
+    <b>Meshes file</b> - a file with meshes and spots produced by SpotFinder
+    family tools.
+  </li>
+  <li>
+    <b>Pixel size in microns</b> (used as a scaling factor in the output
+    SpotList arrays, see below).
+  </li>
+  <li>
+    <b>First frame</b> - the first frame where the cells are present. The
+    program will not consider the cells on the earlier frames.
+  </li>
+  <li>
+    <b>Time interval between frames</b> - will be used for plotting purposes
+    only.
+  </li>
+  <li>
+    <b>Min number of frames</b> - the program will reject the cells which
+    existed (were detected) for a shorter period of time.
+  </li>
+  <li>
+    <b>Spots field name</b> - the name of the field that contains spots.
+    "spots" is the default name used by the SpotFinder family tools, but it can
+    be changed if multiple colors (e.g. different fluorescence dyes) are used.
+  </li>
+  <li>
+    <b>Max link length</b> - during automatic joining only connect the spots
+    that are separated by a no longer number of frames.
+  </li>
+</ul>
+
+<p align="left"><font size="4"><b>Main window</b></font></p></p>
+        
+<br clear=all>
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="center">
+    <tr>
+      <td>
+        <img border="0" src="joinspotsmain.gif">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p align="center">Main window of joinspots
+      </td>
+    </tr>
+  </table>
+</div>
+
+<p>The main window will display an image of the currently selected cell on the
+currently selected frame (top left), the tree of spot connections for the
+currently selected cell (bottom) with the selected frame highlighted with a box,
+and a control panel (top right). The panel contains the following controls:
+
+<ul>
+  <li>
+    <b>Autotrack</b> - join the spots for the current cell automatically. The
+    program will forget all the currently available connection and will attampt
+    to remake them.
+  </li>
+  <li>
+    <b>Next/prev cell/frame</b> - select the next or previous cell or frame.
+  </li>
+  <li>
+    <b>Delete links</b> - when this button is pressed (or keyboard Shift is
+    held) a click on a spot will delete the link connecting it with its parent.
+  </li>
+  <li>
+    <b>Delete spots</b> - when this button is pressed (or keyboard Alt is held)
+    a click on a spot will delete the spot and all links connecting it with
+    other spots.
+  </li>
+  <li>
+    <b>Delete branches</b> - when this button is pressed (or double click is
+    used) a click on a spot will delete the spot and all its descendants.
+  </li>
+  <li>
+    <b>Save</b> - save the results to a file. The program will prompt for a
+    file, which will get the three data arrays descrobed below.
+  </li>
+  <li>
+    <b>Export</b> - instead of saving, the output data will appear in MATLAB
+    workspace.
+  </li>
+</ul>
+  
+<p align="center"><font size="5">Output format</font></p>
+        
+<p>The program will output three data arrays:</p>
+
+<ul>
+  <li>
+    <b>cellList</b> - standard cellList array produced by MicrobeTracker, in
+    which the field "spots" (or other indicated in the "Spots field name" above)
+    will get the fields:
+    <ul>
+      <li>
+        "parentframe" and "parentnum" - the frame and number of the parent spot;
+      </li>
+      <li>
+        "childrenframe" and "childrennum" - arrays containing the frames and the
+        number of the children spots.
+      </li>
+    </ul>
+  </li>
+  <li>
+    <b>spotList</b> - array of spots, each containing sevaral data fields. Each
+    of the fields is an array containing the information for every frame on
+    which the spot existed. The fields are:
+    <ul>
+      <li>
+        relpos - relative position of the spot within a cell;
+      </li>
+      <li>
+        abspos - absolute position of the spot within the cell counted from
+        the old pole;
+      </li>
+      <li>
+        frame - frame number;
+      </li>
+      <li>
+        cell - cell number;
+      </li>
+      <li>
+        spot - spot number within the cell;
+      </li>
+      <li>
+        celllength the length of the cell on that frame;
+      </li>
+    </ul>
+  </li>
+  <li>
+    <b>spotList2</b> - same as spotList, but containing the spots that existed
+    for at least two frames.
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br><p class="MsoNormal">Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

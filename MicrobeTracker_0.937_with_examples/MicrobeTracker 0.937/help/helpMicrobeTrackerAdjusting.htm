@@ -1,0 +1,259 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Adjusting Parameters
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>This section describes how to select the parameter file and to adjust <b>the 
+most sensitive</b> parameters for a particular experiment. For a detailed 
+description of all parameters see the <a href="helpMicrobeTrackerParameters.htm">
+Parameters</a> page. After you have adjusted the parameters and the result seems
+to be good, you should save the parameter set to use in the future with similar
+experiments. The set you used before can also be retrieved from a saved results
+(meshes) file (make sure in this case that you select
+<font face="Courier">.mat</font> filter when loading the file). If saved in a
+separate file (.set), the parameters can be edited with any external text
+editor.</p>
+<p><b><font size="4">1. Algorithm</font></b></p>
+<p>The typical choice is <a href="helpMicrobeTrackerParameters.htm#algorithm">algorithm</a>
+4, sometimes 1, and more rarely 2, they are selected by setting
+<font face="Courier">algorithm=1</font>, <font face="Courier">algorithm=2</font>,
+etc. Try algorithm 4 first, unless it is clear a different one should be used.
+The algorithm 3 has practically no benefits over the other algorithms, and
+therefore has not been tested in the latest versions of the program. The choice
+of the algorithm will mostly depends on the type of the image and of the cells.
+See <a href="helpAlgorithms.htm">Cell outlining algorithms</a> page for more
+details.</p>
+<ul>
+  <li>For filamentous rod-shaped bacteria algorithm 4 is the only option.</li>
+  <li>For extremely small (area &lt; 20 px<sup>2</sup>) or irregularly shaped
+  (not rod-shaped) cell algorithm 1 is the only option, you should also consider
+  runnig it without generating the meshes (<font face="Courier">getmesh=0</font>).</li>
+  <li>For rod-shaped bacteria any algorithm will work.</li>
+  <li>Algorithm 4 is the slowest and the best in working with curved cells.</li>
+  <li>Algorithm 2 is faster, but fails on elongated cells and requires a
+  training set. In the distribution of the suite such set is currently only
+  available for <i>C. crecsentus</i> (these cells have pointed ends, wide septal
+  regions, are curved). </li>
+  <li>Algorithm 1 is the fastest as it does not use the active contour step at
+  all. This algorithm has poorer performance in separating cells in clusters and
+  in tracking them in timelapses.</li>
+  <li>If you are using algorithm 1, consider using it with
+  (<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#getmesh">getmesh</a>=1</font>) or without
+  (<font face="Courier">getmesh=0</font>) meshes. Generation of meshes takes
+  additional time, but may fail for irregularly-shaped cells. A mesh is
+  required to produce a coordinate system inside, but frequently only the
+  outline of the cell is sufficient.</li>
+</ul>
+<p><b><font size="4">2. Default parameter sets</font></b></p>
+<p>After you have decided what algorithm to use, load the corresponding
+predefined set. There are several general sets alg1.set, alg2.set, alg4.set
+tested for <i>C. crescentus</i> under the resolution ~ 0.06 &#181m/px. Some
+other sets were tested for other cell types, such as alg2ecoli.set and
+alg4ecoli.set for <i>E. coli</i> cells under the same resolution. For other
+cells just select one of the standard sets and modify some of the parameters
+if necessary.</p>
+<p><b><font size="4">3. Image segmentation</font></b><img border="0" src="Adjusting_segmentation.gif" width="200" height="271" align="right" vspace="3"></p>
+<p>Image segmentation is performed in two steps: thresholding and edge detection:</p>
+<ul>
+  <li><b>Thresholding</b> is detecting the parts of the image above a certain
+  threshold. The threshold is detected automatically, but the algorithm may
+  fail if objects other than cells are present or if the background is
+  non-uniform.<br>The threshold is multiplied by
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#thresFactorM">thresFactorM</a></font>
+  parameter. Default: 1, very high values of the parameter (such that the
+  threshold exceeds the maximum value for
+  the image bitdepth) will cause an error. On even images with multiple cells no
+  adjustment is necessary. Automatic threshold detection may fail on the images
+  that are uneven, only partially illuminated, have too few cells, or have a lot
+  of dust particles. You can see that by either keeping the cell-free areas of
+  the image (the program will typically process and discard multiple regions
+  with the area of about a few pixels each, in this case increase
+  <font face="Courier">thresFactorM</font>), or by not seeing many cells
+  (decrease <font face="Courier">thresFactorM</font>).<br>An alternative to
+  <font face="Courier">thresFactorM</font> is
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#threshminlevel">threshminlevel</a></font>
+  parameter which defines the fraction of the brightest pixels (between 0 and 1)
+  that are excluded from the set of values used to calculate the threshold. This
+  parameter should be included and set in the range 0.05 to 0.1 to eliminate the
+  effect of bright dust particles, glass chips, or any other objects that may
+  confuse the automatic threshold detection algorithm.</li>
+  <li><b>Edge/valley detection</b> is detecting boundaries of cells
+  (<a href="helpValleyDetection.htm">detailed description</a>). You can choose
+  between Laplacian of Gaussian edge detection
+  (LoG, <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#edgemode">edgemode</a>=1</font>), valley detection
+  (<font face="Courier">edgemode=2</font>), none
+  (<font face="Courier">edgemode=0</font>), or both
+  (<font face="Courier">edgemode=3</font>). The parameters of the method are:
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#edgeSigmaL">edgeSigmaL</a></font> and
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#logthresh">logthresh</a></font> (for LoG),
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#edgeSigmaV">edgeSigmaV</a></font>,
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#valleythresh1">valleythresh1</a></font> and
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#valleythresh2">valleythresh2</a></font>
+  (for valley detection),
+  <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#crossthresh">crossthresh</a></font>
+  (for both).</li>
+  <li><b>Segmentation testing tool.</b> Click the <b>Segmentation</b> button on
+  the 'Parameter test mode' panel to see segmented image for the current
+  parameter set before cell detection. Try adjusting the parameters mentioned
+  above and test the effect. See the
+<a href="helpParameterTestMode.htm#Segmentation">Segmentation testing tool</a>
+for more information.</li>
+</ul>
+<p><b><font size="4">4. Other shape-related parameters</font></b></p>
+<ul>
+  <li><b>Area.</b> The program rejects the cells larger and smaller than a
+    certain thresholds, which are regulated by the
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#areaMin">areaMin</a></font> and
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#areaMax">areaMax</a></font>
+    parameters and expressed in px<sup>2</sup>. To adjust these parameters, zoom
+    on a cell and estimate the area of a cell by counting the pixels along and
+    perpendicularly to the cell. Typically set <font face="Courier">areaMax</font>&nbsp;
+    somewhat larger than the largest cell and <font face="Courier">areaMin</font>
+    somewhat smaller than the smallest cell. If on other images some extreme
+    cells get rejected, click on the largest/smallest detected cell to see its
+    area and to estimate the area of these extreme cells.
+  </li>
+  <li><b>Smoothing cell.</b> The program uses Fourier smoothing keeping a
+    predefined number of descriptors, defined by
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#fsmooth">fsmooth</a></font>
+    parameter. Typically for extremely small cells <font face="Courier">fsmooth</font>
+    should be ~ 10, for normal-size cells ~20, for spaghetti-like filamentous
+    cells up to ~200. Values too small don't allow to fit a complex shape of a
+    cell correctly. Values too large are more tolerable, but may result in a
+    pixilated outline. Increasing this parameter is one of the ways (the only
+    way for algorithm 1) to smooth the outline. To smooth the cell using
+    algorithm 2 you can reduce the number of descriptors by setting
+    <font face="Courier">Nkeep</font> lower (from the default of 11 to 7-9),
+    using algorithm 4 increase the outline rigidity (increase 
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityRange">rigidityRange</a></font> or
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidity">rigidity</a></font>
+    parameters).
+  </li>
+  <li><b><font face="Courier"><a href="helpMicrobeTrackerParameters.htm#scaleFactor">scaleFactor</a>.</font></b>
+    Use this parameter if you have adjusted well the parameter for a particular
+    set (keeping <font face="Courier">scaleFactor=1</font>), and then you only
+    change the resolution slightly by using variable magnification units on the
+    microscope. Increase or decrease this parameter proportionally to the
+    resolution (measured in &#181m/px).
+  </li>
+  <li><b>Cell diameter (algorithm 4 only).</b> Using algorithm 4 you have the 
+direct control on two aspects of cell diameter: the absolute values and 
+flexibility. Note, that you don't set the width exactly, it will still be 
+adjusted to fit actual cells. The absolute value is regulated by
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#cellwidth">cellwidth</a></font>
+parameter (mesh generation is optionally regulated by an additional parameter
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#meshWidth">meshWidth</a></font>).
+Estimate this parameter by counting a typical number of pixels across a cell.
+The flexibility is regulated by
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#wspringconst">wspringconst</a></font>
+parameter. The default <font face="Courier">wspringconst=0.5</font> produces a
+very small error, which is tolerable for most purposes. However, if the exact
+value of the diameter is one of the properties you are trying to measure in your
+experiment, you should reduce this parameter to about 0.05 will be small enough
+for any purposes. If the image is noisy and the cell diameter variations are
+caused by image noise, consider increasing it up to about 2.</li>
+  <li><b>Cell rigidity (algorithm 4 only, for filamentous cells).</b> The 
+rigidity of filamentous cells is regulated by
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityB">rigidityB</a></font> 
+(elasticity between nodes, &lt; 10, default: 4) and
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityRangeB">rigidityRangeB</a></font>
+(number of affected nodes, &lt; cell length, default: 7) parameters. Low values
+make the cell too 'flexible', producing kinks sometimes resulting in errors.
+High values smooth kinks too much, so that the program may lose the cell.</li>
+</ul>
+
+<p class="MsoNormal"><b><font size="4">5. Aligning the shape</font></b></p>
+
+<ul>
+  <li>
+
+<p class="MsoNormal"><b>Attraction/repulsion.</b> Attraction is pulling the cell 
+outline into the 'dark' (i.e. cell) areas to fill the cell completely. Repulsion 
+is retracting the outline from 'light' (background) areas so that it does not 
+extend from the cell. These effects help to fit better isolated cells, but may 
+cause the shape to penetrate into the neighbor cell. The two effects are 
+regulated by
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#attrCoeff">attrCoeff</a></font> and
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#repCoeff">repCoeff</a></font>
+parameters. Typical values: from 0 to 1. Usually set them in the range 0-0.2 and
+adjust only if necessary. In most cases keep <font face="Courier">attrCoeff &lt;
+repCoeff</font>.</p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Alignment testing tool.</b> The 'alignment' button 
+on the 'Parameter test mode' panel lets the user to see the process of alignment dynamically. 
+After activating the mode, click any processing button (such as All frames, This 
+frame, Range, buttons for manual operations) to see the how alignment happens. 
+This regime when activated is equivalent to
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#fitDisplay">fitDisplay</a></font> and
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#fitDisplay1">fitDisplay1</a></font>
+parameters present and set to 1. Note, MicrobeTracker still saves the data in
+memory and to the disk after each frame (if selected), so be careful to not
+erase your data! See the <a href="helpParameterTestMode.htm#Alignment">Alignment
+testing tool</a> for more information.</p>
+
+  </li>
+</ul>
+
+<p class="MsoNormal"><b><font size="4">
+<img border="0" src="Split_condition.gif" align="right" width="303" height="265">6. Splitting and joining cells</font></b></p>
+
+<ul>
+  <li>
+
+<p class="MsoNormal"><b>
+Splitting</b> cells is regulated by
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#splitThreshold">splitThreshold</a></font>
+parameter (available in algorithms 2-4). This parameter 
+defines the minimum septation depth in the profile of integrated phase contrast 
+intensity (see the image to the right) which triggers cells splitting. If the 
+condition is met, the program will try to fit new contours to each of the parts 
+of the cells separated by the septum position. Note, if you split the cell 
+manually, this condition does not have to be met. Typical values of the 
+parameter ~ 0.3. The value 1 means that the cell will never be split. If the 
+cells do not split when they should - reduce <font face="Courier">
+splitThreshold</font> (to 0.12-0.25), if they split too early - increase it (to 
+0.4-0.5).&nbsp; </p>
+
+  </li>
+  <li>
+
+<p class="MsoNormal"><b>Joining cells.</b> The program will attempt to join two 
+cells if the distance between two poles is below
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#joindist">joindist</a></font>
+parameter and the angle between the axes of the cells at those poles is below
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#joinangle">joinangle</a></font>
+parameter (in radians). If these conditions are met the program will try to fit
+a new shape to the two cells and check the splitting condition for the resulting
+cell. Only in this condition fails, the new cell outline will be kept. Note, if
+you join the cells manually no check for either of the conditions will be
+performed, however the program needs to be able to fit new shape to the both
+cells. Typical values are 5 pixels for the distance and ~ 1 radian for the
+angle, the values can be easily estimated by looking at a highly zoomed image.</p>
+
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>See also: <a href="helpMicrobeTrackerParameters.htm">
+Parameters</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

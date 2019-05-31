@@ -1,0 +1,187 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker - Quick Start</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Tutorial: Cell detection
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This tutorial is intended to demonstrate the steps in using
+<a href="helpMicrobeTracker.htm">MicrobeTracker</a> to detect <i>E. coli</i>
+cells on a single image, as well as to demonstrate some
+<a href="helpTools.htm">basic tools</a> for cell shape analysis. For a more
+general description of the cell detection procedure, the other steps of
+MicrobeTracker operation, and the full list of tutorials see
+<a href="helpQuickStart.htm">Quick Start</a> section of the help. This
+tutorial assumes that the <a href="helpQuickStart.htm#Installation">installation
+procedure</a> has been already performed as described.</p>
+
+<p>The data for this tutorial is not available by default because of its large
+size (about 10 MB). Please, make sure you download the version of MicrobeTracker
+that contains all tutorials from the
+<a href="http://microbetracker.org/download/">MicrobeTracker website</a>.</p>
+
+<p><b>1.</b> Start MATLAB. Set the working path in MATLAB to the folder of the
+example: <font face="Courier">.../MicrobeTracker.../examples\microbetracker_ecoli</font>
+(see the image below, click on the image for its full resolution version).</p>
+
+<center><a href="example_mt_ecoli_1.gif" target="_blank">
+<img src="example_mt_ecoli_1.gif" width="500" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>2.</b> Type <font face="Courier">microbeTracker</font> in MATLAB's command
+window to start MicrobeTracker. A new MicrobeTracker window will open.</p>
+
+<center><a href="example_mt_ecoli_2.gif" target="_blank">
+<img src="example_mt_ecoli_2.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>3.</b> Click <b>Load phase</b> and select the <font face="Courier">phase_contrast</font>
+subfolder of the example folder to load the images. Click <b>Load parameters</b>,
+<u>browse to the example folder</u> and select the
+<font face="Courier">alg4ecoli3.set</font> file to load the parameter set best
+adjusted for this image type.</p>
+
+<center><a href="example_mt_ecoli_3.gif" target="_blank">
+<img src="example_mt_ecoli_3.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>4.</b> Now perform cell detection. To do that, click <b>This frame</b> and
+wait for the program to detect all cells. It will take several munutes, during
+which the program will display some information abut the processing in the
+MATLAB workspace window. When it finishes, the detected cells will be displayed
+with their numbers.</p>
+
+<center><a href="example_mt_ecoli_4.gif" target="_blank">
+<img src="example_mt_ecoli_4.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>5.</b> In order to see the cells better, select <b>Contour</b> and
+<b>Green</b> on the <b>Objects to display</b> panel in the bottom.</p>
+
+<center><a href="example_mt_ecoli_5.gif" target="_blank">
+<img src="example_mt_ecoli_5.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>6.</b> Make manual corrections to the occasional errors in cell detection.
+Use a zoomed image (called by selecting <b>Display zoomed image</b> checkbox) to
+display cells at higher resolution. Use mouse wheel or <b>-</b> and <b>+</b>
+buttons on the <b>Zoom</b> panel to zoon in and out.</p>
+
+<center><a href="example_mt_ecoli_6.gif" target="_blank">
+<img src="example_mt_ecoli_6.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>7.</b> To join two cells (in the image) select those cells by clicking on
+them either in the main or in the zoomed window while holding the keyboard SHIFT
+button (to select more than one cell) and click <b>Join</b> on the <b>Manual</b>
+panel.</p>
+
+<center><a href="example_mt_ecoli_7.gif" target="_blank">
+<img src="example_mt_ecoli_7.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>8.</b> Finish joining and removing cells (by clicking <b>Delete</b>). Now
+you can save the results of your analysis by clicking <b>Save
+analysis</b> button (a file is already provided with MicrobeTracker, so you can
+skip this step this time).</p>
+
+<center><a href="example_mt_ecoli_8.gif" target="_blank">
+<img src="example_mt_ecoli_8.gif" width="350" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>9.</b> In what follows, the tutorial demonstrates what information can be
+extracted from the data we just obtained. Close microbeTracker and load the
+meshes from the saved file into MATLAB command window either by dragging and
+dropping or by typing (the information that you type will be indicated by MATLAB
+invitation <font face="Courier">>></font>:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> load('meshes')</font></p>
+
+<p><b>10.</b> Now a few new variables appear in MATLAB's workspace subwindow, the
+most important being <font face="Courier">cellList</font>. Display some basic
+statiscs on the experiment by typing:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> cellstat(cellList)</font></p>
+
+<p><font face="Courier">Total number of cells: 229, located on 1 frames<br/>
+Total number of spots: 0, located in 1 cells (0 spots/cell)<br/>
+Cell length is 43.8474 +/- 10.3947 pixels (mean +/- st. dev.)<br/>
+Cell width is 14.0543 +/- 0.82771 pixels<br/>
+Cell area is 620.3603 +/- 168.4189 pixels^2<br/>
+Cell volume is 7296.4757 +/- 2196.6474 pixels^3</font></p>
+
+<p><b>11.</b> Display a histogram of cell length by typing (make sure the
+MicrobeTracker window is closed, otherwise the command will plot into that
+window; reload the meshes after you close the window):</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> lengthhist(cellList)</font></p>
+
+<p><font face="Courier">Cell length, pixels<br/>
+Processed 1 dataset<br/>
+Set 1: mean 43.8474, std 10.3947</font></p>
+
+<center><a href="example_mt_ecoli_9.gif" target="_blank">
+<img src="example_mt_ecoli_9.gif" width="300" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>12.</b> Notice that the length of the cell is indicated in pixals because
+MicrobeTracker does not know about the actual recolution of the microscope. To
+display the same histogram in microns enter the conversion factor, which is in
+this case 0.0652 &#181m/pixel:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> lengthhist(cellList,0.0642)</font></p>
+
+<p><font face="Courier">Cell length, um<br/>
+Processed 1 dataset<br/>
+Set 1: mean 2.815, std 0.66734</font></p>
+
+<center><a href="example_mt_ecoli_10.gif" target="_blank">
+<img src="example_mt_ecoli_10.gif" width="300" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>13.</b> Display a histogram of the mean width of the cells (i.e. everaged
+for each cell across the length of its body). Notice, in the previous example
+the figure window was replaced. Open the results in a new window this time:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> figure<br/>
+&nbsp;&nbsp;&nbsp;>> meanwidthhist(cellList,0.0642)</font></p>
+
+<p><font face="Courier">Mean cell width, um<br/>
+Processed 1 dataset<br/>
+Set 1: mean 0.87521, std 0.054137</font></p>
+
+<center><a href="example_mt_ecoli_11.gif" target="_blank">
+<img src="example_mt_ecoli_11.gif" width="300" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>14.</b> In order to save the width of each cell in MS Excel format to
+process in a different application type (assiming you have MS Excel installed on
+your computer):</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;>> mwanwidthlist = meanwidthhist(cellList,0.0642)<br/>
+&nbsp;&nbsp;&nbsp;>> xlswrite('xlsdata',mwanwidthlist')</font></p>
+
+<p>In this example the apostroph after the <font face="Courier">mwanwidthlist</font>
+variable transposes the matrix to write it as a column rather than as a row.
+Notice that a file named <font face="Courier">xlsdata.xls</font> appeared in
+the example folder. If you open this file in Excel, you will see that the first
+column contains the information about the mean width (in microns) of each of the
+229 cells in the image.</p>
+
+<!-- Start replacement block 3 -->
+<br>
+<b>Top pages: <a href="helpQuickStart.htm">Quick Start</a>,
+<a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+loadimagestack
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">images = loadimagestack(filename);</font></p>
+<p><font face="Courier">images = loadimagestack(filename,dsp);</font></p>
+
+<p>This function loads an image stack file into a 3D array.</p>
+
+<ul>
+  <li>
+  <p>&lt;filename&gt; - file name of a stack file, i.e. 'c:\test\test.stk'. The
+  stack file must be a multipage TIFF file or BioFormats software must be
+  installed (see <a href="helpQuickStart.htm#Installation">Installation</a>) to
+  use other formats.</li>
+  <li>
+  <p>&lt;images&gt; - a 3D array of loaded images, where the third dimension is
+  image number. The images are in 8-bit or 16-bit format depending on the
+  bitdepth of the original files.</li>
+  <li>
+  <p>&lt;dsp&gt; - display progress bar if 1 (true), don't display if 0 (false)
+  or absent.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>See also: <b><a href="helploadimageseries.htm">
+loadimageseries</a>, <a href="helpsaveimagestack.htm">
+saveimagestack</a></b>, top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

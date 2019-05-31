@@ -1,0 +1,223 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Cell outlining algorithms
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>This section describes the underlying principles of the cell detection
+algorithms used by <a href="helpMicrobeTracker.htm">MicrobeTracker</a>. The
+algorithm is chosen by
+<a href="helpMicrobeTrackerParameters.htm#algorithm">algorithm</a> parameter
+and is the most essential property determining the quality and speed of cell
+detection, as well as some details of the
+<a href="helpMicrobeTrackerOutput.htm">output format</a>. There is a very
+detailed description of the principles of MicrobeTracker operation in the
+<a href="http://onlinelibrary.wiley.com/store/10.1111/j.1365-2958.2011.07579.x/asset/supinfo/MMI_7579_sm_FigureS1-3_TableS1.pdf?v=1&s=20c1ca5b5e04a29eeb407ba2c759a4b7baadd9fb">
+Supplementary Material</a> to the
+<a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2958.2011.07579.x/abstract">paper
+describing the Suite</a>. This section focuses on listing the available regimes
+and options.</p>
+
+<p>The general procedure of MicrobeTracker operation on the first frame of a
+<a href="helpMicrobeTrackerButtons.htm#Detection">timelapse</a> or in the
+<a href="helpMicrobeTrackerButtons.htm#Detection">independent frames</a> regime
+consists of these steps:</p>
+<ol>
+  <li>
+    <p>Image segmentation (using thresholding,
+    <a href="helpValleyDetection.htm">edge/valley detection</a>, splitting large
+    regions). See <a href="helpParameterTestMode.htm#Segmentation">Parameter
+    testing mode</a> for a list of parameters used.</p>
+  </li>
+  <li>
+    <p>Cell outlining following one of the algorithms listed here.</p>
+  </li>
+  <li>
+    <p>Mesh creation (placing equally spaced "ribs" perpendicularly to the
+    centerline).</p>
+  </li>
+</ol>
+
+<p>In the timelapse regime the procedure is somewhat different and depends on
+the detection algorithms listed below.</p>
+
+
+
+<p align="center"><font size="5"><a name="algorithm1">Algorithm 1</a></font></p>
+
+<p>This is the most basic method that does not use any refinement of the
+outline. However, it encomasses two submethods:</p>
+
+<ul>
+  <li>
+    <p>Simple outlining - the outline goes through the centers of boderline
+    pixels of the region being outlined. The outline is determined by the
+    segment border, though it can be Fourier-smoothed later by setting
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#fsmooth">fsmooth</a></font>
+    parameter to a number other than 0 or Inf (Fourier-smoothing can be used
+    with all other regimes as well).</p>
+  </li>
+  <li>
+    <p>Subpixel resolution outlining - the outline is interpolated between
+    pixel values. To use this regime, include
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#interpoutline">interpoutline</a></font>
+    parameter and set it to 1. This outline generated is in a certain range from
+    the segment border, but the exact location is determined by thresholding
+    a sum of the original image and a "Maxican hat"-filtered image (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#interpSigma">interpSigma</a></font>)
+    in order to enhance the boundaries, with the weights of the two determined by
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#interpWeights">interpWeights</a></font>
+    parameter.</p>
+  </li>
+</ul>
+
+<p>Using this regime, in case of timelapses the procedure is the following:</p>
+
+<ol>
+  <li>
+    <p>Segment the image.</p>
+  </li>
+  <li>
+    <p>Outline the cells.</p>
+  </li>
+  <li>
+    <p>Find the closest matching outline for each cell, which will be considered
+    the same cell on the next frame.</p>
+  </li>
+</ol>
+
+<p>In algorithm 1 (and similarly algorithms 2 and 3), mesh creation is not an
+essential step and can be skipped by setting
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#getmesh">getmesh</a></font>
+parameter to 0. This typically leads to achieving a noticeably higher operation
+speed, since the other operations in algorithm 1 are fast.</p>
+
+
+
+<p align="center"><font size="5"><a name="algorithms23">Algorithms 2 & 3</a></font></p>
+
+<p>These algorithms are based on the Point Distribution Model (PDM). Read the
+description of the method either in the
+<a href="http://www.sciencedirect.com/science/article/pii/S1077314285710041">oridinal
+paper</a> or (more specifically) in the
+<a href="http://onlinelibrary.wiley.com/store/10.1111/j.1365-2958.2011.07579.x/asset/supinfo/MMI_7579_sm_FigureS1-3_TableS1.pdf?v=1&s=20c1ca5b5e04a29eeb407ba2c759a4b7baadd9fb">
+SI to the paper describing MicrobeTracker</a>.</p>
+
+<p>In practice, algorithm 2 is always preferred over
+the two. Algorithm 3 uses non-linear transformations in addition to the linear
+ones and was created to deal with filamentous cells, however it was later
+replaced with the more efficient for this purpose algorithm 4.</p>
+
+<p>An essential feature of these algorithms is that they use
+<a href="helpMicrobeTrackerButtons.htm#training">training</a> to a
+particular cell type. They have been trained for <i>C. crescentus</i> and
+<i>E. coli</i> cells. These training sets seem to work for a very large number
+of rod-shaped cells, however they might need to be retrained if the shape is
+fundamentally different, for example lemon-, pear- or dumbbell-shaped.</p>
+
+<p>Since it is impossible to automatically convert an arbitrary cell outline
+to a PDM model, the cell outlining procedure in algorithms 2 & 3 consists of two
+substeps:</p>
+
+<ol>
+  <li>
+    <p>Fit the PDM model to the binary region outline.</p>
+  </li>
+  <li>
+    <p>Fit the PDM model under the action of the image forces.</p>
+  </li>
+</ol>
+
+<p>The operation of MicrobeTracker in these regimes can be visualized in the
+<a href="helpParameterTestMode.htm#Alignment">Parameter testing mode</a>.</p>
+
+<p>If using these algorithms, as well as algorithm 4, the procedure in the
+timelapse regime is the following:</p>
+
+<ol>
+  <li>
+    <p>Start with the outline from the previous frame as the initial guess.</p>
+  </li>
+  <li>
+    <p>Fit the outline to the new image.</p>
+  </li>
+</ol>
+
+<p>This algorithm depends on a small number of constraint parameters:
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#scaleFactor">scaleFactor</a></font>,
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#trainingFile">trainingFile</a></font>,
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#Nkeep">Nkeep</a></font> and
+<font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityPDM">rigidity</a></font>
+(and also on the <a href="helpMicrobeTrackerParameters.htm#imageforces">image force</a>
+and <a href="helpMicrobeTrackerParameters.htm#fitting">fitting</a> parameters, similarly to algorithm 4).</p>
+
+
+
+<p align="center"><font size="5"><a name="algorithm4">Algorithm 4</a></font></p>
+
+<p>This algorithm is based on a manually constrained contour. The constraints
+and the parameters they depend on are listed below:</p>
+
+<ul>
+  <li>
+    <p>Contour rigitidy, ensuring smooth outline (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidity">rigidity</a></font> and
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityRange">rigidityRange</a></font>).</p>
+  </li>
+  <li>
+    <p>Backbone rigitidy, ensuring smooth centerline (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityB">rigidityB</a></font> and
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#rigidityRangeB">rigidityRangeB</a></font>).</p>
+  </li>
+  <li>
+    <p>Cell width, ensuring cells being of about equal width (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#cellwidth">cellwidth</a></font> and
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#wspringconst">wspringconst</a></font>).</p>
+  </li>
+  <li>
+    <p>Distance between nodes (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#eqaldist">eqaldist</a></font>).</p>
+  </li>
+  <li>
+    <p>Perpendicularity of ribs to the centerline (depends on
+    <font face="Courier"><a href="helpMicrobeTrackerParameters.htm#horalign">horalign</a></font>).</p>
+  </li>
+</ul>
+
+<p>The cell outlining procedure when using algorithm 4 is the following:</p>
+
+<ol>
+  <li>
+    <p>Use either the mesh from the previous frame of one detected by
+    segmentation followed by mesh creation.</p>
+  </li>
+  <li>
+    <p>Convert the mesh to model (simply by reshaping the data structure).</p>
+  </li>
+  <li>
+    <p>Fit the model to the image.</p>
+  </li>
+</ol>
+
+<p>Notice that in the case of algorithm 4, mesh creation is mandatory.</p>
+
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p align="left"><b>See also: <a href="helpParameterTestMode.htm#Segmentation">
+Segmentation testiong tool</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="helpTools.htm">MicrobeTracker tools</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

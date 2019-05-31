@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+curvhist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">curvhist</font></p>
+<p><font face="Courier">curvhist(cellList)</font></p>
+<p><font face="Courier">curvhist(curvlist)</font></p>
+<p><font face="Courier">curvhist(...,'long mean')</font></p>
+<p><font face="Courier">curvhist(...,'long all')</font></p>
+<p><font face="Courier">curvhist(...,'long...',window)</font></p>
+<p><font face="Courier">curvhist(...,xarray)</font></p>
+<p><font face="Courier">curvhist(...,pix2mu)</font></p>
+<p><font face="Courier">curvhist(...,'radius')</font></p>
+<p><font face="Courier">curvhist(...,'counts')</font></p>
+<p><font face="Courier">[hst,xarray] = curvhist(...)</font></p>
+<p>
+This function plots a histogram of the curvature (default) or the radius of 
+curvature of all cells in a list obtained by MicrobeTracker.</p>
+<ul>
+  <li>
+  <p>&lt;curvlist&gt; - table of cell curvatures obtained by the
+  <a href="helpgetcurvature.htm">getcurvature</a> function (one of two possible
+  inputs).</li>
+  <li>
+  <p>&lt;cellList&gt; - input cell list (the other possible input, which can be
+  used instead of the curvlist). If neither curvlist nor cellList is supplied,
+  the program will request to open a file with the cellList.</li>
+  <li>
+  <p>'long mean', 'long all', 
+  window - parameters for processing long cells, the same as in the
+  <a href="helpgetcurvature.htm">getcurvature</a> function. these parameters are 
+  not used if curvlist is supplied.</li>
+  <li>
+  <p>&lt;xarray&gt; - array of x 
+  values for the histogram, which serve the the centers of bins of the histogram 
+  (the boundaries will be in between, for example [1 2 3 4 5] to display all the 
+  cells shorter than 1.5 micron in the first bin, between 1.5 and 2.5 microns in 
+  the second, etc.).</li>
+  <li>
+  <p>&lt;pix2mu&gt; - conversion factor from image units to microns. If not
+  supplied, the histogram is plotted in pixels.</li>
+  <li>
+  <p>'radius' - plot a histogram of the radius of curvature instead of
+  curvature.</li>
+  <li>
+  <p>'counts' - plot the histogram in units of cell counts instead of the
+  percentage of cells.</li>
+  <li>
+  <p>&lt;hst&gt; - the height of the bars as plotted in the histogram.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

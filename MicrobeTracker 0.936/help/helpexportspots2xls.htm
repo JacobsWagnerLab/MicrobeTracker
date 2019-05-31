@@ -1,0 +1,55 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+exportspots2xls
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">exportspots2xls</font></p>
+<p><font face="Courier">exportspots2xls(cellList)</font></p>
+<p><font face="Courier">exportspots2xls(cellList,filename)</font></p>
+<p><font face="Courier">exportspots2xls([],[],field)</font></p>
+
+<p>This functions saves some of the spots data produced by the
+SpotFinder family tools into an Excel or CSV file. The output data are saved
+as a matrix in which each row corresponds to a spot and the columns are:
+(A) frame number, (B) cell number, (C) spot number within this cell or on the
+frame if SpotFinderF was used, (D) x-coordinate, (E) y-coordinate,
+(F) l-coordinate, (G) relative l-coordinate, i.e. l divided by cell length,
+(H) d-coordinate, (I) magnitude/m, (J) h, (K) w, (L) b. The Excell (but not CSV)
+file also gets a header with the names of the columns. The CSV file will contain
+NaN for the missing values, such as the cell number for SpotFinderF or h, w, and
+b for older versions of SpotFinderZ.</p>
+
+<ul>
+  <li>
+  <p>&lt;cellList&gt; - input cell/spot array (e.g. cellList or
+    spotList) produced by SpotFinder family tools. An input dialog will appear
+    if the value is not provided.</li>
+  <li>
+  <p>&lt;filename&gt; - name of the output file (must be .xls or .csv). An input
+  dialog will appear if the value is not provided.</li>
+  <li>
+  <p>&lt;field&gt; - name of spots field (default: 'spots').</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>See also: <b><a href="helpexportcells2xls.htm">
+exportcells2xls</a></b>, top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

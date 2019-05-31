@@ -1,0 +1,131 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Image Aligning Tool
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+        <img border="0" src="imageAlignToolWindow.gif">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p align="center">Image Aligning Tool window
+      </td>
+    </tr>
+  </table>
+</div>
+<p>This tool allows for manual alignment of images in image stacks
+with timelapse image series that drift too much and cannot be aligned
+automatically. The tool can export the alignment data in the format readable by
+MicrobeTracker and can export shifted phase contrast or fluorescence images.</p>
+
+<p><font size="4"><b>Basic Operation</b></font></p>
+<ul>
+  <li>
+    <p>Load images by clicking <b>Load phase</b> button.</p>
+  </li>
+  <li>
+    <p>Pick an object in the images that does not move (a non-motile cell or a
+    dust particle). Scroll through different frames and click on the object. You
+    do not need to click on it on every frame, clicking before and after big
+    jumps would be sufficient. A cross appears in the image in each point you
+    click on.</p>
+  </li>
+  <li>
+    <p>Click <b>Align</b> button to align the images using the picked points
+    (labeled with crosses) as the initial guess for the alignment.</p>
+  </li>
+  <li>
+    <p>Save the alignment data by clicking <b>Save</b> and use this data
+    later in MicrobeTracker.</p>
+  </li>
+  <li>
+    <p>In MicrobeTracker load the alignment data by clicking <b>Load</b>
+    button on the Alignment panel and proceed to cell detectin. Do not realign
+    the images.</p>
+  </li>
+</ul>
+
+<p><font size="4"><b>Buttons and Controls</b></font></p>
+<p align="center"><img border="0" src="IAT_top_panel.gif"></p>
+<ul>
+  <li>
+    <p><b>Help</b> - call this help window.</p>
+  </li>
+  <li>
+    <p><b>Load Phase, Load signal 1, Load signal 2, stack</b> - load images the
+    same way you would do in MicrobeTracker.</p>
+  </li>
+  <li>
+    <p><b>Align</b> - align frames using clicked points positions as the
+    original guess. If these points are not available, do automatic alignment,
+    similarly to that in MicrobeTracker.</p>
+  </li>
+  <li>
+    <p><b>Points</b> - produce the alignment from clicked points, without doing
+    automatic alignment. The alignment is done in the way so that the clicked
+    points remain in place, and the frames are shifted accordingly.</p>
+  </li>
+  <li>
+    <p><b>Load, Save</b> - load or save alignment data.</p>
+  </li>
+  <li>
+    <p><b>Reset</b> - reset the alignment to none.</p>
+  </li>
+</ul>
+
+<p align="center"><img border="0" src="IAT_bottom_panel.gif"></p>
+<ul>
+  <li>
+    <p><b>Panel 1</b> - information on the images loaded, current frame, and
+    cursor position.</p>
+  </li>
+  <li>
+    <p><b>Panel 2</b> -  image zoom, message output, and contrast controls, which
+    operate similarly to those of MicrobeTracker.</p>
+  </li>
+  <li>
+    <p><b>Panel 3</b> - selection of the image: either original or shifted (by
+    <b>Align</b> or <b>Points</b> buttons) and of the channel (i.e. Phase,
+    Signal 1, or Signal 2).</p>
+  </li>
+  <li>
+    <p><b>Panel 4</b> - parameters of the program, similar to those in
+    MicrobeTracker. <b>aligndepth</b> indicates to the number of frames used in
+    alignment, it should be intreases for long slowly-drifting series.
+    <b>bgrErodeNum</b> is used for background subtraction and indicates the
+    width of the area around cells (or other dark objects) in pixels that needs
+    to be excluded from background calculation.</p>
+  </li>
+  <li>
+    <p><b>Panel 5</b> - background subtraction panel similar to that of
+    MicrobeTracker. You can subtract background and save the images. The images
+    will be saved in the mode they are displayed in, i.e. the currently
+    displayed channel (Phase, Signal 1, or signal 2) and currently displayed
+    shifted or non-shifted images.</p>
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helptools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

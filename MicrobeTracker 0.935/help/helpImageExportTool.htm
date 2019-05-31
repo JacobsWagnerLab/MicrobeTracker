@@ -1,0 +1,90 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Image export tool
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+<img border="0" src="imageExportToolWindow.gif" width="417" height="284"></td>
+      <td>
+<img border="0" src="imageExportToolExample.gif" width="200" height="256"></td>
+    </tr>
+    <tr>
+      <td>
+      <p align="center">Image export tool window</td>
+      <td>
+      <p align="center">Output image example</td>
+    </tr>
+  </table>
+</div>
+<p align="left">This tool is designed to export movies or image series of cells 
+outlined with a contour detected by MicrobeTracker. The display mode (image 
+channel, image contrast, the color of the contours, whether the mesh or cell 
+number is displayed, etc.) is determined by current MicrobeTracker settings. The 
+user can specify certain basic parameters of the output:</p>
+
+<ul>
+  <li>
+<p align="left"><b>Export images from frame</b> specifies the start and end 
+frames of the images to output the.</p>
+
+  </li>
+  <li>
+<p align="left"><b>Output format</b> specifies the image/movie type. However, .avi 
+format currently only works correctly on 32-bit Windows systems.</p>
+
+  </li>
+  <li>
+<p align="left"><b>Region to export</b> specifies the position of the left top 
+corner, the width and the height of the image. Image export tool communicates 
+with the <b>region selection tool</b> (check <b>Selected area</b> on the <b>
+Detection &amp; analysis</b> panel and select a region while holding <b>Shift</b>). 
+When a new selection is made, Image export tool automatically updates the values 
+of the region to export.</p>
+
+  </li>
+  <li>
+<p align="left"><b>Image zoom</b> specifies zoom of the image, while keeping the 
+width of the lines constant. You should increase image zoom in order to obtain 
+thinner lines and smaller cell labels relative to the pixel size of the original 
+image. <b>Resolution</b> specifies the resolution of the output image. Note that 
+both image zoom and resolution increase image size on the disk.</p>
+
+  </li>
+  <li>
+<p align="left"><b>Movie fps</b> - the number of frames per second in the movie 
+if .avi output format is selected.</p>
+
+  </li>
+  <li>
+<p align="left"><b>Time stamp</b> indicated the <b>x</b> and <b>y</b> position 
+of the left top corner of the time record, the time interval between frames and 
+the font size of the record. If any of the field is left blank, no time stamp 
+will be added.</p>
+
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>See also: <a href="helpMicrobeTrackerParameters.htm">
+Parameters</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

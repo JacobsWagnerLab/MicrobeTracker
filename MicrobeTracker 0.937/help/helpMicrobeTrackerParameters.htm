@@ -1,0 +1,396 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Parameters
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>The MicrobeTracker grabs the parameters from the window at the beginning of any operation. Any changes made afterwards will have no effect. Not all of the 
+parameters are used for every operation, the rest are just ignored. Some of the parameters sets are saved as default, but they may need to be modified depending 
+on the particular image set. <b>Usually only a few parameters have to be changed, these parameters are written in bold and their effect described in more detail 
+on the <a href="helpMicrobeTrackerAdjusting.htm">Adjusting Parameters</a> page.</b> Most of the parameters are numeric. The logical parameters 
+(yes/no) are also numeric, with yes=1 and no=0.</p>
+
+<p><a name="algorithm"></a><b><font size="4">Algorithm</font></b></p>
+
+<p><font face="Courier">algorithm</font> is the most important parameter, which
+determines how the cells are outlined. For a more description of the difference
+between algorithms see <a href="helpAlgorithms.htm">Cell outlining algorithms</a>
+section. If you are detecting cells in a timelapse series, the algorithm used
+must be the same, the program will not be able to continue otherwise. Currently,
+4 algorithms
+are implemented (numbered 1 to 4), though their quality of work and intended use
+differ.</p>
+
+<p><span LANG="EN">Algorithm 1 is the most primitive and the fastest algorithm
+based exclusively on morphological operations, such as thresholding, edge 
+detection, and watershed algorithms. It is the closest to what most previous
+object or cell detection program offered. This algorithm should be used when 
+nothing is known about the cell shape. However, if it tries to create a mesh
+(which could be disabled with <a href=#getmesh><font face="Courier">getmesh</font></a>
+parameter), it will not detect a cell if this is impossible for a particular
+object. This algorithm uses a minimum number of parameters, only such parameters
+as <a href=#fsmooth><font face="Courier">fsmooth</font></a>,
+<a href=#areaMin><font face="Courier">areaMin</font></a>,
+<a href=#areaMax><font face="Courier">areaMax</font></a>,
+<a href=#fmeshstep><font face="Courier">fmeshstep</font></a>,
+<a href=#maxmesh><font face="Courier">maxmesh</font></a>,
+<a href=#interpoutline><font face="Courier">interpoutline</font></a> (and related),
+and <a href=helpValleyDetection.htm><font face="Courier">valley/edge</font></a>
+parameters will affect detection.</span></p>
+
+<p>The algorithms 2-4 use an attraction map, attracting the cell outline contour to particular points on the image, which is opposed by resistance related to 
+internal shape constraints. The nature of these constraints is different for each algorithm and is described below. </p>
+
+<p>Algorithm 2 uses the same procedure as algorithm 1 for initial guess, which
+is then refined using the Point Distribution Model (PDM). In timelapses, the
+outline produced for the previous frame is used as the initial guess. This
+algorithm is faster than the following algorithms and works only for the cells
+which it is trained for. Currently only the data for &quot;normal&quot;
+<i>Caulobacter</i> cells is included, but training is relatively simple and can
+be performed by the user (see subsection <a href="helpMicrobeTrackerButtons.htm#training">Training</a>).</p>
+
+<p>Algorithm 3 is a modification of algorithm 2, though is uses a further
+modified variant of the PDM to work on elongated cells. It currently requires
+additional attention to develop the best parameter set and solve some common
+issues.</p>
+
+<p>Algorithm 4 is based on a version of the Active Contour Model (snake). It is 
+the slowest method and requires setting all parameters manually. It was 
+developed for filamentous cells, but is works well for all cell types. It is 
+recommended for the applications with filamentous cells and non-<i>Caulobacter</i> 
+rod-shaped cells. It will not work well for noticeably non-rod-shaped cells.</p>
+
+<p><b><font size="4">List of parameters</font></b></p>
+
+<p>The <i>most important</i> parameters that should be changed relatively frequently are indicated in bold. The typical values are shown for wild type <i>Caulobacter crescentus</i> cells imaged in phase contrast regime at 0.064 &#956;m/pixel resolution, unless mentioned otherwise.</span></p>
+<p><b>General</b></p>
+<ul>
+  <li><a name="algorithm"></a><font face="Courier">algorithm</font> &#9472; the algorithm used, a number from 1 to 4, described above.</li>
+  <li><font face="Courier">invertimage</font> (previously called <font face="Courier">useExtraData</font>) &#9472; indicates that light cells are used on dark background and the image needs to be inverted (for example, if you are using diffuse GFP instead of phase contrast microscopy). All algorithms. Default: 0 (false). </li>
+</ul>
+<p><b>Algorithm 1 specific</b></p>
+<ul>
+  <li><a name="getmesh"></a><font face="Courier">getmesh</font> &#9472; indicate
+  if mesh should be generated. Default: 1 (true).</li>
+  <li><a name="interpoutline"></a><font face="Courier">interpoutline</font> &#9472;
+  produce an interpolated outline instead of a pixilated one in order to achieve
+  subpixel resolution. When using interpolation, typically use with
+  <font face="Courier"><a href=#fsmooth>fsmooth</a>=Inf</font> in order to not
+  smooth the outline additionally. Default: 0 (false).</li>
+  <li><a name="interpSigma"></a><font face="Courier">interpSigma</font> &#9472;
+  width of Gaussian smoothing (in pixels) applied in the interpolation
+  procedure. Consider values between 0 and 1-2 pixels.</li>
+  <li><a name="interpWeights"></a><font face="Courier">interpWeights</font> &#9472;
+  relative weights of the original image and edge strength in the interpolation
+  procedure, a vector of two values. Start with 0.5 0.5, then try from 0 1 to 1 0.</li>
+</ul>
+<p><b>Pixel-based operations</b></p>
+<ul>
+  <li><a name="areaMin"></a><b><font face="Courier">areaMin</font></b> &#9472; minimum area of the
+    region or the cell that is kept, all objects smaller will be discarded.
+    Depends on the resolution, select the smallest cell when detected to
+    estimate.</li>
+  <li><a name="areaMax"></a><b><font face="Courier">areaMax</font></b> &#9472; maximum area of the
+    region or the cell that is kept, all regions larger will be attempted to
+    split, all cells larger will be discarded. The area of the cells depends on
+    the resolution. To estimate this parameter, set this value very large so
+    that no cells are rejected and click on the largest cell.</li>
+  <li><a name="splitregions"></a><font face="Courier">splitregions</font> &#9472; determines whether the
+    regions can be split using watershed algorithm, default value: 1 (meaning
+    &quot;yes&quot;).</li>
+  <li><font face="Courier">edgedetection</font> (obsolete) &#9472; determines
+    whether the edge detection should be used (Laplacian of Gaussian algorithm),
+    default value is 1 (meaning &quot;yes&quot;).</li>
+  <li><a name="edgemode"></a><font face="Courier">edgemode</font> &#9472;
+    <a href="helpValleyDetection.htm">boundary (edge) detection method</a>.
+    Currently a choice of "none" (or 0) - no edge detection, "log" (or 1) -
+    Laplacian of Gaussian (LoG) edge detection algorithm, "valley" (or 2) -
+    'valley detection' algorithm (zero crossings of the gradient), "logvalley"
+    (or 3) - both.</li>
+  <li><a name="edgeSigmaL"></a><font face="Courier">edgeSigmaL</font> (previously called
+    <font face="Courier">edgeSigma</font>) &#9472; &#963; parameter of
+    Gaussian smoothing for the
+    <a href="helpValleyDetection.htm#Laplacian of Gaussian">LoG edge detection
+    algorithm</a>.</li>
+  <li><a name="logthresh"></a><font face="Courier">logthresh</font> &#9472;
+    threshold for the LoG edge detection algorithm. Default: 0. Typical values:
+    ~0.1-0.4 (in the range 0 to 1).</li>
+  <li><a name="edgeSigmaV"></a><font face="Courier">edgeSigmaV</font> &#9472; &#963; parameter of
+    Gaussian smoothing for the
+    <a href="helpValleyDetection.htm#Valley detection">Valley detection
+    algorithm</a>.</li>
+  <li><a name="valleythresh1"></a><font face="Courier">valleythresh1</font>
+    (previously called <font face="Courier">valleythres1</font>) &#9472; weak threshold for the
+    Valley detection algorithm. Must be smaller than
+    <font face="Courier">valleythresh2</font>. </li>
+  <li><a name="valleythresh2"></a><font face="Courier">valleythresh2</font>
+    (previously called <font face="Courier">valleythres2</font>) &#9472; strong threshold for the
+    Valley detection algorithm.</li>
+  <li><a name="crossthresh"></a><font face="Courier">crossthresh</font> &#9472;
+    cross-detection threshold between the LoG and valley algorithms. Default: 0.
+    Typical values: ~0.1-0.4 (in the range 0 to 1).</li>
+  <li><font face="Courier">opennum</font> &#9472; number of pixels to open (erode, then dilate) an image after segmentation to separate some of the cells that remained linked. Typical values from 0 to 3. Default - 0. For all algorithms.</li>
+  <li><a name="thresFactorM"></a><b><font face="Courier">thresFactorM</font></b>
+    &#9472; image intensity (considering white is 0 and black is 1) threshold
+    factor, used in morphological operations. The value of 1 implies using the
+    automatically detected threshold. Increasing may help for some unevenly
+    illuminated images for which multiple false cells get detected. Typically
+    try increasing the values from 1 to 1.1-1.5. Increasing it too much can be
+    dangerous - if the automatically detected threshold multiplied by this value
+    exceeds the maximum bit depth of the image, the program will exit with an
+    error.</li>
+  <li><a name="threshminlevel"></a><font face="Courier">threshminlevel</font>
+    &#9472; an alternative to <font face="Courier">thresFactorM</font>; this
+    factor tells the program the fraction of the brightest pixels to exclude
+    from threshold calculation. To eliminate the effect of bright dust particles
+    which may appear in the field of view. Default: 0, typical values:
+    0.05-0.1.</li>
+  <li><font face="Courier">erodeNum</font> &#9472; number of pixels to erode
+    from the cell before detection. Usually the value should be 1, but may be
+    increased if the cells tend to be detected smaller or missing the poles.</li>
+</ul>
+<p><b>PDM model specific</b> (for algorithms 2 and 3)</p>
+<ul>
+  <li><a name="scaleFactor"></a><b><font face="Courier">scaleFactor</font></b> &#9472; multiplication
+    factor to switch between different cameras or microscopes. Since cell
+    diameter cannot be set directly in the PDM model, this parameter is required
+    to use the same training file with different resolution images. For the
+    included training files (both for <i>C. crescentus</i> and <i>E. coli</i>,
+    the value 1 corresponds to the resolution 0.064 &#956;m/pixel. In other
+    cases the parameter should be set to resolution / 0.064.</li>
+  <li><a name="trainingFile"></a><font face="Courier">trainingFile</font> &#9472; file where the PDM
+  training data is saved.</li>
+  <li><a name="Nkeep"></a><font face="Courier">Nkeep</font> &#9472; number of Principal Components
+    Analysis (PCA) modes to keep in a PDM-based algorithm. The default for
+    <i>C. crescentus</i> is 11, the number should be increased for more
+    complexly shaped cells and decteased for simpler shaped cells.</li>
+  <li><a name="rigidityPDM"></a><font face="Courier">rigidity</font> &#9472; enhances the degree of
+  keeping constraints. Typical values from 0 to 0.1.</li>
+</ul>
+<p><b>Constraints</b> (for algorithm 4)</p>
+<ul>
+  <li><a name="cellwidth"></a><b><font face="Courier">cellwidth</font></b> &#9472; typical width of the
+    cell.</li>
+  <li><a name="wspringconst"></a><b><font face="Courier">wspringconst</font></b> the &#9472;
+    &quot;rigidity&quot; of the cell width. This parameter has to be reduced
+    when measurements of the cell width or cell constriction are performed or if
+    the cell width is highly variable (typically from 0.5 to ~0.1).</li>
+  <li><a name="rigidityRange"></a><font face="Courier">rigidityRange</font> &#9472; the range of the cell
+    outline rigidity in pixels.</li>
+  <li><a name="rigidity"></a><b><font face="Courier">rigidity</font></b> &#9472; the value of the cell
+    outline rigidity. Reduce (from the default 0.4 for &quot;normal&quot; cells)
+    to pick roughness of the cell, increase for the cells to be smoother (for
+    example on rough background).</li>
+  <li><a name="rigidityRangeB"></a><font face="Courier">rigidityRangeB</font> &#9472; the range of the
+    backbone (centerline) rigidity in pixels.</li>
+  <li><a name="rigidityB"></a><b><font face="Courier">rigidityB</font></b> &#9472; the value of the
+    backbone rigidity. Reduce for cells with kinks (default value is 4).</li>
+  <li><a name="horalign"></a><font face="Courier">horalign</font> &#9472; parameter responsible for
+    maintaining perpendicular &quot;ribs&quot; during fitting. Only try changing
+    if cell outlines form self-intersections.</li>
+  <li><a name="eqaldist"></a><font face="Courier">eqaldist</font> &#9472; parameter responsible for
+    maintaining equal spacing during fitting. Only try changing is cell outlines
+    form self-intersections.</li>
+</ul>
+<p><a name="imageforces"></a><b>Image forces</b> (for algorithms 2-4)</p>
+<ul>
+  <li><font face="Courier">imageforce</font> &#9472; factor, multiplying the
+    image attraction force (as opposed to constraints, see section
+    &quot;Algorithm&quot; above).</li>
+  <li><a name="attrCoeff"></a><b><font face="Courier">attrCoeff</font></b> &#9472; the force attracting
+    the contour to the dark areas outside of the cell. It is useful to fill the
+    cells on low contrast images, but may produce contours being detached from
+    the cell or noticeably larger, or the cells filling extra area after
+    splitting. In the latter cases the value has to be reduced to about 0-0.3.
+    Otherwise keep in the range 0.5 to 1 for algorithm 4. For algorithms 2 and 3
+    it should be ~10 times lower.</li>
+  <li><a name="repCoeff"></a><b><font face="Courier">repCoeff</font></b> &#9472; the force repulsing
+    the contour from light areas inside the cell, for algorithms 2-4. It should
+    not exceed <font face="Courier">attrCoeff</font> more than 3-4 times and has
+    to be increased if the contours are larger than the cells on some
+    low-contrast images.</li>
+  <li><font face="Courier">attrRegion</font> &#9472; the width of the
+    attraction/repulsion area. Keep the default value (4) in most cases.</li>
+  <li><font face="Courier">forceWeights</font> &#9472; relative weights of
+    different image force components (3 numbers in square brackets) in the
+    order: <i>distance from the edge &#9472; gradient forces &#9472; attraction
+    to the intensity close to the threshold</i>.</li>
+  <li><font face="Courier">dmapThres</font> &#9472; threshold for the
+    <i>distance from the edge</i> method of force calculation (the force is a
+    sigmoid function of the distance, characterized by threshold and power
+    parameters).</li>
+  <li><font face="Courier">dmapPower</font> &#9472; power for the <i>distance
+    from the edge</i> method of force calculation.</li>
+  <li><font face="Courier">gradSmoothArea</font> &#9472; the amount of smoothing
+    for the <i>gradient forces</i> method of force calculation.</li>
+  <li><b><font face="Courier">thresFactorF</font></b> &#9472; similar to
+    <font face="Courier"> thresFactorM</font>, but used for the contour motion.
+    Keep equal to 1 in most cases, change together with
+    <font face="Courier">thresFactorM</font>.</li>
+  <li><font face="Courier">repCoeff1</font> &#9472; similar to
+    <font face="Courier">repCoeff</font>, but for the fit to the initial guess.
+    Keep 0 in most cases, except for very irregularly shaped cells, in that case
+    increase to ~1. For algorithms 2-3 only.</li>
+  <li><font face="Courier">attrCoeff1</font> &#9472; similar to
+    <font face="Courier">attrCoeff</font>, but for the fit to the initial guess.
+    Keep 0 in most cases, except for very irregularly shaped cells, in that case
+    increase to ~1. For algorithms 2-3 only.</li>
+  <li><font face="Courier">repArea</font> &#9472; maximum area of the cell when
+    it still experiences attraction as a fraction of
+    <font face="Courier">areaMax</font>. Designed to use the attraction only for 
+    falsely small cells.</li>
+  <li><font face="Courier">attrPower</font> &#9472; the power in the sigmoid
+    function used in attraction.</li>
+  <li><font face="Courier">neighRep</font> &#9472; the amount of repulsion from
+    previously detected neighbors in timelapses. Should be increases if cells
+    tend to grow into other cells area. If the growth between frames is
+    significant or if there is drift that cannot be eliminated by aligning
+    images, it may prevent the cells from occupying areas previously occupied by
+    the neighbors - the value should be reduced.</li>
+  <li><font face="Courier">neighRepA</font> &#9472; similar to
+    <font face="Courier">neighRep</font>, but uses a different way of taking
+    neighbors into account, should be 0 in most cases. For algorithm 4 only.</li>
+</ul>
+<p><a name="fitting"></a><b>Contour fitting</b> (for algorithms 2-4)</p>
+<ul>
+  <li><a name="fitDisplay"></a><font face="Courier">fitDisplay</font> &#9472; whether the images during
+    fitting should be displayed, for debugging purposes only.</li>
+  <li><font face="Courier">fitqualitymax</font> &#9472; minimum allowed quality
+    of fit. Designed to reject not well fitted cells, but no efficient criterion
+    is currently implemented.</li>
+  <li><a name="fitDisplay1"></a><font face="Courier">fitDisplay1</font> &#9472; whether the cell should be
+    displayed during the fit for the initial guess. For debugging purposes. For
+    algorithms 2-3 only.</li>
+  <li><font face="Courier">fitConvLevel1</font> &#9472; one of the two possible
+    conditions to finish fitting to the initial guess if the norm of the force
+    drops below this value, usually not used. For algorithms 2-3 only.</li>
+  <li><font face="Courier">fitMaxIter1</font> &#9472; another condition to
+    finish, the maximum number of iterations in the initial guess fit. Rarely
+    changed. For algorithms 2-3 only.</li>
+  <li><font face="Courier">fitStep1</font> &#9472; the norm of the step size
+    when fitting to the initial guess. Rarely changed. For algorithms 2-3.</li>
+  <li><font face="Courier">fitConvLevel</font> &#9472; one of the two possible
+    conditions to finish fitting if the norm of the force drops below this
+    value, usually not used.</li>
+  <li><font face="Courier">fitMaxIter</font> &#9472; one of the conditions to
+    finish the fitting, the maximum number of iterations. Increase if you think
+    the contour has not converged yet; will be slower but more precise.</li>
+  <li><font face="Courier">moveall</font> &#9472; whole cell motion coefficient,
+    linearly spanning between 0 and 1. 0 corresponds to growing non-moving cells
+    detection. 1 - the cell moving as a whole. For timelapses only. It is
+    recommended to set it below 1 even for moving cells for stability (i.e.
+    0.5-0.9). Setting it above 0 for non-moving cells helps if some drift of
+    pushing by other cells are present. For algorithm 4 only.</li>
+  <li><font face="Courier">fitStep</font> &#9472; the norm of the step size.
+    Decrease if you the contour diverges, only helps if some of the force
+    parameter were increased.</li>
+  <li><font face="Courier">fitStepM</font> &#9472; the norm of the step size of
+    the whole cell motion (in pixels). Typically about 1 is fine, decrease it if
+    the program is losing cells, increase if the outline does not shift
+    sufficiently from frame to frame. For algorithm 4 only.</li>
+</ul>
+<p><b>Mesh creation</b></p>
+<ul>
+  <li><a name="fmeshstep"></a><font face="Courier">fmeshstep</font> &#9472; distance between
+    &quot;ribs&quot; in the mesh in pixels, usually 1.</li>
+  <li><a name="fsmooth"></a><b><font face="Courier">fsmooth</font></b> &#9472; number of Fourier modes
+    used to smooth the cell. The default for &quot;normal&quot; cells is 40,
+    this number has to be proportionally increased for filamentous cell (up to
+    ~250 for very long cells). Values 0 or Inf will result in no smoothing.</li>
+  <li><a name="maxmesh"></a><font face="Courier">maxmesh</font> &#9472; maximum size of the mesh. It
+    is mainly designed to reject meshes formed on clusters of cells, junk
+    particles or other large objects, keep the default value (1000) in most
+    cases.</li>
+  <li><font face="Courier">roiBorder</font> &#9472; distance in pixels around
+    the existing mesh or detected region used to crop the corresponding image
+    area. Has to be larger than the cell can grow in one frame, if the cell can
+    be different from its initial guess.</li>
+  <li><font face="Courier">noCellBorder</font> &#9472; distance from the edge of
+    the image the cells are not allowed to be in.</li>
+  <li><a name="splitbndcells"></a><font face="Courier">splitbndcells</font>
+    &#9472; this parameter controls if a cell (which could in reality be a
+    cluster of cells) be rejected because of its proximity to the image edge
+    should be splitted to try getting a good cell. For algorithms 2-4. Default
+    1 (true).</li>
+  <li><font face="Courier">maxRegNumber</font> &#9472; maximum number of regions
+    on a frame. Designed to prevent forming multiple regions in case of wrong
+    threshold detection. For a typical frame should be ~1000, depends on the
+    number of cells and image size. For algorithms 2-4.</li>
+  <li><font face="Courier">maxCellNumber</font> &#9472; maximum number of cells
+    on a frame. Designed to prevent uncontrolled false divisions of some cells
+    in timelapses. For algorithms 2-4.</li>
+  <li><font face="Courier">meshStep</font> &#9472; distance between ribs in the
+    final mesh.</li>
+  <li><font face="Courier">meshTolerance</font> &#9472; Tthe precision of mesh
+    creation.</li>
+  <li><a name="meshWidth"></a><font face="Courier">meshWidth</font> &#9472; typical width of the mesh,
+    used for mesh creation.</li>
+</ul>
+<p><b>Joining and splitting</b></p>
+<ul>
+  <li><a name="splitThreshold"></a><b><font face="Courier">splitThreshold</font></b> &#9472; relative
+    threshold determining when the cell has to be split into two. Designed for
+    timelapse series, but can be used for independent images. Usually values
+    0.25-0.4 work for &quot;normal&quot; <i>C. crescentus</i> cells. Decrease if
+    cells don't split in time, and increase if they split too soon. For
+    algorithms 2-4.</li>
+  <li><a name="joindist"></a><b><font face="Courier">joindist</font></b> &#9472; maximum distance in
+    pixels between cell poles when the program should try to join them. The
+    other condition is the angle between the backbones. The program will try
+    joining, but will keep the original shapes if it fails. For algorithms
+    2-4.</li>
+  <li><a name="joinangle"></a><b><font face="Courier">joinangle</font></b> &#9472; maximum angle
+    between cell backbones in radians when the program should try to join them.
+    For algorithms 2-4.</li>
+  <li><b><font face="Courier">joinWhenReuse</font></b> &#9472; whether the
+    program should try joining cells when reusing meshes. For algorithms
+    2-4.</li>
+  <li><b><font face="Courier">split1</font></b> &#9472; whether the program
+    should try splitting cells on the first frame or independent images. For
+    algorithms 2-4.</li>
+  <li><font face="Courier">joindilate</font> &#9472; the amount of dilation
+    (erosion) used when joining cells manually. The default is 1, it may have to
+    be reduced for long self-touching filamentous cells (using algorithm 4) to
+    -1 or -2.</li>
+  <li><font face="Courier">forceindframes</font> (only in
+    <a href="helpManualOperations.htm">Manual Operations</a> regime) &#9472; if
+    this parameter is available and is equal to 1, it forces cell numbering in
+    time-lapse series to follow the rule of Individual Frames mode. New cells
+    aqcuire the smallest available numbers on the frame and the lineage data are
+    not updated.</li>
+</ul>
+<p><b>Other</b></p>
+<ul>
+  <li><font face="Courier">bgrErodeNum</font> &#9472; the number of pixels to
+    erode the image when detecting and subtracting the background. For
+    the background subtraction routine only.</li>
+  <li><font face="Courier">sgnResize</font> &#9472; resizing when adding the
+    signal to increase the precision. Usually the effect is small at the cost of
+    increasing time. For the signal addition routine only.</li>
+  <li><font face="Courier">aligndepth</font> &#9472; number of frames before
+    each image used during alignment. Default: 1. Increase beyond 1 to correct
+    for small drifts that accumulate into significant values in long time-lapse
+    series. Set this parameter to the typical number of frames required to drift
+    by 2-3 pixels. For the image alignment routine only.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>See also: <a href="helpMicrobeTrackerAdjusting.htm">
+Adjusting Parameters</a>. Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

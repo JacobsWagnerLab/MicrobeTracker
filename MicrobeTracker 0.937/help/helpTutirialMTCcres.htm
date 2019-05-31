@@ -1,0 +1,364 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker - Quick Start</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Tutorial: Fluorescence profiles
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This tutorial is intended to demonstrate the sequence of actions
+required to detect <i>Caulobacter crescentus</i> cells in timelapses with the
+help of <a href="helpMicrobeTracker.htm">MicrobeTracker</a>, to obtain
+fluorescence profiles, and to use MATLAB for their analysis (the last task
+requires some previous MATLAB knowledge). For a more general description of the
+cell detection procedure and other steps of MicrobeTracker operation see the
+<a href="helpMicrobeTrackerProtocols.htm">MicrobeTracker Protocols</a> section,
+for the full list of tutorials see <a href="helpQuickStart.htm">Quick Start</a>
+section of the help. This tutorial assumes that the
+<a href="helpQuickStart.htm#Installation">installation procedure</a> has been
+already performed as described.</p>
+
+<p>The data for this tutorial is not available by default because of its large
+size (about 50 MB). Please, make sure you download the version of MicrobeTracker
+that contains all tutorials from the
+<a href="http://microbetracker.org/download/">MicrobeTracker website</a>.</p>
+
+<p>The images are <i>C. crescentus</i> cells expressing MipZ-YFP protein from
+the endogenous MipZ promoter. The images were taken at 1.5 min intervals at
+0.064 &#181m/pixel resolution. See
+<a href="http://www.nature.com/emboj/journal/vaop/ncurrent/full/emboj2010207a.html">Schofield
+WB <i>et al.</i>, EMBO J, 2010</a> paper for the details of this experiment.
+This tutorial shows how to orient cells, obtain the averaged fluoresncence
+profile of these cells, and find the position of its minimum.</p>
+
+<p><b>1.</b> Start MATLAB. Set the working path in MATLAB to the folder of the
+example: <font face="Courier">...\MicrobeTracker...\examples\microbetracker_ccres_fluo</font>
+(see the image below, click on the image for its full resolution version).</p>
+
+<center><a href="example_mt_ccres_1.gif" target="_blank">
+<img src="example_mt_ccres_1.gif" width="500" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p><b>2.</b> Type <font face="Courier">microbeTracker</font> in MATLAB's command
+window to start MicrobeTracker. A new MicrobeTracker window will open.</p>
+
+<p>Click <b>Load phase</b> and select the <font face="Courier">phase_contrast</font>
+subfolder of the example folder to load the images.<p/>
+
+<center><a href="example_mt_ccres_2.gif" target="_blank">
+<img src="example_mt_ccres_2.gif" width="350" border="0" alt="Opening MicrobeTracker" />
+</a></center>
+
+<p><b>3.</b> In this tutorial you should simply load saved meshes by clicking
+<b>Load analysis</b> and selection the file <font face="Courier">meshes.set</font>
+from the example folder. If you wish, you can repeat the detection by loading
+parameters from the same file (make sure you change the file extension from .set
+to .mat in the file opening dialog).</p>
+
+<center><a href="example_mt_ccres_3.gif" target="_blank">
+<img src="example_mt_ccres_3.gif" width="350" border="0" alt="Loading meshes" />
+</a></center>
+
+<p><b>4.</b> Load fluorescence images by clicking the <b>Load signal 1</b>
+button from the <b>Detection & analysis</b> panel. Inspect the images by
+selecting the <b>Signal 1</b> checkbox. Select yellow or green cell outlines for
+better visibility.</p>
+
+<center><a href="example_mt_ccres_4.gif" target="_blank">
+<img src="example_mt_ccres_4.gif" width="350" border="0" alt="Loading fluorescence images" />
+</a></center>
+
+<p><b>5.</b> Subtract the background by clicking <b>Subtract bgrnd</b> (make
+sure that the fluorescence images are currently displayed, otherwise select
+<b>All</b> on the signal subtraction panel). Click <b>Contrast</b> to adjust
+the contrast of the images (exclusively for better visibitily, this step does
+not affect the results).</p>
+
+<center><a href="example_mt_ccres_5.gif" target="_blank">
+<img src="example_mt_ccres_5.gif" width="350" border="0" alt="Subtrackting background" />
+</a></center>
+
+<p><b>6.</b> Add signal profiles to the meshes. Uncheck <b>Save on each frame</b>
+chackbox on the <b>Detection & analysis</b> panel to not save the results on
+each frame (which takes time). Select <b>Reuse meshes</b> radiobutton,
+<b>Compute signal 1 profile</b> checkbox, and click the <b>All frames</b>
+button to start processing.</p>
+
+<center><a href="example_mt_ccres_6.gif" target="_blank">
+<img src="example_mt_ccres_6.gif" width="350" border="0" alt="Adding fluorescence profiles" />
+</a></center>
+
+<p><b>7.</b> Save the cell meshes by clicking <b>Save analysis</b> (the included
+file <font face="Courier">meshes.mat</font> already contains the predetected profiles, so this step can be skipped).
+Load this file into the MATLAB command window by dragging and dropping or by
+typing the name of the file (the .mat extension can be dropped; if the file is
+in the current MATLAB folder, the full path can be dropped as well; the input
+text here and below will be shown in blue color to distinguish it from MATLAB
+output, which is shown in black):</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp; load('meshes')</font></p>
+
+<p><b>8.</b> Do not close MicrobeTracker. Pick a cell in the MicrobeTracker window
+to look at. Let it be cell 22 on frame 100.</p>
+
+<center><a href="example_mt_ccres_7.gif" target="_blank">
+<img src="example_mt_ccres_7.gif" width="100" border="0" alt="Frame 100 cell 22" />
+</a></center>
+
+<p>To display its profile type (the <font face="Courier">figure</font> command
+creates a new figure, otherwise the following command will replot the MicrobeTracker window):</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;plot(cellList{100}{22}.signal1)</font></p>
+
+<center><a href="example_mt_ccres_8.gif" target="_blank">
+<img src="example_mt_ccres_8.gif" width="300" border="0" alt="Intensity profile" />
+</a></center>
+
+<p>Notice that the cell has a little straight "stalk" sticking from a pole.
+This "stalk" indicates the old pole of the cell when it is known (either because
+this cell resulted from a division in this time-lapse series or because the polarity of
+the cell was set manually). When this stalk is present, the signal profile data
+is oriented from the old to the new pole (if it is not present, the orientation
+is random). Therefore, the left of the plot corresponds to the bottom of the
+image. Indeed, the intensity on the plot is higher on the left, which
+corresponds to the bright spot on the bottom of the cell.</p> 
+
+<p><b>9.</b> This and the following sections are intended to learn how to write
+simeple scripts in MATLAB to process tha data and require some MATLAB knowledge.</p>
+<p>Now count how many unique cell-frame combinations we have, i.e. sum the number
+of frames each cell has been in the time-lapse series for. To do so, we cycle
+though all the frames and through all cells withing each frame, and only look at
+those where the cell is present.
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;counter=0;<br/>
+&nbsp;&nbsp;&nbsp;for frame=1:length(cellList)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for cell=1:length(cellList{frame})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter=counter+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;counter</font></p>
+
+<p><font face="Courier">counter =<br/>
+&nbsp;&nbsp;&nbsp;4395</font></p>
+
+<p>I.e. the number of unique cell-frame combinations is 4395.</p>
+
+<p><b>10.</b> Now count the number of cell division events by counting the cells
+immediately after a division, and only those that are not "newborn". Here the
+<font face="Courier">divisions</font> field of the cell structure contatins the
+list of frames on which the cell divided. We make sure the cell did divide and that the
+last division was on this frame. The field <font face="Courier">descendants</font>
+holds the list of daughter cells, here we make sure it is empty, meaning that we are
+looking at the "mother" cell, i.e. the old pole cell when the orientation is
+known or a random of the two daughter cells when it is not.</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;counter=0;<br/>
+&nbsp;&nbsp;&nbsp;for frame=<b>2</b>:length(cellList)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for cell=1:length(cellList{frame})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if ~isempty(cellList{frame}{cell}.divisions) && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellList{frame}{cell}.divisions(end)==frame && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~isempty(cellList{frame}{cell}.descendants)</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter=counter+1;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;counter</font></p>
+
+<p><font face="Courier">counter =<br/>
+&nbsp;&nbsp;&nbsp;17</font></p>
+
+<p>I.e. there are 17 division events in this time-lapse series.</p>
+
+<p><b>11.</b> Now look at the cell which just divided and for which the
+orientation of the cells <u>before</u> the division is known. For these cells
+display the intensity profiles before the division in separate windows:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;for frame=2:length(cellList)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for cell=1:length(cellList{frame})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell}.divisions) && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellList{frame}{cell}.divisions(end)==frame && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~isempty(cellList{frame}{cell}.descendants) && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>cellList{frame-1}{cell}.polarity<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plot(cellList{frame-1}{cell}.signal1)</b><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end</font></p>
+
+<p>MATLAB will display 6 figures.</p>
+
+<p><b>12.</b> These profiles represent the integrated signal inside of each
+segment. To represent the average pixel intensity inside of each segment we
+need to divide the integrated signal by the area of each segment. Notice,
+that at the division a dot is used before the division sign, which indicates
+that the division needs to be performed elementwise, rather than being a matrix
+division:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;for frame=2:length(cellList)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for cell=1:length(cellList{frame})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell})<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ~isempty(cellList{frame}{cell}.divisions) && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellList{frame}{cell}.divisions(end)==frame && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~isempty(cellList{frame}{cell}.descendants) && ...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cellList{frame-1}{cell}.polarity<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;plot(<b>cellList{frame-1}{cell}.signal1./cellList{frame-1}{cell}.steparea</b>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br/>
+&nbsp;&nbsp;&nbsp;end</font></p>
+
+<p>MATLAB will display 6 figures.</p>
+
+<p><b>13.</b> The plots are very noisy because of low light level
+and therefore shot noise of detection. To deal with that we collect the data
+from the previous 10 frames to obtain an averaged profile. A complexity arises
+because the number of segments in each cell increases as the cell grows.
+Therefore, we interpolate the intensity at 51 points spread uniformly from one
+pole of the cell to the other. In addition we smooth the resulting profile and
+collect the data for each cell in a matrix of 6 rows (for 6 division events) and
+51 columns. Since the script is becoming long, it is saved as
+<font face="Courier">mipzprofile1.m</font> in the example folder. To run the
+script, type <font face="Courier">mipzprofile1</font> in MATLAB command window.
+To see it, type <font face="Courier">edit mipzprofile1</font>. The script will
+open in MATLAB editor. Alternatively, you can open the editor and load the file
+through <font face="Courier">File>Open</font> menu command.</p>
+
+<p><b>14.</b> After you run the script, display the profiles on a single graph
+with the x-axis spanning from 0 (old cell pole) to 1 (new cell pole):</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;xvector = 0:1/50:1;<br/>
+&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;plot(xvector,profilearray')</font></p>
+
+<center><a href="example_mt_ccres_9.gif" target="_blank">
+<img src="example_mt_ccres_9.gif" width="300" border="0" alt="Signal leakage" />
+</a></center>
+
+<p>Notice that one of the profiles has a distinct "bump" in the middle, unlike
+the rest of them. This is suspicious and could be caused by an artifact,
+therfore we should inspect this cell to examine this possibility. To see
+which cell this is, select <font face="Courier">Insert>Legend</font>
+from the figure menu. A figure legend appears, from which it is clear that the
+profile with the bump corresponds to the sixth cell.</p>
+
+<p><b>15.</b> Now we want to find the number and the frame this cell. To do so,
+we add a line to the script that would display the frame and cell number for each
+division event. In order to convert numbers to strings, we use MATLAB's
+<font face="Courier">num2str</font> command. A string that you enter in MATLAB
+directly has to be enclosed into single quotes. The resulting short strings are
+concatenated (joined together) with the help of <font face="Courier">[]</font>
+operator. And finally the <font face="Courier">disp</font> command is used to
+display the resulting string. The whole line in the script looks like (don't
+run it alone):</p>
+
+<font face="Courier">&nbsp;&nbsp;&nbsp;disp(['Event ' num2str(count) ': frame=' num2str(frame) ', cell=' num2str(cell)])</font>
+
+<p>Run the modified version of the previous script with this line inserted,
+which is called <font face="Courier">mipzprofile2</font>. The program will
+display:</p>
+
+<font face="Courier">Event 1, frame =100, cell=6<br/>
+Event 2: frame=112, cell=7<br/>
+Event 3: frame=116, cell=8<br/>
+Event 4: frame=118, cell=16<br/>
+Event 5: frame=119, cell=24<br/>
+Event 6: frame=124, cell=17</font>
+
+<p><b>16.</b> Now we know that the sixth cell corresponds to the cell number 17 on frames
+114-123 (the frame 124 displayed is the frame after the division, whilest we
+look at the profiles on 10 preceeding frames). Inspect this cell in
+MicrobeTracker by scrolling to frame 123 and finding cell 17 (to find it faster,
+type "17" in the editbox on <b>Selection</b> panel and click <b>Group</b> on
+that panel.</p>
+
+<center><a href="example_mt_ccres_10.gif" target="_blank">
+<img src="example_mt_ccres_10.gif" width="180" border="0" alt="Adding fluorescence profiles" />
+</a></center>
+
+<p>The reason for the bump in the intensity profile in the middle of the cell is
+now obvious and is caused by closely located cell 72. The signal from that cell
+partially penetrates into the outline of cell 17 because of diffraction. This
+example demonstrates a drawback of working with fluorescence with closely packed
+cells, unfortunately in this case the problem is unavoidable: since we are
+looking at cells after 1-2 divisions, touching cell are will be present. Therefore,
+all we can do is to eliminaate this cell from our future analysis. We know that
+we have profiles of six cells and this cell in the last one. To get the portion
+of the profile matrix without the last line use the command (don't enter it now):</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;profilearray(1:5,:)</font></p>
+
+<p>Here the <font face="Courier">profilearray</font> is indexed with two
+indices, the first corresponds to the rows and the second to columns. The
+notation <font face="Courier">1:5</font> give you all integer numbers from 1 to
+5, and the notation <font face="Courier">:</font> standing alone means "all
+elements of the array". Therefore, by using this command we are chopping the
+matrix, leaving only first five rows of it.</p>
+
+<p><b>17.</b> To calculate the mean profile for all 5 cells type:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;meanprofile = mean(profilearray(1:5,:));</font></p>
+
+<p><b>18.</b> Now we want to find the position of the minimum intensity of the profile
+excluding the poles. To do so, we first find the local maxima (which are present
+at the poles) and then the global minimum between the first and the last local
+maxima. To find the local maxima we compare each pixel with its two neighbors:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;meanprofile>meanprofile([2 1:end-1])&meanprofile>meanprofile([2:end end-1])</font></p>
+
+<p>We obtain a string of 1,s and 0,s for each element, with a 1 indicating that
+it the value is larger than the neighbor values. After which we use MATLAB's
+<font face="Courier">find</font> command to find non-zero elements of the array.
+To get these numbers type:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;mx = find(meanprofile>meanprofile([2 1:end-1])&meanprofile>meanprofile([2:end end-1]));</font></p>
+
+<p>To find the global minimum in between first chop the array by keeping only
+the part between the maxima, then use MATLAB's <font face="Courier">min</font>
+command and increment the index of the minimum so that is corresponds to the
+original non-chopped array:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;[mnv,mn] = min(meanprofile(mx(1):mx(end)));<br/>
+&nbsp;&nbsp;&nbsp;mn = mn+mx(1)-1</font></p>
+
+<p><font face="Courier">mn =<br/>
+&nbsp;&nbsp;&nbsp;30</font></p>
+
+<p>I.e. the position of the minumum is point 30, which is at 30/50=60% of cell
+length, demonstrating asymmetry in the profile.</p>
+
+<p><b>19.</b> Plot the averaged profile and the positions of the maxima (in
+green)and the minimum (in red):</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;figure<br/>
+&nbsp;&nbsp;&nbsp;plot(xvector,meanprofile,'-',xvector(mx),meanprofile(mx),'.',xvector(mn),meanprofile(mn),'.')</font></p>
+
+<center><a href="example_mt_ccres_11.gif" target="_blank">
+<img src="example_mt_ccres_11.gif" width="300" border="0" alt="Averaged intensity profile" />
+</a></center>
+
+<p>The final script for this analysis is saved as <font face="Courier">mipzprofile3.m</font> in the example folder.</p>
+
+<!-- Start replacement block 3 -->
+<br>
+<b>Top pages: <a href="helpQuickStart.htm">Quick Start</a>,
+<a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

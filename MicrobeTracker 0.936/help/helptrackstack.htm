@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+trackstack
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">trackstack</font></p>
+<p><font face="Courier">trackstack(cellList1)</font></p>
+<p><font face="Courier">cellList2 = trackstack</font></p>
+<p><font face="Courier">cellList2 = trackstack(cellList1)</font></p>
+<p><font face="Courier">cellList2 = trackstack([cellList1],[weights],[cutoff])</font></p>
+
+<img border="0" src="trackstack_principle.png" width="283" height="179" align="right">
+
+<p>This function processes a cell list obtained by MicrobeTracker in 'Individual
+Frames' mode attempting to assign the same number of the same cell on every
+frame of the list. It is designed to be used for moving cells in the case that
+the motion is too large to use the 'timelapse' mode.</p>
+
+<ul>
+  <li>
+    &lt;cellList1&gt; - input cell list. If not supplied, the program will request to open a file with the 
+    list.
+  </li>
+  <li>
+    &lt;cellList2&gt; - output cell list. If not supplied, the program will
+    request to select a file to write the data to.
+  </li>
+  <li>
+    weights - 4-element vector of weight coefficients for calculating the
+    "cost" of assignment of a cell between two frames, consisting of 4
+    components (see figure):
+    <br>
+      -&nbsp; distance perpendicular to the mean main axis (&#916;<i>x</i><sub>&#8214;</sub>), 
+    <br>
+      -&nbsp; distance along the mean main axis (&#916;<i>x</i><sub>&#9524;</sub>), 
+    <br>
+      -&nbsp; angle (&#916;<i>&#945;</i>, in radians), 
+    <br>
+      -&nbsp; log ratio of the areas.
+    <br>
+    The lower a value is, the less effect the component will have on the
+    assignment. Default: [0.2 1 1 1].
+  </li>
+  <li>
+    cutoff - cutoff in units of the mean distance to the nearest (in terms of
+    the cost) neighbor. Larger values will force to assign most cells, lower 
+    values - to lose those that don't have a good match. Default: 1.
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b><a href="helpTools.htm">MicrobeTracker Tools</a>,
+<a href="../help.htm">MicrobeTracker Suite</a></b>.</p>
+<!-- End replacement block 3 -->
+</body>
+</html>

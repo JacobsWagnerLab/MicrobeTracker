@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+dispcellgrid
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">dispcellgrid(cellList,images)</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,framelist)</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,spotfieldname)</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,spotfieldname1,spotfieldname2,spotfieldname3)</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,signalfieldname)</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,'numbers')</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,'disk')</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,'circle')</font></p>
+<p><font face="Courier">dispcellgrid(cellList,images,...,parametername,parametervalue,...)</font></p>
+
+<p>This function displays the cells from a microscope image with the cells 
+detected on this image and spots inside, cropped and displayed on a grid (the 
+dimensions can be regulated). The cells and the spots to be displayed 
+can be filtered using several criteria.</p>
+
+<ul>
+  <li>
+  &lt;cellList&gt; - an array that contains meshes. You can drag and drop the
+  file with the data into MATLAB workspace or open it using MATLAB Import Tool.
+  The default name of the variable is <b>cellList</b>, but it can be renamed.</li>
+  <li>
+  &lt;images&gt; - a 3D array of images. It can be obtained using
+  <a href="helploadimageseries.htm"> loadimageseries</a> and
+  <a href="helploadimagestack.htm"> loadimagestack</a> commands, e.g.:
+  <font face="Courier">images=loadimageseries('c:\users\test\imagefiles',1);
+  </font></li>
+  <li>
+  &lt;framelist&gt; - list of frames to display, i.e. [1 3 4 10] to display
+  frames 1, 3, 4, and 10. Default: all frames.</li>
+  <li>
+  &lt;spotfieldname&gt; - name of the field containing spots, must start with
+  'spots', e.g. 'spots', 'spots1', 'spots2', etc. Default: 'spots'. Set the
+  fieldnames to an unexisting field to display  cell outlines, but not spots,
+  e.g. dispcellgrid(cellList,images,1,0,'spotsx').</li>
+  <li>
+  'numbers' - use this option to display the numbers inside cells.</li>
+  <li>
+  'disk' - display spots as filled disks rather than dots. The radius in this
+  case is measured in image pixels, not screen points.</li>
+  <li>
+  'circle' - display a circle instead of a filled disk.</li>
+</ul>
+
+<p>The rest of the parameters must be submitted in the format
+&lt;parametername&gt;,&lt;parametervalue&gt;, where &lt;parametername&gt; must
+be in quotes and &lt;parametervalue&gt; must be the value of this parameter. For
+example: dispcellall(cellList,images,cell,'markersize',2). Here are the possible
+parameters:</p>
+
+<ul>
+  <li>'markersize' - spots marker size, 0 - don't show, default automatic.</li>
+  <li>'imagelimits' - image scaling limits, default max to min.</li>
+  <li>'colortable' - nx3 table of the marker disk colors. The table is an
+    n-by-3 or n+1-by-3 matrix, where n if the number of fields. Each row
+    corresponds to the color of the field, in the RGB (red, green, blue)
+    format, the optional extra row corresponds to the color of 
+    overlapping regions.</li>
+  <li>'border' - border around the cell in pixels. Set &lt;0 to use standard
+    box.</li>
+  <li>'dimensions' - dimensions of the 'grid' to display: [#rows #colums].</li>
+</ul>
+
+<p>Filtering parameters: only cells/spots satisfying them will be displayed. If
+no spot exists in the cell or should bedisplayed and any of the spot filters is
+used, the cell will only be displayed if 'nspots' parameter is present and
+contains zero.</p>
+
+<ul>
+  <li>'cellintensity' - array of two numbers: low and high limits of the total 
+    intensity in the cell (as written in the mesh - either 
+    &lt;spotfieldname&gt field or, if not provided, 'signal1' field)</li>
+  <li>'cellmeanintensity' - mean intensity in the cell</li>
+  <li>'celllength' - low and high limits of the cell length (in pixels)</li>
+  <li>'cellarea' - low and high limits of the cell area (in pixels squared)</li>
+  <li>'cellvolume' - low and high limits of the cell volume (in pixels cubic)</li>
+  <li>'cellmeanwidth' - low and high limits of the mean (along the length)
+    width of the cell</li>
+  <li>'cellmaxwidth' - low and high limits of the maximum width of the cell</li>
+  <li>'cellcurvature' - low and high limits of the cell curvature (in 1/pixel)</li>
+  <li>'nspots' - list of possible numbers of spots (e.g. 0:3 for up to 3 spots)</li>
+  <li>'spotmagnitude' - low and high limits of the spot magnitude</li>
+  <li>'spotheight' - low and high limits of the spot height (intensity units)</li>
+  <li>'spotwidth' - low and high limits of the spot width (in pixels)</li>
+  <li>'spotposition' - low and high limits of the spot position from the "old"
+    pole of the cell. This parameter allows more than 2 limits, in which
+    case the spot will be displayed if it is either between 1st and 2nd,
+    or 3rd and 4th, etc.</li>
+  <li>'spotrelposition' - low and high limits of the relative (between 0 and 1)
+    spot position, measured from the "lod" pole. This parameter also
+    allows more than two limits.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

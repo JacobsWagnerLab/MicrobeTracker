@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+getcurvature
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">curvlist = getcurvature(cellList)</font></p>
+<p><font face="Courier">curvlist = getcurvature(cellList,'long 
+mean')</font></p>
+<p><font face="Courier">curvlist = getcurvature(cellList,'long 
+mean',window)</font></p>
+<p><font face="Courier">curvlist = getcurvature(cellList,'long 
+all')</font></p>
+<p><font face="Courier">curvlist = getcurvature(cellList,'long 
+all',window)</font></p>
+<p><font face="Courier">curvlist = getcurvature(...,'addstat')</font></p>
+<p>
+This function calculates radius of curvature for every cell in a list obtained by MicrobeTracker.</p>
+<ul>
+  <li>
+  <p>&lt;cellList&gt; - input array containing cell meshes.</li>
+  <li>
+  <p>&lt;curvlist&gt; - output table. Each row corresponds to a cell (or a
+  segment of a cell in 'long all' mode). The columns are: radius of curvature,
+  frame number, cell number, cell length, cell area, cell volume. The last three
+  columns are only added if 'addstat' option is selected.</li>
+  <li>
+  <p>'long mean' or 'long' - splits every cell to segments and outputs the mean
+  curvature of all the segments.</li>
+  <li>
+  <p>'long all' - splits every cell to segments and outputs the curvature of
+  every segment in a separate row.</li>
+  <li>
+  <p>&lt;window&gt; - maximum length of the segments used in 'long mean' and
+  'long all' modes'. If a non-integer number of windows fits into a cell, the
+  number of windows is rounded up and each window is shortened accordingly.
+  Default: 30.</li>
+  <li>
+  <p>'addstat' - add extra statistics for the cells: cell length, cell area, and
+  cell volume.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Typical Problems
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p><font size="4"><b> Problems with installation and configuration</b></font></p>
+<ul>
+  <li>The error <font color=#900000>"??? Invalid MEX-file 'some file name': The
+  specified module could not be found."</font> is caused by some libraries
+  missing on your operating system. To solve this problem, install the
+  compatible C++ compiler, which can be found on
+  <a href="http://www.mathworks.com/cgi-bin/texis/webinator/search/?query=Supported+and+Compatible+Compilers&db=MSS&prox=page&rorder=750&rprox=750&rdfreq=500&rwfreq=500&rlead=250&sufs=0&order=r&is_summary_on=1&ResultCount=10&submitButtonName=Search">
+  MathWorks website</a> (e.g. <a href="http://www.mathworks.com/support/compilers/R2011a/win32.html">
+  for version 2011a</a>; make sure you select your operating system).</li>
+  <li>Sometimes MicrobeTracker may run out of memory, especially on 32-bit
+  systems during long serrions. The memory problem will be mentioned in the
+  error message. Unfortunately, some MATLAB functons used in the suite have
+  memory leaks, and memory requirements imcrease with runtime. To comtinue, restart
+  MATLAB and try splitting your task into smaller ones, ideally requiring less
+  memory, (e.g. avoid using batch processing, and in case of large image stacks,
+  do cell detection and signal addition separately).</li>
+</ul>
+
+<p><font size="4"><b>Problems with cell detection</b></font></p>
+<ul>
+  <li>The program processes a large number of regions per cell detected with areas 1-20 pixels (as seen on the screen). Multiple small &quot;phantom cells&quot; detected (individual frames of 1st frame of a timelapse). The reason is that the threshold was not detected correctly. This usually happens is the illumination is not uniform. Try increasing <span LANG="EN"><font face="Courier">thresFactorM</font> and <font face="Courier">thresFactorF</font> parameters (to 1.1-1.4) which increase the threshold, though this may lead to missing some cells and to crushing on some frames. If this happens only on some frames and it is affordable to skip them, set <font face="Courier">maxRegNumber</font> to a lower number (1000-2000).</span></li>
+  <li>Neighbor cells overlap. Most common reason is a large value of <font face="Courier">attrCoeff</font>. Reduce it to 0-0.3 (algorithm 4) or 0-0.02 (algorithms 2 and 3), set <font face="Courier">repCoeff</font> to less than <font face="Courier">attrCoeff</font>&middot;3.</li>
+  <li>Cell outlines miss the poles. Check the <span LANG="EN">
+  <font face="Courier">scaleFactor</font>, try increasing
+  <font face="Courier">attrCoeff.</font></span></li>
+  <li>Cell outlines form extensions from the poles in darker areas of the image. 
+  Reduce <span LANG="EN"><font face="Courier">attrCoeff</font><font face="Times New Roman">, 
+  increase </font><font face="Courier">repCoeff</font>.</span></li>
+  <li>Cells divide too early or too late. Adjust <span LANG="EN">
+  <font face="Courier">splitThreshold</font> (usually in the range 0.15-0.5). If 
+  neighbor cells don't split in the Individual Frames mode, set <font face="Courier">split1</font> 
+  to 1 so that it tries splitting. If individual cells split in the Individual Frames 
+  mode, adjust
+  <font face="Courier">joinangle</font> (typically to 0.6-1.2) and <font face="Courier">joindist</font> 
+  (typically to 4-8) so that the program tries to join cells.</span></li>
+  <li>The programs performs a timelapse well, but misses certain cells starting from one frame. 
+  Usually this is due to large drift of the images or to an out-of-focus frame. Try aligning frames, though if the drift 
+  is too strong, it may fail. Check is there are out-of-focus frames, you can 
+  consider removing these frames from the stack. The reason for the problem can also be significant growth of the 
+  cells between frames. The only solution in this case is taking reducing the 
+  time intervals between frames.</li>
+  <li>Signal profile does not show distinct peaks. Probably the background was 
+  not subtracted. Make sure the signal images are loaded in the right channel 
+  when performing background subtraction and integration of the signal.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

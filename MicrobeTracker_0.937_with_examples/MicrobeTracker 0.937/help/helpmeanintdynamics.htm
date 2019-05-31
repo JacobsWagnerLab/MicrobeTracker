@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p class="MsoNormal"><b><font face="Courier">
+<!-- End replacement block 1 -->
+meanintdynamics
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p class="MsoNormal">Syntax:</p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList)</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,timelist)</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,frame2time)</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,signal) </font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,...,'area')</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,...,'volume')</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,...,'errorbar')</font></p>
+<p class="MsoNormal"><font face="Courier">meanintdynamics(cellList,...,'nodisp')</font></p>
+<p class="MsoNormal"><font face="Courier">[intlist,timelist,errors] = meanintdynamics(cellList,...)</font></p>
+<p class="MsoNormal">This function plots the dynamics of the signal in a list of
+cells obtained by MicrobeTracker. Note, the background has to be corrected and
+necessary controls taken to accont for possible background fluorescence and the
+signal integrated and present in the list.</p>
+<ul>
+  <li>
+  <p class="MsoNormal">&lt;cellList&gt; - an array
+  that contains the meshes. You can drag and drop the file with the data into
+  MATLAB workspace or open it using MATLAB Import Tool. The default name of the
+  variable is <b>cellList</b>, but it can be renamed.</p></li>
+  <li>
+  <p class="MsoNormal">&lt;timelist&gt; - the list of timepoints when each frame
+  was taken. For example, if 3 images were taken at zero time and 2 more 10
+  minutes this array must be [0 0 0 10 10].</p></li>
+  <li>
+  <p class="MsoNormal">&lt;frame2time&gt; - the intervals between frames. If
+  'timelist' array is not provided, the each frame will be considered taken at a
+  different timepoint separated by 'frame2time' intervals. If not provided, the
+  data will be plotted versus frame rathen than time. The constructed timelist
+  can be obtained at function's output.</p></li>
+  <li>
+  <p class="MsoNormal">&lt;signal&gt; - the signal field which
+  will be processed. Must be in single quotes and must start with the word
+  'signal'. The default is 'signal1'.</p></li>
+  <li>
+  <p class="MsoNormal">'area'/'volume' - normalize the signal inside cells by
+  the area or volume of that cell. Otherwise the total signal will be calculated
+  for each cell (and averaged for each timepoint).</p></li>
+  <li>
+  <p class="MsoNormal">'errorbar' - show errorbars.</p></li>
+  <li>
+  <p class="MsoNormal">'nodisp' - do not produce a plot (otherwise it is
+  automatically created). Note, the command does not open a new figure window
+  if at least one exists already. Use MATLAB's 'figure' command to create a new
+  figure if you wish to avoid replotting any of the existing figures.</p></li>
+  <li>
+  <p class="MsoNormal">&lt;intlist&gt; - mean intensity array corresponding to
+  all cells at the 'timelist' points.</p></li>
+  <li>
+  <p class="MsoNormal">&lt;errors&gt; - errorbar sizes corresponding to the
+  standard error of the mean for each intensity value in 'intlist'.</p></li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p class="MsoNormal">Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

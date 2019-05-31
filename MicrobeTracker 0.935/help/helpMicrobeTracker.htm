@@ -1,0 +1,93 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+MicrobeTracker
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+<img border="0" src="MT_window.gif" width="349"></td>
+    </tr>
+    <tr>
+      <td>
+      <p align="center">Main window of MicrobeTracker</td>
+    </tr>
+  </table>
+</div>
+<p class="MsoNormal">
+MicrobeTracker is a MATLAB-based program designed to detect and outline
+bacterial cells in images obtained by light microscopy and to analyze
+fluorescence signal inside them. The program generally requires phase contrast
+images for the analysis, though in some cases they may be replaced with
+fluorescence images, e.g. with diffuse fluorescent proteins, or with DIC images
+that have to be converted to symmetric (phase contrast-like) representation
+using a tool included in a separate file. When applied to individual images,
+MicrobeTracker combines traditional thresholding technique with morphological
+opening operations and edge detection to obtain the initial guess of the shape.
+Then this shape is additionally Fourier-smoothed and may be refined using one of
+a few more complicated techniques, including versions of Active Contour and
+Point Distribution Model (PDM).</p>
+
+<p class="MsoNormal">Detected cells are saved in the form of 'meshes', which 
+provide a coordinate system along the cell. The meshes alone can be used to 
+measure the cell diameter and its uniformity, and to determine cell length, volume, 
+curvature and other geometrical parameters. In combination with fluorescence 
+images, the program can be used to determine the profile of the signal along the 
+cell. This signal provides the total intensity and relative intensity of individual 
+fluorescence foci or polarity of localization.</p>
+<p class="MsoNormal">The program is written in MATLAB and C/C++, it requires 
+MATLAB to run and saves the data in MATLAB (.mat) format. It also requires
+MATLAB's Image Processing toolbox.</p>
+<p class="MsoNormal"><b><font size="4">Contents</font></b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerButtons.htm">Buttons and controls</a></b>
+  - description of the program interface</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerOutput.htm">Output format</a></b>
+  - description of the data format for the data analysis</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerParameters.htm">Parameters</a></b>
+  - full list of parameters used by the program</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerAdjusting.htm">Adjusting parameters</a></b>
+  - important parameters and the process of their adjustment</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerProtocols.htm">Protocols</a></b>
+  - several examples of the program use for typical tasks</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpMicrobeTrackerProblems.htm">Typical problems</a></b>
+  - a few common problems</p>
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p class="MsoNormal"><b>See also: <a href="helpTools.htm">MicrobeTracker Tools</a>. Top page: <a href="../help.htm">MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

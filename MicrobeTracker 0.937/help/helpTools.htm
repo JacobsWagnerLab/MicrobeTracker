@@ -1,0 +1,273 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+MicrobeTracker Tools
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left">This page contains a brief description of the available tools
+that supplement <a href="helpMicrobeTracker.htm">MicrobeTracker</a>. Click the
+name of a particular tool to get more information. For the description of the
+data format, in particular the cellList structure, refer to
+<a href="helpMicrobeTrackerOutput.htm">Output Format</a> section of
+MicrobeTracker manual.</p>
+
+<p align="left">All these commands run under MATLAB, some will be also compiled 
+into stand-alone versions. When running from MATLAB it is generally suggested to 
+add the folder with MicrobeTracker package to MATLAB path (File&gt;Set
+Path&gt;Add with Subfolders, then select the folder) and select the folder (or a
+close upper-level folder) with your data as the working folder in MATLAB, this
+will allow to select the data fast.</p>
+
+<p>Many of the tools that display results require an array containing cell
+meshes produced by MicrobeTracker or by SpotFinder family tools. This array
+could be loaded by dragging and dropping the results file into the MATLAB
+workspace. Alternatively, MATLAB's load command or MATLAB's variable editor menu
+can be used to load the array. The name of the array in the file is cellList.
+</p>
+
+<p align="left">To get help about the functions follow the links on this page or 
+type 'help &lt;function_name&gt;' in MATLAB workspace (providing the name of the 
+appropriate function, e.g. 'help renfiles').</p>
+
+<p align="center"><b><font size="5">List of tools:</font></b></p>
+
+<p align="left"><b>Preparation of images and files</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helprenfiles.htm">renfiles</a></b> - renames and
+sorts TIFF (.tif) files produced by common software for MicrobeTracker use.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helprenfilestc.htm">renfilestc</a></b> - renames and
+sorts TIFF (.tif) files produced in time courses by Nikon Elements software for
+MicrobeTracker use.</p>
+  </li>
+
+  <li>
+<p align="left"><b><a href="helpintegdic.htm">integdic</a></b> - a tool for
+conversion of differential interference contrast (DIC) images into a format
+suitable for MicrobeTracker.</p>
+  </li>
+  
+  <li>
+<p align="left"><b><a href="helpImageAlignTool.htm">aligntool</a></b> - a tool
+for semi-manual image alignment of timelapse series with large drift between
+frames.</p>
+  </li>
+</ul>
+
+<p align="left"><b>Tracking cells</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helptrackstack.htm">trackstack</a></b> - an
+alternative tool for tracking cells detected but not tracked previously with
+MicrobeTracker. Primarily intended for actively moving cells.</p>
+  </li>
+</ul>
+
+<p align="left"><b>Cell dimensions statistics</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helpcellstat.htm">cellstat</a></b> - basic 
+statistics on an experiment</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helplengthhist.htm">lengthhist</a></b> - histogram
+of the <i>length</i> of all cells in a population.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpmeanwidthhist.htm">meanwidthhist</a></b> -
+histogram of the <i>mean width</i> of all cells in a population.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpmaxwidthhist.htm">maxwidthhist</a></b> -
+histogram of the <i>max width</i> of all cells in a population.</p>
+  </li>
+</ul>
+<p align="left"><b>Cell intensity statistics</b></p>
+<ul>
+  <li>
+<p align="left"><b><a href="helpinthist.htm">inthist</a></b> - histogram of the
+<i>total</i> intensity for every cell in a population.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpmeaninthist.htm">meaninthist</a></b> - histogram
+of the <i>mean</i> intensity (i.e. divided by the area) for every cell in a
+population.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpintprofile.htm">intprofile</a></b> - intensity
+profile for a <i>single</i> cell.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpintprofileall.htm">intprofileall</a></b> -
+intensity profiles for a <i>every</i> cell in a file saved into a folder.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpkymograph.htm">kymograph</a></b> - kymograph of
+fluorescence signal in a cell.</p>
+  </li>
+  <li>
+<p align="left"><b><a href="helpintdynamics.htm">intdynamics</a></b> - intensity
+dynamics of fluorescence signal in a single cell in a time-lapse series.</p>
+  <li>
+<p align="left"><b><a href="helpmeanintdynamics.htm">meanintdynamics</a></b> -
+intensity dynamics of fluorescence signal in a time-lapse / time-course series
+averaged for all cells in a given timepoint.</p>
+  </li>
+</ul>
+<p align="left"><b>Spot detection</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helpSpotFinder.htm">spotFinderZ</a></b> - detects
+round, usually diffraction-limited spots inside bacterial cells outlined with
+MicrobeTracker and places them into cellList structure.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpSpotFinderM.htm">spotFinderM</a></b> - manual
+version of SpotFinder, allows the user to click on spots and records them into
+the same cellList structure.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helppeakfinder.htm">peakfinder</a></b> - an
+alternative to SpotFinder, using a signal profile to detect the peaks, which are
+saved as spots.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpSpotFinderF.htm">spotFinderF</a></b> - a
+simplified version of SpotFinderZ, which works in the absence of cell data, i.e.
+finds spots on images.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpjoinspots.htm">joinspots</a></b> - a tool for
+semi-automatic linking spots detected with SpotFinder family tools between
+frames.</p>
+  </li>
+</ul>
+
+<p align="left"><b>Spot statistics</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helpspotnumhist.htm">spotnumhist</a></b> - histogram
+of the <i>number</i> of spots per cell in a 
+population.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpspotvslength.htm">spotvslength</a></b> - diagram
+of the <i>number</i> of spots per cell vs. cell <i>length.</i></p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpspotinthist.htm">spotinthist</a></b> - histogram
+of the <i>intensity</i> of all detected spots 
+in all cells in a population.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpspotposhist.htm">spotposhist</a></b> - histogram
+of the <i>position</i> of spots inside cells.</p>
+  </li>
+</ul>
+
+<p align="left"><b>Displaying cells and spots</b></p>
+<ul>
+  <li>
+<p align="left"><b><a href="helpdispcell.htm">dispcell</a></b> - displays one
+cell with the spots inside on top of the image.</p>
+  </li>
+  
+  <li>
+<p align="left"><b><a href="helpdispcellall.htm">dispcellall</a></b> -
+displays all cells in a given range of frames with the number of spots and the
+intensity of the spots and their relative position in given range.</p>
+  </li>
+  
+  <li>
+<p align="left"><b><a href="helpdispcellgrid.htm">dispcellrid</a></b> - same
+as <b>dispcellall</b> above, but displays the cells cropped and placed in a
+grid.</p>
+  </li>
+  
+  <li>
+<p align="left"><b><a href="helpcellmovie.htm">cellmovie</a></b> - displays or saves
+a movie or a time series of images of a single cell (with or without spots).</p>
+  </li>
+</ul>
+
+<p align="left"><b>Cell curvature</b></p>
+<ul>
+  <li>
+<p align="left"><b><a href="helpgetcurvature.htm">getcurvature</a></b> - obtains
+the radius of curvature of every cell in a list.</p>
+  </li>
+  
+  <li>
+<p align="left"><b><a href="helpcurvhist.htm">curvhist</a></b> - histogram of
+the curvature (or radius of curvature) of the cells.</p>
+  </li>
+</ul>
+
+<p align="left"><b>Exporting and importing data</b></p>
+<ul>
+  <li>
+
+<p align="left"><b><a href="helploadimageseries.htm">loadimageseries</a></b> -
+loads a series of TIFF images into a 3D array.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helploadimagestack.htm">loadimagestack</a></b> -
+loads an image stack file into a 3D array.</p>
+  </li>
+  <li>
+  
+<p align="left"><b><a href="helpsaveimageseries.htm">saveimageseries</a></b> -
+saves a 3D array of images into a series of TIFF files.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpsaveimagestack.htm">saveimagestack</a></b> -
+saves a 3D array of images into a multipage TIFF file.</p>
+  </li>
+  <li>
+  
+<p align="left"><b><a href="helpexportcells2xls.htm">exportcells2xls</a></b> -
+saves the cell dimensions and signal data produced by MicrobeTracker into an Excel or CSV file.</p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="helpexportspots2xls.htm">exportspots2xls</a></b> -
+saves the spots data produced by the SpotFinder family tools into an Excel or CSV file.</p>
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">See also<b> <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a></b> section. Top page: <b> <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

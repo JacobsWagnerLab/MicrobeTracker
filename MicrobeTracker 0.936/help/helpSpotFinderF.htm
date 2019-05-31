@@ -1,0 +1,176 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+SpotFinderF
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p align="left"><font size="4"><b>Purpose</b></font></p>
+
+<p>SpotFinderF if a simplified version of <a href="helpSpotFinder.htm">
+SpotFinderZ</a> designed to work in the absence of cell data. This function
+provides only partial functionality and is included on experimantal basis. The
+purpose of this tool is detecting spots with subpixel resolution on images
+without cells.</p>
+
+<p>SpotFinderF uses most of the <a href="helpSpotFinder.htm#Parameters">
+parameters of SpotFinderZ</a>, which have the same meaning. There is, however,
+no training tool. The training can be performed with SpotFinderZ or done
+manually. The most sensitive parameter is "Min. height", which has to be reduced
+to detect more spots. The acceptable level can be obtained by displaying the
+results after processing.</p>
+
+<p>The program can normalize the data by dividing the intensity by the average
+intensity in the current frame (if "Frame" normalization is selected) or in the
+whole set of frames (if "Stack" normalization is selected). The output can be
+performed either to a file (if "File" is selected) or to MATLAB's workspace (if
+"Screen" is selected).</p>
+
+<p align="left"><b><font size="4">Output format</font></b></p>
+
+<p>The output variable is called <font face="Courier">spotList</font> and is a
+hierarchical MATLAB's <i>cell array</i>. It is an array of frames, each being an
+array of spots, each being a structure of fields describing one spot in one
+frame. Each such structure has the format similar to
+<a href="helpSpotFinder.htm#Output_format">the output format of SpotFinderZ</a>.
+Namely, the structure has the following fields:</p>
+
+<ul>
+  <li>
+    <p><b>x</b> - euclidian coordinate from the left of the image.</p>
+  </li>
+  <li>
+    <p><b>y</b> - euclidian coordinate from the top of the image.</p>
+  </li>
+  <li>
+    <p><b>m</b> - magnitude (brightness) of the spots (combined brightness under
+    the Gaussian fit excluding background).</p>
+  </li>
+  <li>
+    <p><b>h</b> - height of the spots (one of the Gaussian fit parameters).</p>
+  </li>
+  <li>
+    <p><b>w</b> - width of the spots (one of the Gaussian fit parameters).</p>
+  </li>
+  <li>
+    <p><b>b</b> - background under the spots (one of the Gaussian fit parameters).</p>
+  </li>
+</ul>
+
+<p align="left"><b><font size="4">Displaying results</font></b></p>
+
+<p>To visualize the results, use the <a href="helpdispcellall.htm">dispcellall</a> function:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;images = loadimageseries('your_folder_with_images');<br>
+&nbsp;&nbsp;&nbsp;dispcellall(images,spotList)</font></p>
+
+<p>Replace <font face="Courier">your_folder_with_images</font> with the folder
+name where the images are and replace the number 1 in the second line to the
+number of the frame you would like to display.</p>
+
+<p align="left"><b><font size="4">Outputting data to Excell</font></b></p>
+
+<p>To save the results in Excel format, use the
+<a href="helpexportspots2xls.htm">exportspots2xls</a> function:</p>
+
+<p><font face="Courier">&nbsp;&nbsp;&nbsp;savespots2xls(spotList)</font></p>
+
+<p>The program will ask you for the output file name. The data is saved as a
+table with eight columns: the frame number, the spot number and the six
+characteristics of the spots (the same and in the same order as above).</p>
+
+
+<p><a name="example"></a><b><font size="4">Example</font></b><p>
+
+<p>This example demonstrates how to perform the analysis and display the data
+using an image of individual Cy5 fluorophores immobilized on a glass coverslip
+(courtesy of Dr. Sangjin Kim).</p>
+
+<p>1. Start MATLAB. Set the working path in MATLAB to the folder of the
+example: <font face="Courier">...\MicrobeTracker...\examples\spotfinder2</font>
+(see the image below, click on the image for its full resolution version).</p>
+
+<center><a href="example_spotfinder2_1.gif" target="_blank">
+<img src="example_spotfinder2_1.gif" width="500" border="0" alt="Setting the working path in MATLAB" />
+</a></center>
+
+<p>1a. This step is optional. It you want to see the raw data, load the images
+into the workspace. Type in MATLAB's command window:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;images = loadimageseries('spotfinderf');</font></p>
+
+<p>and use MATLAB's
+<a href="http://www.mathworks.com/help/toolbox/images/ref/imshow.html">imshow</a>
+command (for the first image in the stack if the file is a multipage TIFF):</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;imshow(images(:,:,1),[])</font></p>
+
+<center><a href="example_spotfinder2_0.gif" target="_blank">
+<img src="example_spotfinder2_0.gif" width="316" border="0" alt="SpotFinderF program" />
+</a></center>
+
+<p>2. To start SpotFinderF, type in MATLAB's command window:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;spotFinderF</font></p>
+
+<center><a href="example_spotfinder2_2.gif" target="_blank">
+<img src="example_spotfinder2_2.gif" width="316" border="0" alt="SpotFinderF program" />
+</a></center>
+
+<p>3. Select <b>Spots</b> checkbox on the <b>Output</b> panel. <b>Screen</b>
+checkbox gets automatically selected, which means that the data will appear in
+MATLAB's workspace. Click on <b>Params</b> and then <b>Load</b> to load the
+parameters from <font face="Courier">spotfinderf.sfp</font> file. Click
+<b>OK</b> to close the parameters window.</p>
+
+<p>4. Press <b>Run</b> to start SpotFinderF. Select
+<font face="Courier">spotfinderf</font> folder for the images. Because you are
+not outputting data to a file, no file is requested. Now the program will
+display a progress bar and perform processing for about a minute. When it is
+done, <font face="Courier">spotList</font> variable will appear in the
+workspace.</p>
+
+<p>5. Now let's display the images with the detected spots. If you skip the 1a
+step and the images have not been loaded, load them now:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;images = loadimageseries('spotfinderf');</font></p>
+
+<p>Now run <a href="helpdispcellall.htm">dispcellall</a> tool:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;dispcellall(images,spotList)</font></p>
+
+<center><a href="example_spotfinder2_3.gif" target="_blank">
+<img src="example_spotfinder2_3.gif" width="400" border="0" alt="Displayed spots" />
+</a></center>
+
+<p>6. It also possible use various display options of the dispcellall tool,
+for example to display the spots as yellow circles:</p>
+
+<p><font face="Courier" color=#0000AA>&nbsp;&nbsp;&nbsp;dispcellall(spotList,images,1,[],[],[],4,[1 1 0],'circle')</font></p>
+
+<center><a href="example_spotfinder2_4.gif" target="_blank">
+<img src="example_spotfinder2_4.gif" width="400" border="0" alt="Displayed spots" />
+</a></center>
+
+<p>For an example of testing the <b>Shift limit</b> parameter using the same
+data set, see <a href="helptestspotprecision.htm#example">the example for
+testspotprecision</a> function.</p>
+
+<!-- Start replacement block 3 -->
+<br>
+<p class="MsoNormal">Top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

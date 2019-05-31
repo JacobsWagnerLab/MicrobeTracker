@@ -1,0 +1,292 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+SpotFinderZ
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<ul>
+  <li>
+
+<p align="left"><b><a href="#Overview">Overview</a></b></p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="#Buttons_and_controls">Buttons and controls</a></b></p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="#Output_format">Output format</a></b></p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="#Parameters">Parameters</a></b></p>
+  </li>
+  <li>
+
+<p align="left"><b><a href="#Usage_example">Usage example</a></b></p>
+  </li>
+</ul>
+<p align="center"><font size="5"><a name="Overview">Overview</a></font></p>
+<p class="MsoNormal">SpotFinderZ (from now on simply SpotFinder) detects round, usually diffraction-limited spots 
+inside bacterial cells outlined with <a href="helpMicrobeTracker.htm">MicrobeTracker</a> and 
+places them into the meshes structure produced by MicrobeTracker. The program is written in MATLAB and saves the data in 
+the MicrobeTracker format by appending additional fields.</p>
+<p align="center"><font size="5"><a name="Buttons_and_controls">Buttons and controls</a></font></p>
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="344" id="AutoNumber1" align="right">
+    <tr>
+      <td>
+<img border="0" src="spotfinderz.gif"></td>
+    </tr>
+    <tr>
+      <td>
+      <p align="center">Main window of SpotFinder</td>
+    </tr>
+  </table>
+</div>
+<p align="left"><font size="4"><b>Output</b></font></p>
+<ul>
+  <li>
+  <p align="left">Images - displays images with detected cells;</li>
+  <li type="circle">
+  <p align="left">Save - saves the images (the program will ask for the first 
+  image name and then will increment the number);</li>
+  <li type="circle">
+  <p align="left">Show meshes - displays meshes when displaying images;</li>
+  <li>
+  <p align="left">Meshes - save meshes;</li>
+  <li type="circle">
+  <p align="left">File - output them to a file (the program will ask for the 
+  file name);</li>
+  <li type="circle">
+  <p align="left">Screen - output the array to the workspace.</li>
+</ul>
+<p align="left"><b><font size="4">Normalization</font></b></p>
+<ul>
+  <li>
+  <p align="left">No normalization - default mode;</li>
+  <li>
+  <p align="left">Cell - divides the intensity of every spot inside a cell by 
+  the mean intensity inside this cell;</li>
+  <li>
+  <p align="left">Frame - divides the intensity of every spot inside a cell by 
+  the mean intensity of the cells on each frame;</li>
+  <li>
+  <p align="left">Stack - divides the intensity of every spot inside a cell by 
+  the mean intensity of the all cells in the stack;</li>
+  <li>
+  <p align="left">Data from meshes - if checked, extracts the data from Signal1 
+  field in the cellList structure, otherwise obtains it from integration of the 
+  image (in this case the image has to be background-subtracted).</li>
+</ul>
+<p align="left"><b><font size="4">Other controls</font></b></p>
+<ul>
+  <li>
+  <p align="left">Help - displays this page in MATLAB browser;</li>
+  <li>
+  <p align="left">Use stack files - loads images from stack files (multiple formats are supported, must be single channel), only works if Bioformats software is installed;</li>
+  <li>
+  <p align="left">Params - edit, load and save the parameters;</li>
+  <li>
+  <p align="left">Adjust - run adjustment mode to get the right parameters by 
+  clicking on the spots;</li>
+  <li>
+  <p align="left">Run - run the program for every cell.</li>
+  <li>
+  <p align="left">Use on range of frames (appears if you press "+" and
+  dissapears if you press "-" on the keyboard) - the range of frames to use for
+  parameter adjustment and spot detection; empty fields correspond to the
+  beginning / end of the whole range.</li>
+</ul>
+<p align="left"><b><font size="4">Adjustment mode controls</font></b></p>
+<ul>
+  <li>
+  <p align="left">Previous/Next or left/right arrow on the keybiard - go to the
+  previous/next cell to train, the properties of the spots on the displayed
+  cells and their selected/unselected states are memorized;</li>
+  <li>
+  <p align="left">Update params - update the parameters using the memorized set
+  of previously displayed spots; the last 6 parameters in the parameter list are
+  those that are updated;</li>
+  <li>
+  <p align="left">Stop - terminate the adjustment mode; the parameters are
+  updated automatically, unless a parameter window is open;</li>
+  <li>
+  <p align="left">Adjust contrast of the current image (appears if you press
+  "a" on the keyboard).</li>
+</ul>
+<p align="center"><font size="5"><a name="Output_format">Output format</a></font></p>
+<p align="left">
+The output format is based on
+<a href="helpMicrobeTrackerOutput.htm">that of MicrobeTracker</a>. It is saved
+as standard .mat files, which can be opened with MATLAB without running
+MicrobeTracker or SpotFinder, with all SpotFinder results appended into the
+<b>cellList</b> variable, and the parameters saved as the <b>params</b>
+variale.</p>
+<p>The cellList variable is a MATLAB <i>cell array</i> with a hierarchical 
+organization. It is an array of frames, each being an array of cells, each being 
+a structure of fields describing one biological cell on one frame. Among those 
+fields there is one called <b>spots</b>, which is produced by SpotFinder. The
+spots field has several subfields, listed below:</p>
+<div align="right">
+  <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" align="right">
+    <tr>
+      <td>
+        <img border="0" src="spotfinderld.gif" width=100px></td>
+    </tr>
+  </table>
+</div>
+<ul>
+  <li>
+    <p><b>l</b> - coordinate along the centerline.</p>
+  </li>
+  <li>
+    <p><b>d</b> - signed distance from the centerline.</p>
+  </li>
+  <li>
+    <p><b>x</b> - euclidian coordinate from the left of the image.</p>
+  </li>
+  <li>
+    <p><b>y</b> - euclidian coordinate from the top of the image.</p>
+  </li>
+  <li>
+    <p><b>position</b> - segment number in which the spot is located. The spot
+    can be outside of the cell if nonzero <b>Expand cell</b> parameter is used,
+    in which case <b>position</b> would be zero.</p>
+  </li>
+  <li>
+    <p><b>b</b> - background under the spots (one of the Gaussian fit parameters).</p>
+  </li>
+  <li>
+    <p><b>w</b> - width of the spots (one of the Gaussian fit parameters).</p>
+  </li>
+  <li>
+    <p><b>h</b> - height of the spots (one of the Gaussian fit parameters).</p>
+  </li>
+  <li>
+    <p><b>magnitude</b> - brightness of the spots (combined brightness under the
+    Gaussian fit excluding background).</p>
+  </li>
+</ul>
+
+<p>The parameters <b>x</b>, <b>y</b>, <b>b</b>, <b>w</b>, and <b>h</b> are
+obtained by fitting the spot to the function
+<i>b</i>+<i>h</i>&#183;exp{-[(<i>x</i><sub>0</sub>-<i>x</i>)<sup>2</sup>+(<i>y</i><sub>0</sub>-<i>y</i>)<sup>2</sup>]/<i>w</i><sup>2</sup>},
+where (<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>) is the current point, the
+parameters correspond to the mentioned fields of the <b>spots</b> structure. The
+values of the <b>l</b> and <b>d</b> fields are calculated by projection of the
+spot center onto the cell coordinate system, the value of the <b>magnitude</b>
+field is calculated as &#960<i>w</i><sup>2</sup><i>h</i>.
+
+<p align="center"><font size="5"><a name="Parameters">Parameters</a></font></p>
+<p>The typical values are shown for images obtained using a 100x objective at
+0.064 &#956;m/pixel resolution unless mentioned otherwise. The parameters
+from <font face="Courier">Max width</font> and below are adjusted by training,
+usually there is no need for manual adjustment.</span></p>
+<ul>
+  <li><font face="Courier">Expand cell</font> - Amount of mesh expansion in order to take into account the fluorescence outside the cell because of diffraction and aberrations. Real positive number, in pixels.</li>
+  <li><font face="Courier">Exclude other cells</font> - If checked, the program will not pick spots located outside of the countour close to the contour of another cell.</li>
+  <li><font face="Courier">Low cutoff</font> - Lower cutoff of the bandpass filtering step. Integer number, in pixels.</li>
+  <li><font face="Courier">High cutoff</font> - High cutoff of the bandpass filtering step. Integer number, in pixels.</li>
+  <li><font face="Courier">Min filtered height</font> - Minimum spot size after filtering (before fitting) to be considered introduced to reduce processing time by removing false spots sooner.</li>
+  <li><font face="Courier">Fit area size</font> - Radius of the area used to fit spots. Larger areas produce more reliable fit, but increase interference with neighbor spots. Real positive number, in pixels.</li>
+  <li><font face="Courier">Resize</font> - Factor to resize the image (for example, if it is 2, the number of pixels in each direction doubles) to detect spots more presizely. Real positive number.</li>
+  <li><font face="Courier">Shift limit</font> - Factor responsible to attraction of the spot to its originally detected position. Non-negarive real number, default 0.01. Reduce 10-100 times if spots stick to pixel centers losing subpixel resolution (use <a href="helptestspotprecision.htm">testspotprecision</a> function to test). Try increasing if the program ocasionally rejects good spots.</li>
+  <li><font face="Courier">Remove ridges</font> - If checked, the ridge removal filter will be applied to ensure round-shaped spots.</li>
+  <li><font face="Courier">Scale factor</font> - Factor to scale all size parameters below (such as cell width and errors) to use fitted parameters for cells imaged at different resolution.</li>
+  <li><font face="Courier">Max width</font> - Maximum allowed width of a spot. Real positive number, in pixels squared.</li>
+  <li><font face="Courier">Min width</font> - Minimum allowed width of a spot. Real positive number, in pixels squared.</li>
+  <li><font face="Courier">Min height</font> - Minimum allowed height of a spot. Real positive number, in image units.</li>
+  <li><font face="Courier">Max rel. squate error</font> - Maximum allowed relative square error.</li>
+  <li><font face="Courier">Max var/sq. area ratio</font> - Maximum allowed ratio of the variance on the age to spot area.</li>
+  <li><font face="Courier">Min filtered/fitted ratio</font> - Minimum allowed mean ratio of the filtered spot to fit.</li>
+</ul>
+<p align="center"><font size="5"><a name="Usage_example">Usage example</a></font></p>
+<p>In this example we use images of <i>Caulobacter crescentus</i> CB15N cells
+expressing CFP-ParB that localizes at the chromosomal origin of replication. The
+images (phase contrast and cfp fluorescence) are places in the <font face="Courier">
+\examples\spotfinder\</font> subfolder of the MicrobeTracker folder. The cells
+were outlined with MicrobeTracker, with the result saved in
+<font face="Courier">meshes.mat</font> file in the same folder. To dislay the
+contours on top of the phase contrast images <u>select the mentioned folder as
+the active MATLAB folder</u> (otherwise the files will not be found) and type
+the following commands in MATLAB workspace:</p>
+<p><font face="Courier">
+&nbsp;&nbsp;&nbsp;>>images = loadimageseries('phase_images');<br>
+&nbsp;&nbsp;&nbsp;>>load('meshes')<br>
+&nbsp;&nbsp;&nbsp;>>dispcellall(cellList,images)
+</font></p>
+<p>This will display the image below. Note, the number of images will be the
+same as the number of original images. Therefore, you may want to limit it if
+the number of files is large (see <a href= "helpdispcellall.htm">dispcellall
+</a> tool). Note, dispcellall creates new figures, so you do not neet to use
+the "figure" command.</p>
+<p align="center">
+  <img border="0" src="example_spotfinder_1.gif">
+</p>
+<p>Now run SpotFinder:</p>
+<p><font face="Courier">
+&nbsp;&nbsp;&nbsp;>>spotFinderZ
+</font></p>
+<p align="center">
+  <img border="0" src="example_spotfinder_2.gif">
+</p>
+<p>And click "Adjust" button to modify the quality parameters for this image
+set. The program will prompt you for the input images folder (file) and the
+meshes file. Select <font face="Courier">cfp_images</font> folder and
+<font face="Courier">meshes.mat</font> file. In what follows, you have to go
+through several cells clicking on the "real" so that they are displayed in red
+and unclicking the "false" spots.</p>
+<p align="center">
+  <img border="0" src="example_spotfinder_3.gif">
+</p>
+<p>The navigation is performed by "Previous" / "Next" buttons of SpotFinder,
+"Stop" button will terminate the adjustment regime. "Update params" button is used
+to adjust the parameters and evaluate the spots on the next frames according to
+the newly set parameters. The number of cells to click on may be as small as
+just a few, but more cell will improve the quality of detection.</p>
+<p align="center">
+  <img border="0" src="example_spotfinder_4.gif">
+</p>
+<p>When you are done and have clicked "Stop" button, SpotFinder will return to the
+original view. Select now "Meshes" and "File" checkboxes to save the data at the end
+of processing into a file and click "Run" button.</p>
+<p align="center">
+  <img border="0" src="example_spotfinder_5.gif">
+</p>
+<p>The program will prompt for the file and folder names. Select the same input
+files and folders (will appear by default) and a different file for the output,
+for example <font face="Courier">meshes+spots.mat</font> (make sure, the
+<font face="Courier">\examples\spotfinder\</font> folder is still the active
+folder in MATLAB). The program will process the images while displaying a
+progress bar and will save the data automatically. To view the results type:</p>
+<p><font face="Courier">
+&nbsp;&nbsp;&nbsp;>>images = loadimageseries('cfp_images');<br>
+&nbsp;&nbsp;&nbsp;>>load('meshes+spots')<br>
+&nbsp;&nbsp;&nbsp;>>dispcellall(cellList,images,[],[],[],[],3,'circle')
+</font></p>
+<p>Which will display the data indicating the spots with circles of the radius
+of 3 pixels:</p>
+<p align="center">
+  <img border="0" src="example_spotfinder_6.gif">
+</p>
+
+<!-- Start replacement block 3 -->
+<br>
+<p class="MsoNormal">Top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

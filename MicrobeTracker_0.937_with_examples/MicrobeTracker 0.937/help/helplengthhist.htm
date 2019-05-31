@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+lengthhist
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">lengthhist(cellList) </font></p>
+<p><font face="Courier">lengthhist(cellList1,cellList2,...)</font></p>
+<p><font face="Courier">lengthhist(cellList,xarray) </font></p>
+<p><font face="Courier">lengthhist(cellList1,cellList2,xarray)</font></p>
+<p><font face="Courier">lengthhist(cellList1,pix2mu)</font></p>
+<p><font face="Courier">lengthhist(cellList1,pix2mu1,cellList2,pix2mu2)</font></p>
+<p><font face="Courier">lengthhist(cellList1,cellList2,'overlap')&nbsp; </font></p>
+<p><font face="Courier">lengthhist(...'nooutput')&nbsp; </font></p>
+<p><font face="Courier">lengthhist(...'nodisp')&nbsp; </font></p>
+<p><font face="Courier">[lengthlist] =  lengthhist(cellList)</font></p>
+<p><font face="Courier">[lengthlist1,lengthlist2] = lengthhist(cellList1,cellList2)</font></p>
+
+<p>This function plots a histogram of the length of every cell in a population</p>
+
+<ul>
+  <li>
+  <p>&lt;cellList&gt; is an array that contains the meshes. You can 
+  drag and drop the file with the data into MATLAB workspace or open it using 
+  MATLAB Import Tool. The default name of the variable is <b>cellList</b>, but 
+  it can be renamed.</li>
+  <li>
+  <p>&lt;cellList1&gt;, &lt;cellList2&gt; - you can load two arrays, they will
+  be plotted together for comparison.</li>
+  <li>
+  <p>&lt;xarray&gt; &#727; array of x values for the histogram, which serve the
+  centers of bins of the histogram (the boundaries will be in between, for
+  example [1 2 3 4 5] to display all the cells shorter than 1.5 micron in the
+  first bin, between 1.5 and 2.5 microns in the second, etc.).</li>
+  <li>
+  <p>&lt;pix2mu&gt;, &lt;pix2mu1&gt;, &lt;pix2mu2&gt; - conversion factors from
+  pixels to microns, the size of a pixel in microns. Typical value 0.064.</li>
+  <li>
+  <p>'overlap' - indicate this if you wish the histograms to overlap, otherwise
+  they will be displayed separately.</li>
+  <li>
+  <p>&lt;lengthlist&gt;, &lt;lengthlist1&gt;, &lt;lengthlist2&gt; - arrays
+  containing the length of every cell to save and plot separately.</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks standard text output (type of data processed, mean,
+  and standard deviation; only a figure is displayed).</li>
+  <li>
+  <p>&lt;nooutput&gt; blocks figure output (only text output is produced).</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

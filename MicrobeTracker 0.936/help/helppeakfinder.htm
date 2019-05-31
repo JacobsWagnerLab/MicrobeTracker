@@ -1,0 +1,94 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+peakfinder
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">cellList2 = peakfinder(cellList,[cnd_new],[cnd_old],[range],[mindistold],[smooth],[signalfield],[spotsfield],[mindistnew])</font></p>
+<p><font face="Courier">cellList2 = peakfinder(cellList,...,'plot')</font></p>
+
+<p>This function detects peaks using a signal profile, an 
+alternative to SpotFinder. All parameters except for &lt;cellList&gt; are
+optional. The optional numeric parameters must follow the order; to use the
+default value of a particular parameter but still to provide the value of the
+following one, supply [] (empty array) for its value. All detected peaks are
+saved as spots in <a href="helpSpotFinder.htm">SpotFinder</a> format with zero
+background, width, height, and magnitude.</p>
+
+<ul>
+  <li>
+  <p>&lt;cellList&gt; is an array that contains the meshes.
+  You can drag and drop the file with the data into MATLAB workspace or open it
+  using MATLAB Import Tool. The default name of the variable is <b>cellList</b>,
+  but it can be renamed.</p>
+  </li>
+  <li>
+  <p>&lt;cellList2&gt; - output array of meshes.</p>
+  </li>
+  <li>
+  <p>&lt;cnd_new&gt; - condition to detect a spot where no
+  spots are present. Default: 0.25.</p>
+  </li>
+  <li>
+  <p>&lt;cnd_old&gt; - condition to detect a spots where a
+  spot already exists. Default: equal to &lt;cnd_new&gt;.</p>
+  </li>
+  <li>
+  <p>&lt;range&gt; - range of comparison area, i.e. the number
+  of cell segments before and after the potential peak that are taken into
+  consideration. Default: 20.</p>
+  </li>
+  <li>
+  <p>&lt;mindistold&gt; - minimum distance from the peaks existing before running
+  peakfinder and the newly detected peaks so that they are considered identical.
+  In such case the old peak is kept with all its properties. Default: 4.</p>
+  </li>
+  <p>&lt;smooth&gt; - degree of smoothing, number of smoothing
+  cycles. Default: 10.</p>
+  </li>
+  <li>
+  <p>&lt;signalfield&gt; - the signal field which will be
+  processed. Must be in single quotes and must start from the word 'signal'. 
+  Default: 'signal1'.</p>
+  </li>
+  <li>
+  <p>&lt;spotsfield&gt; - the spots field to which the data
+  will be saved. Must be in single quotes and must start from the word 'spots'.
+  Default: 'spots'.</p>
+  </li>
+  <li>
+  <p>&lt;mindistnew&gt; - minimum distance separating the peaks so that they are
+  considered distinct. Default: 0 (all peaks are distinct).</p>
+  </li>
+  <li>
+  <p>'plot' - display the graph and spot information for each cell as the 
+  processing goes in order to test the parameters. When the figure is
+  displayed, press 'Enter' to continue or 'Escape' to exit.</p>
+  </li>
+  <li>
+  <p>'diagram' - display a diagram of the number of spots vs.
+  cell length for quality control.</p>
+  </li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

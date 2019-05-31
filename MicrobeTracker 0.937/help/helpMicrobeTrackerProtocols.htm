@@ -1,0 +1,148 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p align="center"><b><font size="6">
+<!-- End replacement block 1 -->
+Protocols
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>This section provides protocols for MicrobeTracker use in order to perform a
+few most typical tasks. For a particular operation, the user may also need to
+read the description of the mentioned operation (button or tool) on their
+corresponding help pages.</p>
+<p>See also available related tutorials that guide you through some of the
+mentioned operations on the example of provoded image sets:</p>
+<ul>
+  <li>
+<a href="helpTutirialMTEcoli.htm">Cell detection</a> (detection of <i>E. coli</i> cells in still images)<br/>
+  </li>
+  <li>
+<a href="helpTutirialMTCcres.htm">Fluorescence profiles</a> (detection of <i>C. crescentus</i> cells in time-lapses, obtaining fluorescence profiles)<br/>
+  </li>
+  <li>
+<a href="helpTutirialMTFRAP.htm">Accessing internal variables</a> (obtaining a kymograph from a FRAP experiment).
+  </li>
+  <li>
+<a href="helpTutirialMTNucleoid.htm">Extending MicrobeTracker</a> (obtaining outlines and properties of nucleoids or other intracellular objects).
+  </li>
+</ul>
+
+<p><font size="4"><b>Usage for independent images</b></font></p>
+<ul>
+  <li>Make sure you take phase contrast images, not DIC (DIC images can be
+  converted into an acceptable format, however with a loss of quality). Place
+  all phase contrast images into one folder. The tools
+  <a href="helprenfiles.htm"><font face="Courier">renfiles</font></a> and
+  <a href="helprenfilestc.htm"><font face="Courier">renfilestc</font></a> can be
+  used for this purpose: </font><font face="Courier">renfiles</font> moves
+  images from one folder into a set of subfolders, and
+  <font face="Courier">renfilestc</font> combines files from multiple folders
+  and sorts them into new folders based on the name prefix. If you never used
+  these tools for the particular file naming format, try first on a copy of the 
+  images.</li>
+  <li>Load images clicking on <b>Load phase data</b> (and also <b>Load signal 1 
+  data</b> and <b>Load signal 2</b> <b>data</b> if necessary).  </li>
+  <li>Load parameters (usually
+  <font face="Courier">alg4.set</font>, your set, or the set from the previous 
+  working analysis), adjust necessary parameters (such as <font face="Courier">scaleFactor</font> 
+  or <font face="Courier">areaMin</font>, <font face="Courier">areaMax</font>).</li>
+  <li>Set the radio button on the <b>Detection &amp; analysis</b> 
+  panel to <b>Independent frames</b>. Check if you want to save the results during processing.</li>
+  <li>If you use fluorescence, subtract the background (check <b>All </b>and then click
+  <b>Subtract bgrnd</b> for all signals).</li>
+  <li>If you use fluorescence, check if you want to add signal(s) to the 
+  meshes (<b>Compute signal 
+  1 profile as / Compute signal 2 profile as</b>).</li>
+  <li>Try detecting cells on one frame to make sure the program works correctly. 
+  For this click <b>This frame</b> on the <b>Detection &amp; analysis</b> 
+  panel.</li>
+  <li>If the results look good, click <b>All frames</b> or put the beginning 
+  of the range to 2 (to skip frame 1) and then click on <b>Range</b>.</li>
+  <li>When the program finishes (depending on the number of cells, if will take 
+  from a minute to several hours), check the performance. Delete occasional 
+  misdetected cells by selecting them and clicking <b>Delete</b> or pressing the 
+  keyboard Del button.</li>
+  <li>Make sure you save the results (<b>Save analysis</b>) or they get saved to the right place during 
+  processing (select <b>Save on each frame</b> or <b>Save when done</b>, and 
+  chose the file name below).</li>
+</ul>
+<p>You do not have to save the results during processing. However, this is preferable for 
+large image sets in case the program crashes. In addition, there are memory leaks in MATLAB that cannot be 
+easily eliminated, so that during long processing the memory requirements grow. 
+If you are processing large image sets, it may be preferable to do the detection without 
+fluorescence signal. In this case restart MATLAB after detection, load the phase 
+contrast, the fluorescence images and the analysis, then subtract the 
+background, check <b>Reuse</b>, and click <b>All frames</b> to add the signal 
+without cells detection. In addition, if you have noticed excessive memory held 
+by MATLAB in Windows task manager after running for a long time, restarting 
+MATLAB may also be advisable.</p>
+<p><font size="4"><b>Usage for timelapses</b></font></p>
+<ul>
+  <li>Place the phase contrast images into one folder, signal 1 images (if any) 
+  into another, etc. See above for more details.</li>
+  <li>Load images clicking on <b>Load phase data</b> (and also <b>Load signal 1 
+  data</b> and <b>Load signal 2</b> <b>data</b> if necessary).  </li>
+  <li>Load parameters (usually
+  <font face="Courier">alg4.set</font>, your set, or the set from the previous 
+  working analysis), adjust necessary parameters (such as <font face="Courier">scaleFactor</font> 
+  or <font face="Courier">areaMin</font>, <font face="Courier">areaMax</font>).</li>
+  <li>Set the radio button on the <b>Detection &amp; analysis</b> 
+  panel to <b>Timelapse</b>. Check if you want to save the results during processing.</li>
+  <li>If you use fluorescence, subtract the background (check <b>All </b>and then click
+  <b>Subtract bgrnd</b> for all signals).</li>
+  <li>If you use fluorescence, check if you want to add signal(s) to the 
+  meshes (<b>Compute signal 
+  1 profile as / Compute signal 2 profile as</b>).</li>
+  <li>If there is any noticeable drift (horizontal shift between frames as 
+  timelapse proceeds), align frames by clicking <b>Align</b>.</li>
+  <li>Try detecting cells on a few frames to make sure the program works 
+  correctly. For this select frames from 1 to 3 (or from 1 to 2) on the <b>Detection &amp; analysis</b> 
+  panel, then click <b>Range</b>.</li>
+  <li>When the program finishes (depending on the number of cells, if will take 
+  from a minute to several hours), check the performance. Delete occasional 
+  misdetected cells by selecting them and clicking <b>Delete</b> or pressing the 
+  keyboard Del button. You can also remove them on one frame 
+  only and then with a separate script <font face="Courier">cleanCellList</font> 
+  on the frames starting from the frame where the cell is missing. You can 
+  also redetect all the cells or a subset of them with a different parameters set 
+  starting from the frame where something went wrong.</li>
+  <li>If the signal was not added simultaneously with cell detection, load the 
+  signal, subtract background, run in <b>Reuse 
+  meshes</b> regime.</li>
+  <li>Make sure you save the results.</li>
+</ul>
+
+<p><font size="4"><b>Usage for moving cells</b></font></p>
+<p>If the cells are moving very little, the timelapse regime may still work. You 
+can also increase <font face="Courier">moveall</font> parameter to ~ 0.95. In 
+most cases, however, you should follow the procedure below.</p>
+<ul>
+  <li>Detect the cells using the independent images regime (see the description 
+  above).</li>
+  <li>Remove misdetected cells from the first frame only.</li>
+  <li>Save the results.</li>
+  <li>Run <font face="Courier"><a href="helptrackstack.htm">trackstack</a></font> 
+  command (read the command description for details). The simplest syntax is 
+  just typing <font face="Courier">trackstack</font>, which will request the 
+  user to enter meshes file and the file to save the results.</li>
+  <li>Load the results into MicrobeTracker and check the performance. If not 
+  good, try changing <font face="Courier">trackstack</font> parameters.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal"><b>Top pages: <a href="helpMicrobeTracker.htm">
+MicrobeTracker</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

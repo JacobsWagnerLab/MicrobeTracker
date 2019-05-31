@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+kymograph
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+
+<p><font face="Courier">kymograph(cellList,cell);</font></p>
+<p><font face="Courier">kymograph(cellList,cell,[nbins],[frame2time],[pix2mu]);</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,framerange);</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,signal);</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'area');</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'volume');</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'normalize');</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'nodisp');</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'integrate');</font></p>
+<p><font face="Courier">kymograph(cellList,cell,...,'absolute');</font></p>
+<p><font face="Courier">kgraph = kymograph(cellList,cell,...);</font></p>
+
+<p>This function produces a kymograph of the integrated signal profiles for a
+single cell in a list of obtained by MicrobeTracker.</p>
+<ul>
+  <li>
+  <p>&lt;cellList&gt; - input cell list 
+  (the other possible input, which can be used instead of the curvlist). If 
+  neither curvlist nor cellList is supplied, the program will request to open a 
+  file with the cellList.</li>
+  <li>
+  <p>&lt;cell&gt; - the cell to produce a kymorgaph for.</li>
+  <li>
+  <p>&lt;nbins&gt; (each argument in square brackets is
+  optional, replace with an empty array [] if not used) - number of bins in the
+  kymograph (the profile is resampled nto a fixed number of bins and is
+  therefore produced in the relative coordinates along the cell to compensate
+  for cell growth; default: 50).</li>
+  <li>
+  <p>&lt;frame2time&gt; - conversion factor from frames to
+  time. If not supplied, the kymograph is lotted vs. frame. Note, the first
+  scalar number is interpreted as "nbins" and the second one as "frame2time". In
+  order to only pass "frame2time", use an empty array ([]) for "nbins".</p>
+  <li>
+  <p>&lt;pix2mu&gt - conversion factor from pixels to microns.
+  Only works when 'absolute' parameter is provided. To supply pix2mu but not
+  nbins or frame2time, supply empty arrays ([]) for nbins and frame2time.</p>
+  </li>
+  <p>&lt;framerange&gt; - two-element array (i.e. for frames
+  from 10 to 20, this array would be [10 20]), indicating the starting and the
+  final frames of a range to use for the kymograph. If not supplied, the program
+  starts from the beginning and proceeds until the cell divides or the end of
+  the list is reached.</p></li>
+  <li>
+  <p>&lt;signal&gt; - the signal field which will be
+  processed. Must be in single quotes and must start with the word
+  'signal'. Default: 'signal1'.</p></li>
+  <li>
+  <p>'area' - normalize the profile by the area of each
+  segment producing the average image intensity in each segment.</p></li>
+  <li>
+  <p>'volume' - normalize the profile by the estimated
+  volume of each segment producing the estimate of signal concentration in each
+  segment.</p></li>
+  <li>
+  <p>'normalize' - normalize each profile by its sum to
+  compensate for photobleaching of the signal (if known to be constant).</p></li>
+  <li>
+  <p>'nodisp' - suppress displaying the results as a figure.
+  Note, the function does not produce a new figure by itself. Therefore, you
+  should use the <font face="Courier">figure</font> command to avoid replotting
+  an existing figure.</p></li>
+  <li>
+  <p>'integrate' - obtain the values in the kymograpg by
+  integration instead of interpolation of the raw data values. This method is
+  more precise when the number of bins (nbins) exceeds the number of original
+  segments, but is noticeably slower.</p></li>
+  <li>
+  <p>'absolute' - plot the kymograph in absolute spatial
+  coordinated (pixels or microns, if provided).</p></li>
+  <li>
+  <p>&lt;kgraph&gt; - the output kymograph matrix with the
+  first dimension being the relative position in the cell and the second one
+  being the frame number in the range.</p></li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>Top pages: <b> <a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>

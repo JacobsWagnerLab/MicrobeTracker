@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<!-- Start replacement block 1 -->
+<title>MicrobeTracker Tools</title>
+</head>
+
+<body link="#000000" vlink="#808080" alink="#808080">
+
+<p><b><font face="Courier">
+<!-- End replacement block 1 -->
+exportcells2xls
+<!-- Start replacement block 2 -->
+</font></b></p>
+<!-- End replacement block 2 -->
+
+<p>Syntax:</p>
+<p><font face="Courier">exportcells2xls</font></p>
+<p><font face="Courier">exportcells2xls(cellList)</font></p>
+<p><font face="Courier">exportcells2xls(cellList,filename)</font></p>
+
+<p>This functions saves some of the data from cellList
+produced by MicrobeTracker into an Excel or CSV file. The output data are saved
+as a matrix in which each row corresponds to a bacterial cell and the columns
+are: (A) frame number, (B) cell number, (C) cell length, (D) cell area, (E) cell
+volume, (F) max width of the cell. The Excell (but not CSV) file also gets a
+header with the names of the columns. The CSV file will contain NaN for the
+values of the signals if they are missing in the cell list.</p>
+
+<ul>
+  <li>
+  <p>&lt;cellList&gt; - an array that contains cell meshes produced by
+  MicrobeTracker. An input dialog will appear if the value is not provided.</li>
+  <li>
+  <p>&lt;filename&gt; - name of the output file (must be .xls or .csv). An input
+  dialog will appear if the value is not provided.</li>
+</ul>
+
+<!-- Start replacement block 3 -->
+<br>
+<p>See also: <b><a href="helpexportspots2xls.htm">
+exportspots2xls</a></b>, top pages: <b><a href="helpTools.htm">
+MicrobeTracker Tools</a>, <a href="../help.htm">
+MicrobeTracker Suite</a>.</b></p>
+<!-- End replacement block 3 -->
+</body>
+</html>
